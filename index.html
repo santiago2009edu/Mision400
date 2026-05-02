@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MISIÓN 400 · Santiago Restrepo · Univalle 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════════ */
+:root {
+  --r: #be1e2d;
+  --r2: #e8263a;
+  --r3: #8b0d18;
+  --rg: rgba(190,30,45,0.18);
+  --rg2: rgba(190,30,45,0.06);
+  --bg: #080a0e;
+  --bg2: #0e1017;
+  --bg3: #13161f;
+  --card: #111420;
+  --card2: #171b28;
+  --b: rgba(255,255,255,0.06);
+  --b2: rgba(255,255,255,0.1);
+  --t: #dde1f0;
+  --t2: #9098b8;
+  --t3: #5a6280;
+  --green: #16a34a;
+  --green2: #22c55e;
+  --amber: #d97706;
+  --amber2: #fbbf24;
+  --blue: #2563eb;
+  --blue2: #60a5fa;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Syne',sans-serif;
+  background:var(--bg);
+  color:var(--t);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── PARTICLES CANVAS ── */
+#particles-canvas{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.5;
+}
+
+/* ── SCANLINES OVERLAY ── */
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+}
+
+/* ══════════ LOGIN ══════════ */
+#loginWrap{
+  position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.4,0,.2,1);
+}
+#loginWrap.out{opacity:0;transform:scale(1.08);pointer-events:none}
+
+.login-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 60%,rgba(190,30,45,.12) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 30%,rgba(190,30,45,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 80% 40% at 50% 100%,rgba(190,30,45,.05) 0%,transparent 60%);
+  animation:bgBreath 8s ease-in-out infinite alternate;
+}
+@keyframes bgBreath{from{opacity:.6}to{opacity:1}}
+
+.login-box{
+  position:relative;z-index:1;
+  width:min(440px,92vw);
+  background:linear-gradient(145deg,rgba(20,24,40,.98),rgba(13,15,22,.98));
+  border:1px solid rgba(190,30,45,.25);
+  border-radius:24px;
+  padding:2.75rem;
+  box-shadow:0 0 0 1px rgba(255,255,255,.04),0 40px 100px rgba(0,0,0,.7),0 0 60px rgba(190,30,45,.1);
+  animation:loginIn .9s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes loginIn{from{opacity:0;transform:translateY(50px) scale(.93)}to{opacity:1;transform:none}}
+
+.login-brand{
+  font-family:'Instrument Serif',serif;
+  font-size:3.2rem;color:white;line-height:1;margin-bottom:.2rem;
+  background:linear-gradient(135deg,white 40%,var(--r2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.login-sub{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);margin-bottom:2.25rem;}
+
+.login-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:.4rem;display:block;}
+.login-input{
+  width:100%;background:rgba(255,255,255,.04);border:1px solid var(--b2);border-radius:10px;
+  padding:.8rem 1rem;color:var(--t);font-family:'DM Mono',monospace;font-size:.9rem;
+  outline:none;transition:all .25s;margin-bottom:1rem;
+}
+.login-input:focus{border-color:var(--r);box-shadow:0 0 0 3px rgba(190,30,45,.12);background:rgba(190,30,45,.04);}
+.login-input::placeholder{color:var(--t3)}
+
+.login-btn{
+  width:100%;padding:.9rem;
+  background:linear-gradient(135deg,var(--r3),var(--r),var(--r2));
+  background-size:200%;background-position:0%;
+  border:none;border-radius:12px;color:white;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.04em;
+  cursor:pointer;transition:all .3s;position:relative;overflow:hidden;
+  box-shadow:0 4px 24px rgba(190,30,45,.3);
+}
+.login-btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .2s;}
+.login-btn:hover{background-position:100%;transform:translateY(-2px);box-shadow:0 8px 32px rgba(190,30,45,.45);}
+.login-btn:hover::after{background:rgba(255,255,255,.06);}
+.login-btn:active{transform:scale(.97);}
+
+.login-err{
+  display:none;margin-bottom:1rem;padding:.65rem 1rem;
+  background:rgba(190,30,45,.1);border:1px solid rgba(190,30,45,.3);
+  border-radius:9px;font-size:.82rem;color:#f87171;
+}
+
+/* ══════════ APP SHELL ══════════ */
+#app{display:none;position:relative;z-index:1;min-height:100vh;}
+#app.on{display:flex;}
+
+/* ══════════ SIDEBAR ══════════ */
+.sidebar{
+  width:68px;
+  background:var(--bg2);
+  border-right:1px solid var(--b);
+  display:flex;flex-direction:column;align-items:center;
+  padding:1.25rem 0;gap:.5rem;
+  position:fixed;left:0;top:0;bottom:0;z-index:50;
+  transition:width .35s cubic-bezier(.4,0,.2,1);overflow:hidden;
+}
+.sidebar:hover,.sidebar.pinned{width:220px;}
+.sidebar:hover .nav-label,.sidebar.pinned .nav-label{opacity:1;transform:translateX(0);}
+.sidebar:hover .sidebar-bottom-label,.sidebar.pinned .sidebar-bottom-label{opacity:1;}
+
+.sb-logo{
+  width:40px;height:40px;min-width:40px;
+  background:linear-gradient(135deg,var(--r3),var(--r));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:800;color:white;letter-spacing:.03em;
+  box-shadow:0 4px 16px rgba(190,30,45,.4);
+  margin-bottom:.5rem;cursor:pointer;flex-shrink:0;
+}
+.sb-logo-text{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:white;
+  white-space:nowrap;margin-left:.75rem;opacity:0;transition:opacity .25s .05s;
+}
+.sidebar:hover .sb-logo-text,.sidebar.pinned .sb-logo-text{opacity:1;}
+.sb-logo-row{display:flex;align-items:center;width:100%;padding:0 1rem;}
+
+.nav-item{
+  display:flex;align-items:center;width:100%;padding:0 .9rem;height:44px;
+  border-radius:10px;cursor:pointer;position:relative;
+  color:var(--t3);transition:all .2s;border:1px solid transparent;
+  text-decoration:none;overflow:hidden;flex-shrink:0;
+}
+.nav-item:hover{color:var(--t);background:rgba(255,255,255,.04);}
+.nav-item.active{color:white;background:var(--rg);border-color:rgba(190,30,45,.25);}
+.nav-icon{font-size:1.1rem;min-width:24px;text-align:center;flex-shrink:0;}
+.nav-label{
+  font-size:.82rem;font-weight:600;white-space:nowrap;margin-left:.75rem;
+  opacity:0;transform:translateX(-8px);
+  transition:opacity .25s .05s,transform .25s .05s;
+}
+.nav-divider{width:36px;height:1px;background:var(--b);margin:.35rem 0;flex-shrink:0;transition:width .35s;}
+.sidebar:hover .nav-divider,.sidebar.pinned .nav-divider{width:calc(100% - 2rem);}
+
+/* Streak mini in sidebar */
+.sb-streak{
+  margin-top:auto;width:40px;min-width:40px;height:40px;
+  background:var(--rg2);border:1px solid rgba(190,30,45,.2);
+  border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:width .35s;overflow:hidden;flex-shrink:0;
+}
+.sidebar:hover .sb-streak,.sidebar.pinned .sb-streak{width:calc(100% - 2rem);}
+.sb-streak-num{font-size:1rem;font-weight:800;color:white;line-height:1;}
+.sb-streak-label{font-size:.5rem;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;}
+.sidebar-bottom-label{
+  display:flex;align-items:center;gap:.6rem;width:100%;padding:0 1rem;
+  opacity:0;transition:opacity .2s;
+}
+.sb-logout{
+  width:40px;min-width:40px;height:36px;margin:0 .9rem;
+  background:rgba(255,255,255,.03);border:1px solid var(--b);border-radius:8px;
+  cursor:pointer;color:var(--t3);font-size:.9rem;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden;
+}
+.sb-logout:hover{color:var(--t);background:rgba(255,255,255,.06);}
+.sidebar:hover .sb-logout,.sidebar.pinned .sb-logout{width:calc(100% - 2rem);}
+.sb-logout-label{font-size:.78rem;white-space:nowrap;margin-left:.6rem;opacity:0;transition:opacity .2s;}
+.sidebar:hover .sb-logout-label,.sidebar.pinned .sb-logout-label{opacity:1;}
+
+/* ══════════ MAIN ══════════ */
+.main{
+  margin-left:68px;flex:1;min-height:100vh;
+  padding:2rem 2rem 4rem;
+  transition:margin-left .35s;
+}
+
+/* ══════════ TOPBAR ══════════ */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:2rem;flex-wrap:wrap;gap:1rem;
+}
+.page-title{
+  font-family:'Instrument Serif',serif;
+  font-size:2.4rem;color:white;line-height:1.1;
+}
+.page-title span{color:var(--r2);font-style:italic;}
+.page-sub{font-size:.82rem;color:var(--t3);margin-top:.3rem;letter-spacing:.02em;}
+
+/* ══════════ SECTIONS ══════════ */
+.sec{display:none;}
+.sec.on{display:block;animation:secIn .4s cubic-bezier(.4,0,.2,1) both;}
+@keyframes secIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ══════════ COUNTDOWN HERO ══════════ */
+.countdown-hero{
+  background:linear-gradient(135deg,var(--card) 0%,rgba(190,30,45,.06) 100%);
+  border:1px solid rgba(190,30,45,.15);
+  border-radius:20px;padding:2.5rem;
+  position:relative;overflow:hidden;margin-bottom:1.5rem;
+}
+.countdown-hero::before{
+  content:'';position:absolute;
+  top:-100px;right:-100px;width:400px;height:400px;
+  background:radial-gradient(circle,rgba(190,30,45,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.countdown-hero::after{
+  content:'ICFES 2026';
+  position:absolute;right:2rem;bottom:2rem;
+  font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.06);
+  letter-spacing:.3em;text-transform:uppercase;
+}
+.cd-tag{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--t3);margin-bottom:1.5rem;}
+.cd-nums{display:flex;align-items:flex-start;gap:.75rem;flex-wrap:wrap;}
+.cd-unit{display:flex;flex-direction:column;align-items:center;gap:.3rem;}
+.cd-n{
+  font-family:'Syne',sans-serif;font-size:clamp(2.5rem,7vw,5rem);
+  font-weight:800;color:white;line-height:1;
+  text-shadow:0 0 40px rgba(190,30,45,.3);
+  min-width:2.2ch;text-align:center;
+}
+.cd-l{font-size:.6rem;color:var(--t3);text-transform:uppercase;letter-spacing:.15em;}
+.cd-sep{font-size:clamp(2.5rem,7vw,5rem);font-weight:800;color:var(--r);opacity:.3;line-height:1;margin-top:0;}
+
+/* ══════════ STAT CARDS ══════════ */
+.cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+.cards2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+
+.card{
+  background:var(--card);border:1px solid var(--b);border-radius:16px;
+  padding:1.4rem;transition:transform .25s,box-shadow .25s,border-color .25s;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  transition:opacity .3s;pointer-events:none;
+  background:radial-gradient(ellipse at top left,rgba(190,30,45,.08),transparent 60%);
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4);}
+.card:hover::before{opacity:1;}
+.card.glow:hover{border-color:rgba(190,30,45,.3);box-shadow:0 12px 40px rgba(190,30,45,.12);}
+
+.card-label{font-size:.65rem;letter-spacing:.17em;text-transform:uppercase;color:var(--t3);margin-bottom:.6rem;}
+.card-val{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:white;line-height:1;}
+.card-sub{font-size:.75rem;color:var(--t3);margin-top:.4rem;}
+.card-icon{position:absolute;top:1.2rem;right:1.2rem;font-size:1.5rem;opacity:.15;}
+
+/* ══════════ PROGRESS BAR ══════════ */
+.pb-track{height:4px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin-top:.75rem;}
+.pb-fill{height:100%;border-radius:99px;transition:width .7s cubic-bezier(.34,1.56,.64,1);}
+.pb-fill.red{background:linear-gradient(90deg,var(--r3),var(--r));box-shadow:0 0 8px rgba(190,30,45,.5);}
+.pb-fill.green{background:linear-gradient(90deg,#15803d,var(--green2));box-shadow:0 0 8px rgba(34,197,94,.4);}
+.pb-fill.blue{background:linear-gradient(90deg,#1d4ed8,var(--blue2));}
+.pb-fill.amber{background:linear-gradient(90deg,#92400e,var(--amber2));}
+
+/* ══════════ STREAK FIRE ══════════ */
+.streak-glow{
+  border-color:rgba(190,30,45,.4) !important;
+  animation:sGlow 2.5s ease-in-out infinite;
+}
+@keyframes sGlow{
+  0%,100%{box-shadow:0 0 20px rgba(190,30,45,.15)}
+  50%{box-shadow:0 0 50px rgba(190,30,45,.35),0 0 80px rgba(190,30,45,.1)}
+}
+.fire{display:inline-block;animation:fireAnim .45s ease-in-out infinite alternate;filter:drop-shadow(0 0 6px #ff6600);}
+@keyframes fireAnim{from{transform:rotate(-6deg) scale(1)}to{transform:rotate(6deg) scale(1.15)}}
+
+/* ══════════ BADGES ══════════ */
+.badge{display:inline-flex;align-items:center;gap:.25rem;padding:.18rem .6rem;border-radius:99px;font-size:.68rem;font-weight:700;letter-spacing:.06em;}
+.badge-r{background:rgba(190,30,45,.14);color:var(--r2);border:1px solid rgba(190,30,45,.25);}
+.badge-g{background:rgba(34,197,94,.1);color:var(--green2);border:1px solid rgba(34,197,94,.2);}
+.badge-a{background:rgba(251,191,36,.1);color:var(--amber2);border:1px solid rgba(251,191,36,.2);}
+.badge-b{background:rgba(96,165,250,.1);color:var(--blue2);border:1px solid rgba(96,165,250,.2);}
+
+/* ══════════ BUTTONS ══════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.6rem 1.2rem;border-radius:10px;border:none;cursor:pointer;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;
+  letter-spacing:.03em;transition:all .2s;
+}
+.btn-r{background:var(--r);color:white;box-shadow:0 2px 12px rgba(190,30,45,.25);}
+.btn-r:hover{background:var(--r2);transform:translateY(-2px);box-shadow:0 6px 24px rgba(190,30,45,.4);}
+.btn-r:active{transform:scale(.96);}
+.btn-g{background:rgba(34,197,94,.12);color:var(--green2);border:1px solid rgba(34,197,94,.25);}
+.btn-g:hover{background:rgba(34,197,94,.2);transform:translateY(-1px);}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--t);border:1px solid var(--b2);}
+.btn-ghost:hover{background:rgba(255,255,255,.08);}
+.btn-sm{padding:.42rem .85rem;font-size:.75rem;border-radius:8px;}
+.btn-xs{padding:.3rem .65rem;font-size:.7rem;border-radius:7px;}
+.btn:active{transform:scale(.96);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;}
+
+/* ══════════ INPUTS ══════════ */
+.inp{
+  background:rgba(255,255,255,.04);border:1px solid var(--b2);border-radius:10px;
+  padding:.65rem 1rem;color:var(--t);font-family:'Syne',sans-serif;font-size:.88rem;
+  outline:none;transition:all .2s;
+}
+.inp:focus{border-color:var(--r);box-shadow:0 0 0 3px rgba(190,30,45,.1);}
+.inp::placeholder{color:var(--t3);}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+input[type=number]{-moz-appearance:textfield;}
+
+textarea.inp{resize:vertical;min-height:120px;line-height:1.6;font-family:'Syne',sans-serif;}
+
+/* ══════════ GLASS PANEL ══════════ */
+.panel{
+  background:var(--card);border:1px solid var(--b);border-radius:18px;
+  padding:1.5rem;
+}
+.panel-title{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;}
+.panel-title::after{content:'';flex:1;height:1px;background:var(--b);}
+
+/* ══════════ BOOK CARDS ══════════ */
+.book-card{
+  background:var(--card2);border:1px solid var(--b);border-radius:14px;
+  padding:1.25rem;transition:all .25s;
+}
+.book-card:hover{border-color:rgba(190,30,45,.25);transform:translateY(-2px);}
+.book-title{font-size:.95rem;font-weight:700;color:white;margin-bottom:.15rem;}
+.book-author{font-size:.75rem;color:var(--t3);}
+
+/* ══════════ EXERCISE ITEM ══════════ */
+.ex-item{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--card2);border:1px solid var(--b);border-radius:12px;padding:1rem 1.25rem;
+}
+.ex-icon{font-size:1.8rem;flex-shrink:0;}
+.ex-name{font-size:.95rem;font-weight:700;color:white;}
+.ex-sets{font-size:.78rem;color:var(--t3);margin-top:.1rem;}
+
+/* ══════════ POMODORO RING ══════════ */
+.pom-wrap{position:relative;width:200px;height:200px;flex-shrink:0;}
+.pom-wrap svg{transform:rotate(-90deg);}
+.pom-track{fill:none;stroke:rgba(255,255,255,.05);stroke-width:10;}
+.pom-prog{
+  fill:none;stroke:var(--r);stroke-width:10;stroke-linecap:round;
+  stroke-dasharray:565;stroke-dashoffset:0;
+  transition:stroke-dashoffset 1s linear;
+  filter:drop-shadow(0 0 8px rgba(190,30,45,.6));
+}
+.pom-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;}
+.pom-time{font-family:'DM Mono',monospace;font-size:2.5rem;font-weight:500;color:white;line-height:1;}
+.pom-lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:var(--t3);}
+
+/* ══════════ SUBJECT BUTTONS ══════════ */
+.subjects5{display:grid;grid-template-columns:repeat(5,1fr);gap:.85rem;margin-bottom:1.5rem;}
+.subj-btn{
+  background:var(--card);border:1px solid var(--b);border-radius:14px;
+  padding:1.35rem .75rem;text-align:center;cursor:pointer;transition:all .25s;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:var(--t2);font-size:.82rem;font-weight:600;
+}
+.subj-btn .si{font-size:1.8rem;}
+.subj-btn:hover{border-color:rgba(190,30,45,.35);background:var(--rg2);color:white;transform:translateY(-3px);}
+.subj-btn.active{
+  border-color:var(--r);background:var(--rg);color:white;
+  box-shadow:0 0 24px rgba(190,30,45,.18);
+}
+
+/* ══════════ MOOD PILLS ══════════ */
+.mood-grid{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem;}
+.mood-btn{
+  flex:1;min-width:60px;background:var(--card2);border:1px solid var(--b);border-radius:10px;
+  padding:.65rem .5rem;text-align:center;cursor:pointer;transition:all .2s;font-size:1.3rem;
+}
+.mood-btn:hover{border-color:rgba(190,30,45,.3);transform:scale(1.05);}
+.mood-btn.active{border-color:var(--r);background:var(--rg);box-shadow:0 0 16px rgba(190,30,45,.15);}
+
+/* ══════════ HABIT ROW ══════════ */
+.habit-row{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--card2);border:1px solid var(--b);border-radius:11px;
+  padding:.9rem 1rem;cursor:pointer;transition:all .2s;
+}
+.habit-row:hover{background:rgba(255,255,255,.03);}
+.habit-row.done{border-color:rgba(34,197,94,.2);}
+.toggle{
+  width:44px;height:24px;background:rgba(255,255,255,.08);border:1px solid var(--b2);
+  border-radius:99px;position:relative;flex-shrink:0;transition:background .3s;
+}
+.toggle.on{background:var(--green);border-color:var(--green);}
+.toggle::after{
+  content:'';position:absolute;width:18px;height:18px;background:white;border-radius:50%;
+  top:2px;left:2px;transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+.toggle.on::after{transform:translateX(20px);}
+
+/* ══════════ CHAT ══════════ */
+.chat-msgs{
+  height:400px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;
+  scrollbar-width:thin;scrollbar-color:var(--b) transparent;
+}
+.msg{
+  max-width:78%;padding:.75rem 1rem;border-radius:16px;font-size:.875rem;line-height:1.55;
+  animation:msgIn .35s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes msgIn{from{opacity:0;transform:scale(.88) translateY(6px)}to{opacity:1;transform:none}}
+.msg.user{align-self:flex-end;background:var(--r);color:white;border-bottom-right-radius:4px;}
+.msg.ai{
+  align-self:flex-start;background:var(--card2);border:1px solid var(--b);
+  border-bottom-left-radius:4px;color:var(--t);
+}
+.msg-time{font-size:.6rem;opacity:.45;margin-top:.3rem;}
+.typing{display:flex;gap:4px;align-items:center;padding:.4rem 0;}
+.typing span{width:5px;height:5px;background:var(--t3);border-radius:50%;animation:ty 1.2s ease infinite;}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes ty{0%,60%,100%{opacity:.25;transform:none}30%{opacity:1;transform:translateY(-4px)}}
+
+.chat-bar{display:flex;gap:.75rem;padding:1rem 1.25rem;border-top:1px solid var(--b);align-items:flex-end;}
+.chat-inp{
+  flex:1;background:var(--card2);border:1px solid var(--b2);border-radius:10px;
+  padding:.7rem 1rem;color:var(--t);font-family:'Syne',sans-serif;font-size:.875rem;
+  outline:none;resize:none;max-height:100px;transition:border-color .2s;
+}
+.chat-inp:focus{border-color:var(--r);}
+
+/* ══════════ TOAST ══════════ */
+#toast{
+  position:fixed;bottom:2rem;right:2rem;z-index:999;
+  background:var(--card2);border:1px solid var(--b2);border-radius:12px;
+  padding:.85rem 1.25rem;font-size:.85rem;font-weight:500;
+  display:flex;align-items:center;gap:.5rem;
+  box-shadow:0 16px 48px rgba(0,0,0,.5);
+  transform:translateY(120%) scale(.9);opacity:0;
+  transition:all .45s cubic-bezier(.34,1.56,.64,1);
+  max-width:300px;pointer-events:none;
+}
+#toast.show{transform:none;opacity:1;}
+
+/* ══════════ HISTORY ROWS ══════════ */
+.h-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.6rem .75rem;border-radius:8px;background:rgba(255,255,255,.02);
+  border:1px solid var(--b);font-size:.8rem;margin-bottom:.35rem;color:var(--t2);
+}
+
+/* ══════════ NOTE ENTRY ══════════ */
+.note-entry{background:var(--card2);border:1px solid var(--b);border-radius:11px;padding:1rem;margin-bottom:.5rem;}
+.note-date{font-size:.68rem;color:var(--t3);font-family:'DM Mono',monospace;margin-bottom:.35rem;}
+.note-text{font-size:.875rem;line-height:1.55;color:var(--t);}
+
+/* ══════════ MOBILE NAV ══════════ */
+.mob-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:var(--bg2);border-top:1px solid var(--b);
+  padding:.5rem .75rem calc(.5rem + env(safe-area-inset-bottom));
+  gap:.25rem;
+}
+.mob-nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:.2rem;
+  padding:.4rem .25rem;border-radius:9px;cursor:pointer;
+  font-size:.6rem;color:var(--t3);transition:all .2s;border:1px solid transparent;
+}
+.mob-nav-item .mi{font-size:1.2rem;}
+.mob-nav-item.active{color:white;background:var(--rg);border-color:rgba(190,30,45,.25);}
+
+/* ══════════ PROGRESS CIRCLE SMALL ══════════ */
+.mini-ring{display:inline-flex;position:relative;}
+.mini-ring svg{transform:rotate(-90deg);}
+
+/* ══════════ SCROLLBAR ══════════ */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:99px;}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(max-width:1024px){
+  .cards4{grid-template-columns:repeat(2,1fr);}
+  .subjects5{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .main{margin-left:0;padding:1rem 1rem 6rem;}
+  .mob-nav{display:flex;}
+  .cards4{grid-template-columns:repeat(2,1fr);}
+  .cards2{grid-template-columns:1fr;}
+  .subjects5{grid-template-columns:repeat(2,1fr);}
+  .page-title{font-size:1.8rem;}
+  .pom-wrap{width:160px;height:160px;}
+  .pom-time{font-size:2rem;}
+  .cd-n{font-size:2.2rem;}
+  .countdown-hero{padding:1.5rem;}
+}
+@media(max-width:480px){
+  .cards4{grid-template-columns:1fr 1fr;}
+  .subjects5{grid-template-columns:1fr 1fr;}
+}
+
+/* ══════════ EXTRAS ══════════ */
+.divider{height:1px;background:var(--b);margin:1.25rem 0;}
+.mono{font-family:'DM Mono',monospace;}
+.italic{font-family:'Instrument Serif',serif;font-style:italic;}
+
+/* XP Bar */
+.xp-wrap{background:rgba(255,255,255,.04);border:1px solid var(--b);border-radius:99px;height:8px;overflow:hidden;position:relative;}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--r3),var(--r),#ff6b35);border-radius:99px;transition:width 1s cubic-bezier(.34,1.56,.64,1);position:relative;}
+.xp-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:20px;background:rgba(255,255,255,.3);filter:blur(4px);border-radius:99px;}
+
+/* Streak fire big */
+.fire-row{display:flex;align-items:center;gap:.75rem;}
+.streak-big{font-size:4.5rem;font-weight:800;color:white;line-height:1;font-family:'Syne',sans-serif;}
+
+/* Section labels */
+.sec-lbl{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);}
+
+/* Radio chips */
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+.chip{
+  padding:.35rem .85rem;border-radius:99px;font-size:.75rem;font-weight:600;
+  background:var(--card2);border:1px solid var(--b);cursor:pointer;
+  color:var(--t3);transition:all .2s;
+}
+.chip:hover{color:var(--t);border-color:var(--b2);}
+.chip.on{background:var(--rg);border-color:rgba(190,30,45,.3);color:white;}
+
+/* Done overlay on exercise */
+.done-card{border-color:rgba(34,197,94,.25) !important;background:rgba(34,197,94,.04) !important;}
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- ════════════════════════════════
+     LOGIN
+════════════════════════════════ -->
+<div id="loginWrap">
+  <div class="login-bg"></div>
+  <div class="login-box">
+    <div class="login-brand">Misión 400</div>
+    <div class="login-sub">Universidad del Valle · ICFES 2026</div>
+
+    <label class="login-label">Usuario</label>
+    <input id="lu" type="text" class="login-input" placeholder="santiagoenfocado" autocomplete="username"/>
+
+    <label class="login-label">Contraseña</label>
+    <input id="lp" type="password" class="login-input" placeholder="••••••••••" autocomplete="current-password"/>
+
+    <div id="lerr" class="login-err">⚠ Credenciales incorrectas. Intenta de nuevo.</div>
+
+    <button class="login-btn" onclick="Auth.login()">Entrar al sistema →</button>
+
+    <div style="margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:.72rem;color:var(--t3);">85 días · Todo o nada</span>
+      <span id="loginDayCount" style="font-size:.72rem;color:var(--r);font-weight:700;"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     APP
+════════════════════════════════ -->
+<div id="app">
+
+  <!-- SIDEBAR (desktop) -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-logo-row" style="margin-bottom:.75rem;">
+      <div class="sb-logo">M4</div>
+      <span class="sb-logo-text">MISIÓN 400</span>
+    </div>
+
+    <a class="nav-item active" data-s="dash" onclick="Nav.go('dash')">
+      <span class="nav-icon">⚡</span><span class="nav-label">Dashboard</span>
+    </a>
+    <a class="nav-item" data-s="lect" onclick="Nav.go('lect')">
+      <span class="nav-icon">📚</span><span class="nav-label">Lectura</span>
+    </a>
+    <a class="nav-item" data-s="fuerza" onclick="Nav.go('fuerza')">
+      <span class="nav-icon">💪</span><span class="nav-label">Fuerza</span>
+    </a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" data-s="icfes" onclick="Nav.go('icfes')">
+      <span class="nav-icon">🎓</span><span class="nav-label">ICFES Pro</span>
+    </a>
+    <a class="nav-item" data-s="salud" onclick="Nav.go('salud')">
+      <span class="nav-icon">🧠</span><span class="nav-label">Salud Mental</span>
+    </a>
+    <a class="nav-item" data-s="chat" onclick="Nav.go('chat')">
+      <span class="nav-icon">🤖</span><span class="nav-label">IA Chat</span>
+    </a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" data-s="stats" onclick="Nav.go('stats')">
+      <span class="nav-icon">📊</span><span class="nav-label">Estadísticas</span>
+    </a>
+
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:.5rem;align-items:flex-start;width:100%;padding:0 .9rem;">
+      <div class="sb-streak" id="sbStreak">
+        <div class="sb-streak-num" id="sbStreakNum">0</div>
+        <div class="sb-streak-label">racha</div>
+        <div class="sidebar-bottom-label" style="margin-left:.5rem;">
+          <span style="font-size:.75rem;color:var(--t2);font-weight:600;" id="sbStreakLabel">días de racha 🔥</span>
+        </div>
+      </div>
+      <div class="sb-logout" onclick="Auth.logout()">
+        <span>↩</span>
+        <span class="sb-logout-label" style="font-size:.78rem;">Cerrar sesión</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="mainContent">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <section class="sec on" id="s-dash">
+      <div class="topbar">
+        <div>
+          <div class="page-title" id="greeting">Buenas noches, <span>Santiago</span></div>
+          <div class="page-sub" id="greetSub">Cargando estado...</div>
+        </div>
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;">
+          <span class="badge badge-r" id="dayBadge">DÍA ?</span>
+          <span class="badge badge-b" id="xpBadge">XP 0</span>
+        </div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-hero">
+        <div class="cd-tag">⏳ Cuenta regresiva · ICFES 26 Julio 2026</div>
+        <div class="cd-nums">
+          <div class="cd-unit"><div class="cd-n" id="cd0">--</div><div class="cd-l">días</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-n" id="cd1">--</div><div class="cd-l">horas</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-n" id="cd2">--</div><div class="cd-l">minutos</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><div class="cd-n" id="cd3">--</div><div class="cd-l">segundos</div></div>
+        </div>
+        <!-- XP Bar -->
+        <div style="margin-top:1.75rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:.4rem;">
+            <span class="sec-lbl">Progreso de Misión</span>
+            <span class="mono" style="font-size:.68rem;color:var(--t3);" id="xpText">0 / 85 días</span>
+          </div>
+          <div class="xp-wrap"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="cards4">
+        <div class="card glow" id="streakCard">
+          <div class="card-icon">🔥</div>
+          <div class="card-label">Racha Ejercicio</div>
+          <div style="display:flex;align-items:baseline;gap:.4rem;">
+            <div class="card-val" id="ds-streak">0</div>
+            <div id="ds-fire" style="font-size:1.4rem;"></div>
+          </div>
+          <div class="card-sub">días consecutivos</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📖</div>
+          <div class="card-label">Páginas Hoy</div>
+          <div class="card-val" id="ds-pages">0</div>
+          <div class="card-sub">meta: 10 páginas</div>
+          <div class="pb-track"><div class="pb-fill red" id="ds-pages-bar" style="width:0%"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🍅</div>
+          <div class="card-label">Pomodoros</div>
+          <div class="card-val" id="ds-pom">0</div>
+          <div class="card-sub">sesiones hoy</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">✅</div>
+          <div class="card-label">Hábitos</div>
+          <div class="card-val" id="ds-hab">0<span style="font-size:1.2rem;color:var(--t3)">/4</span></div>
+          <div class="card-sub">completados hoy</div>
+        </div>
+      </div>
+
+      <!-- Books overview + workout quickview -->
+      <div class="cards2">
+        <div class="panel">
+          <div class="panel-title">Libros en progreso</div>
+          <div id="ds-books" style="display:flex;flex-direction:column;gap:.85rem;"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="panel">
+            <div class="panel-title">Rutina de hoy</div>
+            <div id="ds-workout" style="font-size:.875rem;color:var(--t2);min-height:60px;"></div>
+            <button class="btn btn-ghost btn-sm" style="margin-top:1rem;width:100%;" onclick="Nav.go('fuerza')">Ver módulo →</button>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Estado mental</div>
+            <div id="ds-mental" style="font-size:.875rem;color:var(--t2);min-height:40px;"></div>
+            <button class="btn btn-ghost btn-sm" style="margin-top:.75rem;width:100%;" onclick="Nav.go('salud')">Registrar →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ LECTURA ═══ -->
+    <section class="sec" id="s-lect">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Módulo <span>Lectura</span></div>
+          <div class="page-sub">10 páginas diarias · Lectura Crítica ICFES</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:.15em;">Total hoy</div>
+          <div style="font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:500;color:white;"><span id="r-total">0</span><span style="color:var(--t3);font-size:1rem;">/10</span></div>
+        </div>
+      </div>
+
+      <!-- Daily progress bar -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
+          <span class="sec-lbl">Meta diaria</span>
+          <span id="r-pct-label" class="badge badge-r">0%</span>
+        </div>
+        <div class="xp-wrap" style="height:10px;border-radius:99px;">
+          <div class="xp-fill" id="r-daily-bar" style="width:0%"></div>
+        </div>
+        <div id="r-meta-done" style="display:none;margin-top:.75rem;text-align:center;color:var(--green2);font-size:.875rem;font-weight:600;">
+          🎉 ¡Meta de 10 páginas completada hoy!
+        </div>
+      </div>
+
+      <div id="books-container" style="display:flex;flex-direction:column;gap:1rem;"></div>
+    </section>
+
+    <!-- ═══ FUERZA ═══ -->
+    <section class="sec" id="s-fuerza">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Módulo <span>Fuerza</span></div>
+          <div class="page-sub">Rutina diaria adaptativa · Sistema de racha</div>
+        </div>
+      </div>
+
+      <!-- Streak hero -->
+      <div class="panel" style="margin-bottom:1.5rem;text-align:center;padding:2.25rem;" id="wo-streak-panel">
+        <div class="sec-lbl" style="margin-bottom:.75rem;">Racha Actual</div>
+        <div class="fire-row" style="justify-content:center;margin-bottom:.5rem;">
+          <div class="streak-big" id="wo-streak-n">0</div>
+          <div id="wo-streak-fire" style="font-size:2.5rem;"></div>
+        </div>
+        <div style="font-size:.82rem;color:var(--t3);">días consecutivos completados</div>
+        <div style="font-size:.75rem;color:var(--t3);margin-top:.35rem;font-family:'DM Mono',monospace;" id="wo-last"></div>
+
+        <!-- Weekly mini calendar -->
+        <div style="margin-top:1.5rem;display:flex;justify-content:center;gap:.4rem;" id="weekGrid"></div>
+      </div>
+
+      <!-- Routine generator -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem;">
+          <div>
+            <div class="panel-title" style="margin-bottom:0;">Rutina del Día</div>
+            <div style="font-size:.78rem;color:var(--t3);margin-top:.2rem;" id="wo-type-lbl"></div>
+          </div>
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+            <button class="btn btn-ghost btn-sm" onclick="Wo.generate()">🔀 Nueva rutina</button>
+            <button class="btn btn-g btn-sm" id="wo-complete-btn" onclick="Wo.complete()" style="display:none;">✅ Completar</button>
+          </div>
+        </div>
+        <div id="wo-exercises" style="display:flex;flex-direction:column;gap:.6rem;"></div>
+        <div id="wo-done-msg" style="display:none;text-align:center;padding:1.25rem;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:10px;margin-top:1rem;">
+          <div style="font-size:1.5rem;margin-bottom:.3rem;">✅</div>
+          <div style="color:var(--green2);font-weight:700;">¡Rutina completada!</div>
+          <div style="font-size:.78rem;color:var(--t3);margin-top:.2rem;">Regresa mañana para continuar tu racha</div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div class="panel">
+        <div class="panel-title">Historial de Entrenamientos</div>
+        <div id="wo-history" style="max-height:220px;overflow-y:auto;"></div>
+      </div>
+    </section>
+
+    <!-- ═══ ICFES PRO ═══ -->
+    <section class="sec" id="s-icfes">
+      <div class="topbar">
+        <div>
+          <div class="page-title">ICFES <span>Pro</span></div>
+          <div class="page-sub">Misión 400 · Selecciona materia y activa el Pomodoro</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="sec-lbl" style="margin-bottom:.2rem;">Sesiones totales</div>
+          <div class="mono" style="font-size:1.5rem;color:white;" id="ic-total-sessions">0</div>
+        </div>
+      </div>
+
+      <!-- Subjects -->
+      <div class="subjects5" id="subjects-grid"></div>
+
+      <!-- Pomodoro + info -->
+      <div class="cards2">
+        <!-- Pomodoro -->
+        <div class="panel" style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:2rem;">
+          <div class="panel-title" style="width:100%;">Temporizador Pomodoro</div>
+          <div class="pom-wrap" id="pomWrap">
+            <svg width="200" height="200" viewBox="0 0 200 200">
+              <circle class="pom-track" cx="100" cy="100" r="90"/>
+              <circle class="pom-prog" id="pomRing" cx="100" cy="100" r="90"/>
+            </svg>
+            <div class="pom-center">
+              <div class="pom-time" id="pomDisp">25:00</div>
+              <div class="pom-lbl" id="pomLbl">listo</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;">
+            <button class="btn btn-r btn-sm" id="pomStart" onclick="Pom.start()">▶ Iniciar</button>
+            <button class="btn btn-ghost btn-sm" id="pomPause" onclick="Pom.pause()" style="display:none;">⏸ Pausar</button>
+            <button class="btn btn-ghost btn-sm" onclick="Pom.reset()">↺ Reset</button>
+          </div>
+          <div id="pomDone" style="display:none;text-align:center;">
+            <div style="font-size:1.8rem;">🎯</div>
+            <div style="color:var(--green2);font-weight:700;margin-top:.25rem;">¡Sesión completada!</div>
+            <div style="font-size:.78rem;color:var(--t3);">Tómate 5 minutos de descanso</div>
+          </div>
+        </div>
+
+        <!-- Stats + history -->
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="panel">
+            <div class="panel-title">Materia Activa</div>
+            <div style="font-size:1.6rem;font-weight:700;color:white;" id="ic-subject">— Ninguna —</div>
+            <div style="font-size:.8rem;color:var(--t3);margin-top:.3rem;" id="ic-subject-tip">Selecciona una materia arriba</div>
+            <div class="divider"></div>
+            <div class="sec-lbl" style="margin-bottom:.5rem;">Sesiones hoy</div>
+            <div class="mono" style="font-size:2rem;color:white;" id="ic-today-sess">0</div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Historial Hoy</div>
+            <div id="pomHistory" style="max-height:180px;overflow-y:auto;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SALUD MENTAL ═══ -->
+    <section class="sec" id="s-salud">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Salud <span>Mental</span></div>
+          <div class="page-sub">Hábitos · Estado de ánimo · Notas diarias</div>
+        </div>
+      </div>
+
+      <div class="cards2" style="margin-bottom:1.5rem;">
+        <!-- Habits -->
+        <div class="panel">
+          <div class="panel-title">Hábitos de Hoy</div>
+          <div id="habits-wrap" style="display:flex;flex-direction:column;gap:.6rem;"></div>
+        </div>
+
+        <!-- Mood -->
+        <div class="panel">
+          <div class="panel-title">Estado de Ánimo</div>
+          <div class="mood-grid" id="mood-grid"></div>
+          <div style="font-size:.82rem;color:var(--t2);">Hoy te sientes: <strong id="mood-label" style="color:white;">—</strong></div>
+          <div class="divider"></div>
+          <div class="panel-title" style="margin-bottom:.75rem;">Resumen de Hábitos</div>
+          <div id="hab-summary" style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;"></div>
+        </div>
+      </div>
+
+      <!-- Daily note -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem;">
+          <div>
+            <div class="panel-title" style="margin-bottom:0;">Nota del Día</div>
+            <div id="note-date-lbl" style="font-size:.75rem;color:var(--t3);margin-top:.2rem;"></div>
+          </div>
+          <button class="btn btn-r btn-sm" onclick="Mental.saveNote()">Guardar</button>
+        </div>
+        <textarea class="inp" id="note-ta" placeholder="¿Cómo te sientes hoy? Escribe tus pensamientos, logros, metas y lo que quieres mejorar mañana..."></textarea>
+      </div>
+
+      <!-- Notes history -->
+      <div class="panel">
+        <div class="panel-title">Historial de Notas</div>
+        <div id="notes-hist" style="max-height:300px;overflow-y:auto;"></div>
+      </div>
+    </section>
+
+    <!-- ═══ CHAT ═══ -->
+    <section class="sec" id="s-chat">
+      <div class="topbar">
+        <div>
+          <div class="page-title">IA <span>Chat</span></div>
+          <div class="page-sub">Asistente de estudio · Dudas académicas y técnicas</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="Chat.clear()">Limpiar chat</button>
+      </div>
+
+      <div class="panel" style="padding:0;overflow:hidden;">
+        <!-- Chat header -->
+        <div style="padding:1rem 1.25rem;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:.85rem;">
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,var(--r3),var(--r));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🤖</div>
+          <div>
+            <div style="font-weight:700;font-size:.9rem;">Asistente Misión 400</div>
+            <div style="font-size:.7rem;color:var(--green2);display:flex;align-items:center;gap:.3rem;">
+              <span style="width:6px;height:6px;background:var(--green2);border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
+              En línea · Especializado en ICFES
+            </div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:.5rem;flex-wrap:wrap;">
+            <button class="btn btn-ghost btn-xs" onclick="Chat.suggest('Explícame la regla de tres en matemáticas')">📐 Mate</button>
+            <button class="btn btn-ghost btn-xs" onclick="Chat.suggest('Tips para Lectura Crítica ICFES')">📖 LC</button>
+            <button class="btn btn-ghost btn-xs" onclick="Chat.suggest('Cómo estudiar más eficientemente')">⚡ Tips</button>
+          </div>
+        </div>
+
+        <div class="chat-msgs" id="chatMsgs"></div>
+
+        <div class="chat-bar">
+          <textarea class="chat-inp" id="chatInp" placeholder="Escribe tu duda académica... (Enter = enviar)" rows="1" onkeydown="Chat.key(event)"></textarea>
+          <button class="btn btn-r" onclick="Chat.send()" style="align-self:flex-end;">Enviar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ STATS ═══ -->
+    <section class="sec" id="s-stats">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Mis <span>Estadísticas</span></div>
+          <div class="page-sub">Resumen completo de tu progreso en Misión 400</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="Stats.refresh()">↻ Actualizar</button>
+      </div>
+
+      <div class="cards3" style="margin-bottom:1.5rem;" id="stats-top"></div>
+
+      <div class="cards2">
+        <div class="panel">
+          <div class="panel-title">Progreso por Libro</div>
+          <div id="stats-books" style="display:flex;flex-direction:column;gap:1rem;"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Actividad Reciente</div>
+          <div id="stats-activity" style="max-height:320px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- MOBILE NAV -->
+  <nav class="mob-nav" id="mobNav">
+    <div class="mob-nav-item active" data-s="dash" onclick="Nav.go('dash')"><span class="mi">⚡</span><span>Inicio</span></div>
+    <div class="mob-nav-item" data-s="lect" onclick="Nav.go('lect')"><span class="mi">📚</span><span>Leer</span></div>
+    <div class="mob-nav-item" data-s="fuerza" onclick="Nav.go('fuerza')"><span class="mi">💪</span><span>Fuerza</span></div>
+    <div class="mob-nav-item" data-s="icfes" onclick="Nav.go('icfes')"><span class="mi">🎓</span><span>ICFES</span></div>
+    <div class="mob-nav-item" data-s="salud" onclick="Nav.go('salud')"><span class="mi">🧠</span><span>Salud</span></div>
+    <div class="mob-nav-item" data-s="chat" onclick="Nav.go('chat')"><span class="mi">🤖</span><span>IA</span></div>
+    <div class="mob-nav-item" data-s="stats" onclick="Nav.go('stats')"><span class="mi">📊</span><span>Stats</span></div>
+  </nav>
+
+</div><!-- /app -->
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<style>
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+</style>
+
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════
+   STORAGE MANAGER
+═══════════════════════════════════════════════════════════ */
+const S = {
+  KEY: 'm400_v3',
+  load() {
+    try {
+      const r = localStorage.getItem(this.KEY);
+      return r ? this._m(this._d(), JSON.parse(r)) : this._d();
+    } catch { return this._d(); }
+  },
+  save(s) { try { localStorage.setItem(this.KEY, JSON.stringify(s)); } catch {} },
+  _m(d, s) {
+    const r = {...d};
+    for (const k in s) {
+      if (s[k] !== null && typeof s[k]==='object' && !Array.isArray(s[k])) r[k] = this._m(d[k]||{}, s[k]);
+      else r[k] = s[k];
+    }
+    return r;
+  },
+  _d() {
+    return {
+      auth: { in: false },
+      reading: {
+        books: [
+          { id:'ruido', title:'El ruido de las cosas al caer', author:'Juan Gabriel Vásquez', total:320, read:160, log:{} },
+          { id:'emp', title:'Iniciativa Emprendedora', author:'Varios autores', total:280, read:0, log:{} },
+          { id:'vidas', title:'Muchas vidas, muchos sabios', author:'Brian Weiss', total:240, read:0, log:{} },
+          { id:'chango', title:'Changó, el gran putas', author:'Manuel Zapata Olivella', total:600, read:0, log:{} }
+        ]
+      },
+      workout: { streak:0, last:null, done:false, routine:null, history:[] },
+      pom: { today:0, date:null, total:0, history:[], subject:null },
+      mental: { notes:[], habits:{meds:false,agua:false,med:false,sueno:false}, hDate:null, mood:null, mDate:null },
+      chat: { msgs:[] },
+      xp: 0,
+      activity: []
+    };
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════════ */
+const today = () => new Date().toISOString().slice(0,10);
+const pad = n => String(n).padStart(2,'0');
+
+function toast(msg, dur=3500) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove('show'), dur);
+}
+
+function addXP(amount, reason) {
+  const st = S.load();
+  st.xp = (st.xp||0) + amount;
+  st.activity.unshift({ date:today(), time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}), text:reason, xp:amount });
+  if (st.activity.length > 100) st.activity.pop();
+  S.save(st);
+  updateXPDisplay(st.xp);
+}
+
+function updateXPDisplay(xp) {
+  const el = document.getElementById('xpBadge');
+  if (el) el.textContent = `⚡ ${xp} XP`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════════════════════ */
+const Auth = {
+  C: { u:'santiagoenfocado', p:'1107857110' },
+  init() {
+    const st = S.load();
+    // Countdown in login
+    this._loginCountdown();
+    document.getElementById('lp').onkeydown = e => { if(e.key==='Enter') this.login(); };
+    document.getElementById('lu').onkeydown = e => { if(e.key==='Enter') this.login(); };
+    if (st.auth.in) this._show();
+  },
+  login() {
+    const u = document.getElementById('lu').value.trim();
+    const p = document.getElementById('lp').value.trim();
+    if (u===this.C.u && p===this.C.p) {
+      const st = S.load(); st.auth.in=true; S.save(st);
+      document.getElementById('lerr').style.display='none';
+      document.getElementById('loginWrap').classList.add('out');
+      setTimeout(() => this._show(), 650);
+    } else {
+      document.getElementById('lerr').style.display='block';
+      document.getElementById('lp').value='';
+    }
+  },
+  logout() {
+    const st=S.load(); st.auth.in=false; S.save(st);
+    Pom.reset();
+    document.getElementById('app').style.display='none';
+    document.getElementById('loginWrap').classList.remove('out');
+    document.getElementById('lu').value='';
+    document.getElementById('lp').value='';
+  },
+  _show() {
+    document.getElementById('app').style.display='flex';
+    App.init();
+  },
+  _loginCountdown() {
+    const target = new Date('2026-07-26T00:00:00-05:00');
+    const diff = target - new Date();
+    const days = Math.max(0,Math.floor(diff/(1000*60*60*24)));
+    const el = document.getElementById('loginDayCount');
+    if (el) el.textContent = `⏳ ${days} días restantes`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════ */
+const Nav = {
+  cur: 'dash',
+  go(id) {
+    document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+    const target = document.getElementById(`s-${id}`);
+    if (target) target.classList.add('on');
+
+    document.querySelectorAll('[data-s]').forEach(n => {
+      n.classList.toggle('active', n.dataset.s===id);
+    });
+
+    this.cur = id;
+    if (id==='stats') Stats.refresh();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   READING MODULE
+═══════════════════════════════════════════════════════════ */
+const Read = {
+  st: null,
+  init() {
+    this.st = S.load();
+    this.render();
+    this.updateDash();
+  },
+  todayTotal() {
+    const t = today();
+    return this.st.reading.books.reduce((s,b) => s + (b.log[t]||0), 0);
+  },
+  add(id, pages) {
+    pages = parseInt(pages)||0;
+    if (pages<=0) return;
+    const t = today();
+    const b = this.st.reading.books.find(b=>b.id===id);
+    if (!b) return;
+    b.log[t] = (b.log[t]||0)+pages;
+    b.read = Math.min(b.read+pages, b.total);
+    S.save(this.st);
+    this.render();
+    this.updateDash();
+    const total = this.todayTotal();
+    if (total >= 10 && total-pages < 10) {
+      addXP(50, `📚 Meta de lectura diaria completada`);
+      toast('🎉 ¡Meta de 10 páginas lograda! +50 XP');
+    } else {
+      addXP(pages*2, `📖 ${pages} páginas de ${b.title.slice(0,20)}...`);
+      toast(`+${pages} páginas registradas en "${b.title.slice(0,25)}..." 📖`);
+    }
+  },
+  render() {
+    const c = document.getElementById('books-container');
+    if (!c) return;
+    const t = today();
+    c.innerHTML = '';
+    this.st.reading.books.forEach(b => {
+      const pct = Math.round(b.read/b.total*100);
+      const todayP = b.log[t]||0;
+      const div = document.createElement('div');
+      div.className = 'book-card';
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.85rem;flex-wrap:wrap;gap:.5rem;">
+          <div style="flex:1;">
+            <div class="book-title">${b.title}</div>
+            <div class="book-author">${b.author}</div>
+          </div>
+          <div style="display:flex;gap:.4rem;align-items:center;flex-shrink:0;">
+            ${todayP>0?`<span class="badge badge-g">+${todayP} hoy</span>`:''}
+            <span class="badge badge-r">${pct}%</span>
+            ${pct>=100?'<span style="font-size:1rem;">✅</span>':''}
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.85rem;margin-bottom:.85rem;">
+          <div class="pb-track" style="flex:1;height:6px;">
+            <div class="pb-fill ${pct>=100?'green':'red'}" style="width:${pct}%;height:6px;"></div>
+          </div>
+          <span class="mono" style="font-size:.72rem;color:var(--t3);white-space:nowrap;">${b.read}/${b.total} pág</span>
+        </div>
+        <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
+          <input type="number" id="ri-${b.id}" min="1" max="500" placeholder="Páginas de hoy"
+            class="inp" style="flex:1;min-width:130px;max-width:180px;padding:.5rem .85rem;font-size:.82rem;"/>
+          <button class="btn btn-r btn-sm" onclick="Read.add('${b.id}',document.getElementById('ri-${b.id}').value);document.getElementById('ri-${b.id}').value='';">
+            + Registrar
+          </button>
+        </div>
+      `;
+      c.appendChild(div);
+    });
+    // Update daily bar
+    const total = this.todayTotal();
+    const pct = Math.min(total/10*100,100);
+    const bar = document.getElementById('r-daily-bar');
+    if (bar) bar.style.width = pct+'%';
+    const lbl = document.getElementById('r-pct-label');
+    if (lbl) { lbl.textContent = Math.round(pct)+'%'; lbl.className = pct>=100?'badge badge-g':'badge badge-r'; }
+    const doneEl = document.getElementById('r-meta-done');
+    if (doneEl) doneEl.style.display = total>=10?'block':'none';
+    const tot = document.getElementById('r-total');
+    if (tot) tot.textContent = total;
+  },
+  updateDash() {
+    const t = today();
+    const total = this.todayTotal();
+    const pEl = document.getElementById('ds-pages');
+    if (pEl) pEl.textContent = total;
+    const bar = document.getElementById('ds-pages-bar');
+    if (bar) bar.style.width = Math.min(total/10*100,100)+'%';
+
+    const ov = document.getElementById('ds-books');
+    if (!ov) return;
+    ov.innerHTML = '';
+    this.st.reading.books.forEach(b => {
+      const pct = Math.round(b.read/b.total*100);
+      const d = document.createElement('div');
+      d.innerHTML = `
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem;">
+          <span style="font-size:.82rem;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%;">${b.title}</span>
+          <span class="mono" style="font-size:.72rem;color:var(--t3);">${pct}%</span>
+        </div>
+        <div class="pb-track"><div class="pb-fill red" style="width:${pct}%;"></div></div>
+      `;
+      ov.appendChild(d);
+    });
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   WORKOUT MODULE
+═══════════════════════════════════════════════════════════ */
+const Wo = {
+  st: null,
+  ROUTINES: [
+    { label:'Empuje · Día A', exercises:[{n:'Flexiones',s:'4 × 15 reps',i:'🤸'},{n:'Running 3km',s:'1 sesión continua',i:'🏃'}] },
+    { label:'Jalón · Día B', exercises:[{n:'Sentadillas',s:'4 × 20 reps',i:'🦵'},{n:'Plancha',s:'3 × 60 segundos',i:'💪'}] },
+    { label:'Core · Día C', exercises:[{n:'Abdominales',s:'4 × 25 reps',i:'🔥'},{n:'Burpees',s:'3 × 10 reps',i:'⚡'}] },
+    { label:'Full Body · Día D', exercises:[{n:'Dominadas',s:'3 × 8 reps',i:'🏋️'},{n:'Zancadas',s:'3 × 12 c/lado',i:'🦵'}] },
+    { label:'Cardio · Día E', exercises:[{n:'Saltar cuerda',s:'10 minutos',i:'⏱️'},{n:'Fondos de tríceps',s:'4 × 12 reps',i:'💪'}] },
+    { label:'Híbrido · Día F', exercises:[{n:'Mountain climbers',s:'3 × 30 seg',i:'🧗'},{n:'Sprint intervals',s:'6 × 40m',i:'⚡'}] }
+  ],
+  init() {
+    this.st = S.load();
+    this._dayCheck();
+    this.render();
+    this._renderWeek();
+  },
+  _today() { return today(); },
+  _dayCheck() {
+    const t = this._today();
+    if (this.st.workout.last && this.st.workout.last !== t) {
+      const last = new Date(this.st.workout.last);
+      const now = new Date(t);
+      const diff = Math.floor((now-last)/(1000*60*60*24));
+      if (!this.st.workout.done && diff>1) this.st.workout.streak=0;
+      this.st.workout.done = false;
+      S.save(this.st);
+    }
+  },
+  generate() {
+    let idx = Math.floor(Math.random()*this.ROUTINES.length);
+    while (idx===this.st.workout.routine && this.ROUTINES.length>1) {
+      idx = Math.floor(Math.random()*this.ROUTINES.length);
+    }
+    this.st.workout.routine = idx;
+    S.save(this.st);
+    this.render();
+    toast('💪 ¡Rutina generada! A entrenar duro.');
+  },
+  complete() {
+    if (this.st.workout.done) return;
+    const t = this._today();
+    const last = this.st.workout.last;
+    if (last) {
+      const diff = Math.floor((new Date(t)-new Date(last))/(1000*60*60*24));
+      this.st.workout.streak = diff===1 ? (this.st.workout.streak||0)+1 : 1;
+    } else {
+      this.st.workout.streak = 1;
+    }
+    this.st.workout.done = true;
+    this.st.workout.last = t;
+    const r = this.ROUTINES[this.st.workout.routine||0];
+    this.st.workout.history.unshift({ date:t, label:r.label, streak:this.st.workout.streak });
+    if (this.st.workout.history.length>30) this.st.workout.history.pop();
+    S.save(this.st);
+    addXP(30 + this.st.workout.streak*5, `💪 Rutina completada · Racha ${this.st.workout.streak}`);
+    this.render();
+    this._renderWeek();
+    Nav.go('fuerza');
+    toast(`🔥 ¡Racha de ${this.st.workout.streak} días! +${30+this.st.workout.streak*5} XP`);
+  },
+  render() {
+    const streak = this.st.workout.streak;
+    const done = this.st.workout.done;
+    const ri = this.st.workout.routine;
+
+    // Streak display
+    const sn = document.getElementById('wo-streak-n');
+    const sf = document.getElementById('wo-streak-fire');
+    const sp = document.getElementById('wo-streak-panel');
+    const ds = document.getElementById('ds-streak');
+    const dsf = document.getElementById('ds-fire');
+    const sc = document.getElementById('streakCard');
+    const sbn = document.getElementById('sbStreakNum');
+
+    if (sn) sn.textContent = streak;
+    if (ds) ds.textContent = streak;
+    if (sbn) sbn.textContent = streak;
+
+    const fireHTML = streak>=7 ? '<span class="fire">🔥</span><span class="fire" style="animation-delay:.15s">🔥</span><span class="fire" style="animation-delay:.3s">🔥</span>'
+                   : streak>=3 ? '<span class="fire">🔥</span><span class="fire" style="animation-delay:.15s">🔥</span>'
+                   : streak>=1 ? '<span class="fire">🔥</span>' : '';
+    if (sf) sf.innerHTML = fireHTML;
+    if (dsf) dsf.innerHTML = fireHTML;
+    if (sp) sp.classList.toggle('streak-glow', streak>=3);
+    if (sc) sc.classList.toggle('streak-glow', streak>=3);
+
+    const lastEl = document.getElementById('wo-last');
+    if (lastEl && this.st.workout.last) lastEl.textContent = `Último entrenamiento: ${this.st.workout.last}`;
+
+    const exWrap = document.getElementById('wo-exercises');
+    const complBtn = document.getElementById('wo-complete-btn');
+    const doneMsg = document.getElementById('wo-done-msg');
+    const typeLbl = document.getElementById('wo-type-lbl');
+
+    if (done) {
+      if (doneMsg) doneMsg.style.display='block';
+      if (complBtn) complBtn.style.display='none';
+    } else {
+      if (doneMsg) doneMsg.style.display='none';
+    }
+
+    if (ri !== null && exWrap) {
+      const routine = this.ROUTINES[ri];
+      if (typeLbl) typeLbl.textContent = routine.label;
+      exWrap.innerHTML = '';
+      routine.exercises.forEach(ex => {
+        const d = document.createElement('div');
+        d.className = 'ex-item' + (done?' done-card':'');
+        d.innerHTML = `<div class="ex-icon">${ex.i}</div><div><div class="ex-name">${ex.n}</div><div class="ex-sets">${ex.s}</div></div>${done?'<span style="margin-left:auto;font-size:1.2rem;">✅</span>':''}`;
+        exWrap.appendChild(d);
+      });
+      if (!done && complBtn) complBtn.style.display='inline-flex';
+    } else if (exWrap) {
+      exWrap.innerHTML = '<div style="color:var(--t3);font-size:.875rem;text-align:center;padding:1.5rem 0;">Pulsa "Nueva rutina" para comenzar 💪</div>';
+    }
+
+    // History
+    const hist = document.getElementById('wo-history');
+    if (hist) {
+      hist.innerHTML = this.st.workout.history.length===0
+        ? '<div style="color:var(--t3);font-size:.82rem;text-align:center;padding:1rem 0;">Sin historial aún</div>'
+        : this.st.workout.history.slice(0,15).map(h=>`
+            <div class="h-row">
+              <span>${h.label}</span>
+              <div style="display:flex;gap:.4rem;align-items:center;">
+                <span class="mono" style="font-size:.7rem;">${h.date}</span>
+                <span class="badge badge-r">🔥${h.streak}</span>
+              </div>
+            </div>`).join('');
+    }
+
+    // Dashboard workout
+    const dw = document.getElementById('ds-workout');
+    if (dw) {
+      if (done) dw.innerHTML = `<span style="color:var(--green2);">✅ Completada</span> · Racha: <strong style="color:white;">${streak} días</strong>`;
+      else if (ri!==null) dw.textContent = this.ROUTINES[ri].label + ' — Pendiente';
+      else dw.textContent = 'Sin rutina generada. Ve al módulo para generar una.';
+    }
+  },
+  _renderWeek() {
+    const grid = document.getElementById('weekGrid');
+    if (!grid) return;
+    const days = ['L','M','X','J','V','S','D'];
+    const now = new Date();
+    const dow = (now.getDay()+6)%7; // Mon=0
+    grid.innerHTML = '';
+    for (let i=0;i<7;i++) {
+      const d = document.createElement('div');
+      const isToday = i===dow;
+      const isPast = i<dow;
+      const isActive = isPast && this.st.workout.streak>dow-i;
+      d.style.cssText = `width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;
+        background:${isActive?'var(--rg)':isToday?'rgba(255,255,255,.08)':'rgba(255,255,255,.03)'};
+        border:1px solid ${isActive?'rgba(190,30,45,.35)':isToday?'var(--b2)':'var(--b)'};
+        color:${isActive?'white':isToday?'var(--t)':'var(--t3)'};`;
+      d.textContent = days[i];
+      grid.appendChild(d);
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   POMODORO MODULE
+═══════════════════════════════════════════════════════════ */
+const Pom = {
+  DUR: 25*60,
+  rem: 25*60,
+  running: false,
+  iv: null,
+  subject: null,
+  st: null,
+
+  init() {
+    this.st = S.load();
+    if (this.st.pom.date !== today()) {
+      this.st.pom.today = 0;
+      this.st.pom.date = today();
+      S.save(this.st);
+    }
+    this.renderHistory();
+    this._updateUI();
+    this._renderSubjects();
+  },
+
+  start() {
+    if (this.running) return;
+    this.running = true;
+    document.getElementById('pomDone').style.display='none';
+    document.getElementById('pomStart').style.display='none';
+    document.getElementById('pomPause').style.display='inline-flex';
+    clearInterval(this.iv);
+    this.iv = setInterval(()=>this._tick(),1000);
+  },
+  pause() {
+    this.running=false;
+    clearInterval(this.iv);this.iv=null;
+    document.getElementById('pomStart').style.display='inline-flex';
+    document.getElementById('pomPause').style.display='none';
+    document.getElementById('pomLbl').textContent='pausado';
+  },
+  reset() {
+    this.pause();
+    this.rem=this.DUR;
+    this._updateUI();
+    document.getElementById('pomLbl').textContent='listo';
+    document.getElementById('pomDone').style.display='none';
+  },
+  _tick() {
+    if (this.rem<=0){this._done();return;}
+    this.rem--;
+    this._updateUI();
+    document.getElementById('pomLbl').textContent='concentrado';
+  },
+  _done() {
+    clearInterval(this.iv);this.iv=null;
+    this.running=false;
+    this.rem=this.DUR;
+    this.st.pom.today++;
+    this.st.pom.total++;
+    this.st.pom.history.unshift({
+      date:today(),
+      time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}),
+      subject:this.subject||'General'
+    });
+    if(this.st.pom.history.length>100)this.st.pom.history.pop();
+    S.save(this.st);
+    this._updateUI();
+    this.renderHistory();
+    document.getElementById('pomStart').style.display='inline-flex';
+    document.getElementById('pomPause').style.display='none';
+    document.getElementById('pomDone').style.display='block';
+    const sess = document.getElementById('ds-pom');
+    if(sess)sess.textContent=this.st.pom.today;
+    addXP(25,`🍅 Pomodoro completado · ${this.subject||'General'}`);
+    toast(`🎯 ¡Pomodoro #${this.st.pom.today} del día completado! +25 XP`);
+    // Beep
+    try{
+      const a=new(window.AudioContext||window.webkitAudioContext)();
+      [880,1100,880].forEach((f,i)=>{
+        const o=a.createOscillator(),g=a.createGain();
+        o.connect(g);g.connect(a.destination);
+        o.frequency.value=f;g.gain.setValueAtTime(.25,a.currentTime+i*.25);
+        g.gain.exponentialRampToValueAtTime(.001,a.currentTime+i*.25+.4);
+        o.start(a.currentTime+i*.25);o.stop(a.currentTime+i*.25+.4);
+      });
+    }catch{}
+  },
+  _updateUI() {
+    const m=pad(Math.floor(this.rem/60)),s=pad(this.rem%60);
+    const d=document.getElementById('pomDisp');
+    if(d)d.textContent=`${m}:${s}`;
+    const ring=document.getElementById('pomRing');
+    if(ring){
+      const circ=2*Math.PI*90;
+      ring.style.strokeDasharray=circ;
+      ring.style.strokeDashoffset=circ*(this.rem/this.DUR);
+    }
+    const ts=document.getElementById('ic-today-sess');
+    if(ts)ts.textContent=this.st.pom.today;
+    const tots=document.getElementById('ic-total-sessions');
+    if(tots)tots.textContent=this.st.pom.total;
+  },
+  setSubject(name){
+    this.subject=name;
+    this.st=S.load();this.st.pom.subject=name;S.save(this.st);
+  },
+  renderHistory(){
+    const h=document.getElementById('pomHistory');
+    if(!h)return;
+    const t=today();
+    const todayH=this.st.pom.history.filter(e=>e.date===t);
+    if(todayH.length===0){h.innerHTML='<div style="color:var(--t3);font-size:.82rem;">Sin sesiones hoy</div>';return;}
+    h.innerHTML=todayH.map((e,i)=>`
+      <div class="h-row">
+        <span style="color:var(--r2);font-weight:700;">#${todayH.length-i}</span>
+        <span>${e.subject}</span>
+        <span class="mono" style="font-size:.7rem;color:var(--t3);">${e.time}</span>
+      </div>`).join('');
+  },
+  _renderSubjects(){
+    const SUBJECTS=[
+      {n:'Matemáticas',i:'📐',tip:'Álgebra · Geometría · Estadística'},
+      {n:'Lectura Crítica',i:'📖',tip:'Comprensión · Inferencia · Análisis'},
+      {n:'Ciencias Naturales',i:'🔬',tip:'Física · Química · Biología'},
+      {n:'Sociales',i:'🌍',tip:'Historia · Geografía · Constitución'},
+      {n:'Inglés',i:'🇬🇧',tip:'Reading & Comprehension'}
+    ];
+    const g=document.getElementById('subjects-grid');
+    if(!g)return;
+    g.innerHTML='';
+    SUBJECTS.forEach(s=>{
+      const btn=document.createElement('button');
+      btn.className='subj-btn';btn.id=`sb-${s.n}`;
+      btn.innerHTML=`<span class="si">${s.i}</span><span>${s.n}</span>`;
+      btn.onclick=()=>{
+        document.querySelectorAll('.subj-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        Pom.setSubject(s.n);
+        const el=document.getElementById('ic-subject');
+        if(el)el.textContent=s.i+' '+s.n;
+        const tip=document.getElementById('ic-subject-tip');
+        if(tip)tip.textContent=s.tip;
+        toast(`📚 Estudiando ${s.n} · Activa el Pomodoro`);
+      };
+      g.appendChild(btn);
+    });
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   MENTAL MODULE
+═══════════════════════════════════════════════════════════ */
+const Mental = {
+  st:null,
+  HABITS:[
+    {id:'meds',label:'Fluoxetina 💊',desc:'Medicación diaria'},
+    {id:'agua',label:'Agua 2L 💧',desc:'8 vasos mínimo'},
+    {id:'med',label:'Meditación 🧘',desc:'10 minutos'},
+    {id:'sueno',label:'Buen sueño 😴',desc:'7-8 horas'}
+  ],
+  MOODS:[
+    {e:'😔',l:'Mal'},
+    {e:'😐',l:'Regular'},
+    {e:'🙂',l:'Bien'},
+    {e:'😄',l:'Muy bien'},
+    {e:'🔥',l:'¡En llamas!'}
+  ],
+  init(){
+    this.st=S.load();
+    this._dayCheck();
+    this.renderHabits();
+    this.renderMood();
+    this.renderHistory();
+    document.getElementById('note-date-lbl').textContent=
+      new Date().toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const todayNote=this.st.mental.notes.find(n=>n.date===today());
+    const ta=document.getElementById('note-ta');
+    if(ta&&todayNote)ta.value=todayNote.text;
+  },
+  _dayCheck(){
+    const t=today();
+    if(this.st.mental.hDate!==t){
+      this.st.mental.habits={meds:false,agua:false,med:false,sueno:false};
+      this.st.mental.hDate=t;
+      S.save(this.st);
+    }
+  },
+  toggleHabit(id){
+    this.st.mental.habits[id]=!this.st.mental.habits[id];
+    S.save(this.st);
+    this.renderHabits();
+    const h=this.HABITS.find(x=>x.id===id);
+    if(this.st.mental.habits[id]){
+      addXP(10,`✅ Hábito completado: ${h.label}`);
+      toast(`✅ ${h.label} registrado +10 XP`);
+    }
+    this._updateDashHab();
+  },
+  setMood(idx){
+    this.st.mental.mood=idx;
+    this.st.mental.mDate=today();
+    S.save(this.st);
+    this.renderMood();
+    toast(`${this.MOODS[idx].e} Estado: ${this.MOODS[idx].l}`);
+  },
+  saveNote(){
+    const t=document.getElementById('note-ta').value.trim();
+    if(!t){toast('⚠ Escribe algo primero');return;}
+    const d=today();
+    const idx=this.st.mental.notes.findIndex(n=>n.date===d);
+    const entry={date:d,text:t,time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})};
+    if(idx>=0)this.st.mental.notes[idx]=entry;
+    else this.st.mental.notes.unshift(entry);
+    if(this.st.mental.notes.length>60)this.st.mental.notes.pop();
+    S.save(this.st);
+    this.renderHistory();
+    const dm=document.getElementById('ds-mental');
+    if(dm)dm.textContent=t.slice(0,70)+(t.length>70?'...':'');
+    toast('💾 Nota guardada');
+  },
+  renderHabits(){
+    const c=document.getElementById('habits-wrap');
+    if(!c)return;
+    c.innerHTML='';
+    let done=0;
+    this.HABITS.forEach(h=>{
+      const on=this.st.mental.habits[h.id]||false;
+      if(on)done++;
+      const div=document.createElement('div');
+      div.className='habit-row'+(on?' done':'');
+      div.onclick=()=>this.toggleHabit(h.id);
+      div.innerHTML=`
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:.9rem;color:${on?'var(--green2)':'var(--t)'};">${h.label}</div>
+          <div style="font-size:.75rem;color:var(--t3);">${h.desc}</div>
+        </div>
+        <div class="toggle ${on?'on':''}" id="t-${h.id}"></div>`;
+      c.appendChild(div);
+    });
+    this._updateDashHab(done);
+    // Summary badges
+    const sum=document.getElementById('hab-summary');
+    if(sum){
+      sum.innerHTML=this.HABITS.map(h=>{
+        const on=this.st.mental.habits[h.id]||false;
+        return `<div style="background:${on?'rgba(34,197,94,.08)':'rgba(255,255,255,.03)'};border:1px solid ${on?'rgba(34,197,94,.2)':'var(--b)'};border-radius:9px;padding:.5rem .75rem;font-size:.78rem;font-weight:600;color:${on?'var(--green2)':'var(--t3)'};">
+          ${on?'✅':'○'} ${h.label}</div>`;
+      }).join('');
+    }
+  },
+  _updateDashHab(done){
+    if(done===undefined)done=this.HABITS.filter(h=>this.st.mental.habits[h.id]).length;
+    const el=document.getElementById('ds-hab');
+    if(el)el.innerHTML=`${done}<span style="font-size:1.2rem;color:var(--t3)">/4</span>`;
+  },
+  renderMood(){
+    const c=document.getElementById('mood-grid');
+    if(!c)return;
+    c.innerHTML='';
+    this.MOODS.forEach((m,i)=>{
+      const active=this.st.mental.mood===i&&this.st.mental.mDate===today();
+      const btn=document.createElement('button');
+      btn.className='mood-btn'+(active?' active':'');
+      btn.innerHTML=`${m.e}<div style="font-size:.6rem;margin-top:.25rem;color:var(--t3);">${m.l}</div>`;
+      btn.onclick=()=>this.setMood(i);
+      c.appendChild(btn);
+    });
+    const ml=document.getElementById('mood-label');
+    if(ml){
+      if(this.st.mental.mood!==null&&this.st.mental.mDate===today()){
+        const m=this.MOODS[this.st.mental.mood];
+        ml.textContent=m.e+' '+m.l;
+      } else ml.textContent='—';
+    }
+  },
+  renderHistory(){
+    const c=document.getElementById('notes-hist');
+    if(!c)return;
+    if(this.st.mental.notes.length===0){
+      c.innerHTML='<div style="color:var(--t3);font-size:.82rem;text-align:center;padding:1.5rem 0;">Sin notas aún. ¡Empieza hoy!</div>';
+      return;
+    }
+    c.innerHTML=this.st.mental.notes.slice(0,20).map(n=>`
+      <div class="note-entry">
+        <div class="note-date">${n.date} · ${n.time||''}</div>
+        <div class="note-text">${n.text}</div>
+      </div>`).join('');
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   CHAT MODULE
+═══════════════════════════════════════════════════════════ */
+const Chat = {
+  st:null,
+  RESP:[
+    q=>`Para resolver "${q.slice(0,30)}..." te recomiendo dividirlo en partes más pequeñas. En Ingeniería Electrónica, el análisis sistemático es fundamental. Identifica las variables, establece relaciones y verifica con casos límite.`,
+    ()=>`En el ICFES, la Lectura Crítica pesa mucho. Mi estrategia: lee el texto completo antes de ver las preguntas, identifica el argumento central, y elimina opciones que contradigan el texto directamente.`,
+    ()=>`El método Feynman es ideal para preparar el ICFES: 1) Aprende el concepto, 2) Explícalo como si tuvieras 12 años, 3) Identifica lo que no entiendes, 4) Vuelve al material. Funciona para todas las materias.`,
+    ()=>`¡Recuerda tu meta: 400 puntos! Cada Pomodoro que completas te acerca más. La constancia supera al talento. Santiago, tienes la disciplina para lograrlo.`,
+    q=>`Para el ICFES en esa área, practica con los simulacros oficiales de ICFES Interactivo. También puedes buscar los cuadernillos de años anteriores en la web oficial del ICFES Colombia.`,
+    ()=>`Tip de estudio: estudia en bloques de 25 min (Pomodoro) con 5 min de descanso. Varía las materias entre sesiones. Tu cerebro consolida mejor cuando alterna temas distintos.`,
+    ()=>`Las Ciencias Naturales en el ICFES se dividen en Física, Química y Biología aproximadamente en tercios. Te recomiendo identificar tus fortalezas y debilidades con un simulacro diagnóstico.`,
+    ()=>`Para Inglés ICFES: enfócate en vocabulario de contexto (inferir significado), skimming (lectura rápida para idea general) y scanning (buscar información específica). Son las habilidades más evaluadas.`
+  ],
+  init(){
+    this.st=S.load();
+    this.renderMsgs();
+    if(this.st.chat.msgs.length===0) this._addWelcome();
+  },
+  _addWelcome(){
+    this.st.chat.msgs.push({role:'ai',text:'👋 Hola Santiago. Soy tu asistente de Misión 400. Estoy aquí para ayudarte con dudas del ICFES, estrategias de estudio y cualquier tema académico. ¿En qué empezamos?',time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});
+    S.save(this.st);
+    this.renderMsgs();
+  },
+  send(){
+    const inp=document.getElementById('chatInp');
+    const text=inp.value.trim();
+    if(!text)return;
+    inp.value='';
+    this.st.chat.msgs.push({role:'user',text,time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});
+    if(this.st.chat.msgs.length>120)this.st.chat.msgs.splice(0,2);
+    S.save(this.st);
+    this.renderMsgs();
+    // Typing indicator
+    const c=document.getElementById('chatMsgs');
+    const ty=document.createElement('div');
+    ty.className='msg ai';ty.id='typing-ind';
+    ty.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
+    c.appendChild(ty);c.scrollTop=c.scrollHeight;
+    const delay=900+Math.random()*1000;
+    setTimeout(()=>{
+      ty.remove();
+      const fn=this.RESP[Math.floor(Math.random()*this.RESP.length)];
+      const r=fn(text);
+      this.st.chat.msgs.push({role:'ai',text:r,time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});
+      S.save(this.st);
+      this.renderMsgs();
+    },delay);
+  },
+  suggest(text){
+    document.getElementById('chatInp').value=text;
+    Nav.go('chat');
+    setTimeout(()=>this.send(),150);
+  },
+  key(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();this.send();}},
+  clear(){
+    if(!confirm('¿Limpiar el historial del chat?'))return;
+    this.st.chat.msgs=[];S.save(this.st);this._addWelcome();
+  },
+  renderMsgs(){
+    const c=document.getElementById('chatMsgs');
+    if(!c)return;
+    c.innerHTML=this.st.chat.msgs.map(m=>`
+      <div class="msg ${m.role}">
+        ${m.text.replace(/\n/g,'<br>')}
+        <div class="msg-time" style="text-align:${m.role==='user'?'right':'left'};">${m.time}</div>
+      </div>`).join('');
+    c.scrollTop=c.scrollHeight;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   STATS MODULE
+═══════════════════════════════════════════════════════════ */
+const Stats = {
+  refresh(){
+    const st=S.load();
+    const totalPages=st.reading.books.reduce((s,b)=>s+b.read,0);
+    const totalPoms=st.pom.total;
+    const streak=st.workout.streak;
+    const xp=st.xp||0;
+
+    // Top cards
+    const tc=document.getElementById('stats-top');
+    if(tc){
+      tc.innerHTML=`
+        <div class="card"><div class="card-icon">📖</div><div class="card-label">Páginas Totales</div><div class="card-val">${totalPages}</div><div class="card-sub">en todos los libros</div></div>
+        <div class="card"><div class="card-icon">🍅</div><div class="card-label">Pomodoros Totales</div><div class="card-val">${totalPoms}</div><div class="card-sub">${Math.round(totalPoms*25/60)}h de estudio profundo</div></div>
+        <div class="card"><div class="card-icon">⚡</div><div class="card-label">XP Acumulado</div><div class="card-val">${xp}</div><div class="card-sub">puntos de experiencia</div></div>
+      `;
+    }
+
+    // Books
+    const sb=document.getElementById('stats-books');
+    if(sb){
+      sb.innerHTML=st.reading.books.map(b=>{
+        const pct=Math.round(b.read/b.total*100);
+        return `
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:.35rem;">
+              <span style="font-size:.88rem;font-weight:600;color:var(--t);">${b.title}</span>
+              <span class="badge ${pct>=100?'badge-g':'badge-r'}">${pct}%</span>
+            </div>
+            <div class="pb-track" style="height:6px;margin-bottom:.25rem;"><div class="pb-fill ${pct>=100?'green':'red'}" style="width:${pct}%;height:6px;"></div></div>
+            <div style="font-size:.72rem;color:var(--t3);">${b.read} de ${b.total} páginas</div>
+          </div>`;
+      }).join('');
+    }
+
+    // Activity
+    const sa=document.getElementById('stats-activity');
+    if(sa){
+      if(st.activity.length===0){
+        sa.innerHTML='<div style="color:var(--t3);font-size:.82rem;text-align:center;padding:1.5rem 0;">Sin actividad aún</div>';
+      } else {
+        sa.innerHTML=st.activity.slice(0,30).map(a=>`
+          <div class="h-row">
+            <span style="font-size:.8rem;">${a.text}</span>
+            <div style="display:flex;gap:.4rem;align-items:center;flex-shrink:0;">
+              ${a.xp?`<span class="badge badge-b">+${a.xp} XP</span>`:''}
+              <span class="mono" style="font-size:.68rem;color:var(--t3);">${a.time}</span>
+            </div>
+          </div>`).join('');
+      }
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   COUNTDOWN
+═══════════════════════════════════════════════════════════ */
+function tickCountdown(){
+  const target=new Date('2026-07-26T00:00:00-05:00');
+  const diff=Math.max(0,target-new Date());
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hrs=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const mins=Math.floor((diff%(1000*60*60))/(1000*60));
+  const secs=Math.floor((diff%(1000*60))/1000);
+  [days,hrs,mins,secs].forEach((v,i)=>{
+    const el=document.getElementById('cd'+i);
+    if(el)el.textContent=pad(v);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PARTICLES
+═══════════════════════════════════════════════════════════ */
+function initParticles(){
+  const c=document.getElementById('particles-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let W=c.width=window.innerWidth,H=c.height=window.innerHeight;
+  window.addEventListener('resize',()=>{W=c.width=window.innerWidth;H=c.height=window.innerHeight;});
+  const PARTS=40;
+  const pts=Array.from({length:PARTS},()=>({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+    r:Math.random()*2+.5,
+    a:Math.random()
+  }));
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(190,30,45,${p.a*.4})`;
+      ctx.fill();
+    });
+    // Connect nearby
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=`rgba(190,30,45,${(1-dist/120)*.08})`;
+          ctx.lineWidth=.5;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   APP INIT + DASHBOARD
+═══════════════════════════════════════════════════════════ */
+const App = {
+  init(){
+    const st=S.load();
+    // Greeting
+    const h=new Date().getHours();
+    const greet=h<12?'Buenos días':h<18?'Buenas tardes':'Buenas noches';
+    const el=document.getElementById('greeting');
+    if(el)el.innerHTML=`${greet}, <span>Santiago</span>`;
+    // Sub greeting
+    const subs=['Cada página te acerca a Univalle.','La disciplina es tu superpoder.','85 días. Un solo objetivo.','Hoy es el mejor día para estudiar.','El ICFES no te va a ganar.'];
+    const subEl=document.getElementById('greetSub');
+    if(subEl)subEl.textContent=subs[Math.floor(Math.random()*subs.length)];
+    // Day badge
+    const start=new Date('2026-05-01');
+    const dayN=Math.min(85,Math.max(1,Math.floor((new Date()-start)/(1000*60*60*24))+1));
+    const db=document.getElementById('dayBadge');
+    if(db)db.textContent=`DÍA ${dayN}/85`;
+    // XP bar
+    const pct=dayN/85*100;
+    const xf=document.getElementById('xpFill');
+    if(xf)setTimeout(()=>xf.style.width=pct+'%',300);
+    const xt=document.getElementById('xpText');
+    if(xt)xt.textContent=`${dayN} / 85 días`;
+    // XP badge
+    updateXPDisplay(st.xp||0);
+    // Init modules
+    Read.init();
+    Wo.init();
+    Pom.init();
+    Mental.init();
+    Chat.init();
+    // Coundown
+    tickCountdown();
+    setInterval(tickCountdown,1000);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   BOOTSTRAP
+═══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  initParticles();
+  Auth.init();
+});
+</script>
+</body>
+</html>

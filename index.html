@@ -259,6 +259,76 @@ body{
 .hidden{display:none!important;}
 .muted{color:var(--t3);}
 
+/* ─── EMERGENCY BANNER ─── */
+.emergency-banner{
+  background:linear-gradient(135deg,rgba(200,25,43,.18),rgba(200,25,43,.08));
+  border:1px solid rgba(200,25,43,.35);
+  border-radius:16px;padding:1rem 1.1rem;
+  display:flex;gap:.75rem;align-items:center;
+  animation:pulse-border 2.5s ease-in-out infinite;
+}
+@keyframes pulse-border{
+  0%,100%{border-color:rgba(200,25,43,.35);box-shadow:0 0 0 0 rgba(200,25,43,0);}
+  50%{border-color:rgba(200,25,43,.7);box-shadow:0 0 16px rgba(200,25,43,.18);}
+}
+.emergency-icon{font-size:1.6rem;flex-shrink:0;animation:shake 2s ease-in-out infinite;}
+@keyframes shake{
+  0%,90%,100%{transform:none}
+  92%{transform:rotate(-8deg)}
+  94%{transform:rotate(8deg)}
+  96%{transform:rotate(-5deg)}
+  98%{transform:rotate(5deg)}
+}
+.emergency-title{font-size:.82rem;font-weight:800;color:var(--r2);letter-spacing:-.01em;}
+.emergency-sub{font-size:.71rem;color:var(--t2);margin-top:.15rem;line-height:1.4;}
+.emergency-cta{margin-top:.6rem;}
+
+/* ─── MISIONES DIARIAS ─── */
+.mission-card{
+  background:var(--c1);border:1px solid var(--bdr);border-radius:18px;overflow:hidden;
+}
+.mission-header{
+  padding:.85rem 1.1rem .6rem;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.mission-title{font-size:.82rem;font-weight:800;color:#fff;letter-spacing:-.02em;}
+.mission-progress{font-size:.65rem;color:var(--t3);font-weight:700;}
+.mission-item{
+  padding:.9rem 1.1rem;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:.85rem;
+  transition:background .2s;
+}
+.mission-item:last-child{border-bottom:none;}
+.mission-item.done-mission{background:rgba(74,222,128,.04);}
+.mission-check{
+  width:26px;height:26px;border-radius:8px;flex-shrink:0;
+  border:2px solid var(--bdr2);background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;cursor:pointer;transition:all .2s;
+}
+.mission-item.done-mission .mission-check{
+  border-color:var(--grn);background:rgba(74,222,128,.15);
+}
+.mission-text{flex:1;}
+.mission-name{font-size:.86rem;font-weight:600;color:var(--t1);transition:color .2s;}
+.mission-item.done-mission .mission-name{color:var(--grn2);text-decoration:line-through;opacity:.7;}
+.mission-desc{font-size:.68rem;color:var(--t3);margin-top:.1rem;}
+.mission-xp{font-size:.62rem;font-weight:700;color:var(--amb2);}
+
+/* ─── LOCK OVERLAY ─── */
+.lock-wrap{position:relative;}
+.lock-overlay{
+  position:absolute;inset:0;z-index:10;border-radius:18px;
+  background:rgba(7,8,13,.55);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.35rem;backdrop-filter:blur(2px);
+  pointer-events:auto;
+}
+.lock-overlay .lock-icon{font-size:1.6rem;}
+.lock-overlay .lock-msg{font-size:.68rem;color:var(--t3);font-weight:700;letter-spacing:.05em;text-align:center;padding:0 1rem;}
+/* semi-locked = just low opacity, no full overlay */
+.semi-locked{opacity:.4;pointer-events:none;transition:opacity .4s;}
+
 @keyframes td{0%,60%,100%{opacity:.2;transform:none}30%{opacity:1;transform:translateY(-3px)}}
 </style>
 </head>
@@ -304,6 +374,18 @@ body{
       <div style="font-size:.8rem;color:var(--t2);margin-top:.25rem;" id="homeSub">Cargando...</div>
     </div>
 
+    <!-- EMERGENCY BANNER -->
+    <div id="emergencyBanner" class="emergency-banner hidden">
+      <div class="emergency-icon">🚨</div>
+      <div style="flex:1;">
+        <div class="emergency-title">¡ALERTA ROJA! Faltan <span id="emergencyDays">—</span> días</div>
+        <div class="emergency-sub">Cada día sin simulacro es un punto que pierdes. ¡Hazlo ahora!</div>
+        <div class="emergency-cta">
+          <button class="btn btn-r btn-sm" onclick="Nav.go('simulacros')">📊 Hacer simulacro →</button>
+        </div>
+      </div>
+    </div>
+
     <div class="cd-hero">
       <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--t3);">⏳ ICFES · 26 Jul 2026</div>
       <div class="cd-grid">
@@ -319,11 +401,26 @@ body{
       <div class="pb6"><div class="pf pf-r" id="mBar" style="width:0%"></div></div>
     </div>
 
-    <div class="g2">
-      <div class="card card-p" id="homeStreakCard" style="cursor:pointer" onclick="Nav.go('fuerza')">
-        <div style="font-size:1.2rem;margin-bottom:.35rem;" id="homeStreakIcon">💪</div>
-        <div class="big-num" id="homeStreakN">0</div>
-        <div class="card-sub">días de racha</div>
+    <!-- MISIONES DIARIAS -->
+    <div>
+      <div class="sec-label">🎯 Misiones del Día</div>
+      <div class="mission-card" id="missionCard">
+        <!-- rendered by Missions.render() -->
+      </div>
+    </div>
+
+    <!-- STATS GRID — las tarjetas se bloquean si no hay misiones completas -->
+    <div class="g2" id="statsGrid">
+      <div class="lock-wrap">
+        <div class="card card-p" id="homeStreakCard" style="cursor:pointer" onclick="Nav.go('fuerza')">
+          <div style="font-size:1.2rem;margin-bottom:.35rem;" id="homeStreakIcon">💪</div>
+          <div class="big-num" id="homeStreakN">0</div>
+          <div class="card-sub">días de racha</div>
+        </div>
+        <div class="lock-overlay hidden" id="lockStreak">
+          <div class="lock-icon">🔒</div>
+          <div class="lock-msg">Completa una misión</div>
+        </div>
       </div>
       <div class="card card-p" onclick="Nav.go('lectura')" style="cursor:pointer">
         <div style="font-size:1.2rem;margin-bottom:.35rem;">📖</div>
@@ -331,10 +428,16 @@ body{
         <div class="card-sub">páginas hoy</div>
         <div class="pb" style="margin-top:.6rem;"><div class="pf pf-r" id="homePagesBar" style="width:0%"></div></div>
       </div>
-      <div class="card card-p" onclick="Nav.go('icfes')" style="cursor:pointer">
-        <div style="font-size:1.2rem;margin-bottom:.35rem;">🍅</div>
-        <div class="big-num" id="homePom">0</div>
-        <div class="card-sub">pomodoros</div>
+      <div class="lock-wrap">
+        <div class="card card-p" onclick="Nav.go('icfes')" style="cursor:pointer" id="homePomCard">
+          <div style="font-size:1.2rem;margin-bottom:.35rem;">🍅</div>
+          <div class="big-num" id="homePom">0</div>
+          <div class="card-sub">pomodoros</div>
+        </div>
+        <div class="lock-overlay hidden" id="lockPom">
+          <div class="lock-icon">🔒</div>
+          <div class="lock-msg">Completa una misión</div>
+        </div>
       </div>
       <div class="card card-p" onclick="Nav.go('salud')" style="cursor:pointer">
         <div style="font-size:1.2rem;margin-bottom:.35rem;">✅</div>
@@ -486,12 +589,16 @@ body{
       <button class="chip" onclick="Chat.sendMsg('Cómo mejorar en Matemáticas ICFES')">📐 Matemáticas</button>
       <button class="chip" onclick="Chat.sendMsg('Estrategia para subir puntaje ICFES')">🎯 Estrategia</button>
       <button class="chip" onclick="Chat.sendMsg('Inglés A2 B1 consejos ICFES')">🇬🇧 Inglés</button>
+      <button class="chip" onclick="Chat.generateRandomQuestion()">🎲 Pregunta aleatoria</button>
     </div></div>
     <div class="card" style="overflow:hidden;">
       <div style="padding:.85rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:.75rem;">
         <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--r3),var(--r));border-radius:50%;display:flex;align-items:center;justify-content:center;">🤖</div>
         <div style="flex:1;"><div style="font-weight:700;">Asistente M400</div><div style="font-size:.65rem;color:var(--grn2);">Especializado en ICFES</div></div>
-        <button class="btn btn-ghost btn-xs" onclick="Chat.clearChat()">Limpiar</button>
+        <div style="display:flex;gap:.35rem;">
+          <button class="btn btn-ghost btn-xs" onclick="Chat.generateRandomQuestion()" title="Pregunta aleatoria ICFES">🎲</button>
+          <button class="btn btn-ghost btn-xs" onclick="Chat.clearChat()">Limpiar</button>
+        </div>
       </div>
       <div id="chatMsgs" style="height:360px;overflow-y:auto;padding:.85rem;display:flex;flex-direction:column;gap:.6rem;"></div>
       <div style="padding:.7rem;border-top:1px solid var(--bdr);display:flex;gap:.55rem;">
@@ -579,7 +686,9 @@ const Storage = {
         {id:1, subj:'Lectura Crítica',       score:35, correct:7, wrong:13, time:20, date:'2026-05-01'},
         {id:2, subj:'Sociales y Ciudadanas', score:45, correct:9, wrong:11, time:31, date:'2026-05-02'}
       ],
-      simNextId: 3
+      simNextId: 3,
+      /* ─── MISIONES (nuevo) ─── */
+      missions:{ date: null, done: [] }
     };
   }
 };
@@ -637,6 +746,143 @@ const Nav = {
     if(activePg) activePg.scrollTo({top:0});
   }
 };
+
+/* ─── MISIONES DIARIAS ─── */
+const Missions = {
+  // Banco de 30 misiones — se rotan por día del año
+  BANK: [
+    { name:'Haz 2 pomodoros de Matemáticas', desc:'25 min cada uno, sin distracciones', xp:40, icon:'📐' },
+    { name:'Lee 15 páginas hoy', desc:'Cualquier libro de tu lista', xp:30, icon:'📖' },
+    { name:'Completa un simulacro de Lectura Crítica', desc:'Registra tus resultados en Notas', xp:50, icon:'📝' },
+    { name:'Haz tu rutina de ejercicio', desc:'Genera y completa la rutina del día', xp:30, icon:'💪' },
+    { name:'Toma todos tus hábitos de salud', desc:'Medicación, agua, meditación y sueño', xp:40, icon:'✅' },
+    { name:'2 pomodoros de Lectura Crítica', desc:'Practica análisis de textos', xp:40, icon:'📖' },
+    { name:'Simulacro de Inglés', desc:'Haz el quiz completo en la sección ICFES', xp:50, icon:'🇬🇧' },
+    { name:'Lee 10 páginas + 1 pomodoro', desc:'Combina lectura y estudio ICFES', xp:35, icon:'🎯' },
+    { name:'Registra un simulacro de Ciencias', desc:'Al menos 20 preguntas', xp:50, icon:'🔬' },
+    { name:'3 pomodoros hoy', desc:'Enfócate en la materia más difícil', xp:60, icon:'🍅' },
+    { name:'Simulacro de Sociales y Ciudadanas', desc:'Repasa la Constitución de 1991', xp:50, icon:'🌍' },
+    { name:'Registra 12 páginas leídas', desc:'Supera tu meta diaria de 10 páginas', xp:35, icon:'📚' },
+    { name:'Completa todos los hábitos + 1 pomo', desc:'Bienestar y estudio van de la mano', xp:45, icon:'🧠' },
+    { name:'Haz ejercicio + 2 pomodoros', desc:'Mente sana en cuerpo sano', xp:45, icon:'⚡' },
+    { name:'Quiz de Gramática A2 en perfecto', desc:'10/10 en el quiz de Inglés A2', xp:55, icon:'🏆' },
+    { name:'Simulacro de Matemáticas', desc:'Proporciones, geometría y estadística', xp:50, icon:'📐' },
+    { name:'Escribe tu nota del día', desc:'Reflexiona sobre tu progreso', xp:20, icon:'💭' },
+    { name:'4 pomodoros hoy', desc:'¡Sesión épica de estudio!', xp:75, icon:'🔥' },
+    { name:'Lee + simulacro + ejercicio', desc:'El triple combo ganador', xp:65, icon:'🚀' },
+    { name:'2 pomodoros de Sociales', desc:'Historia, geografía y constitución', xp:40, icon:'🌍' },
+    { name:'Mejora tu marca anterior', desc:'Supera tu puntaje en cualquier materia', xp:55, icon:'📈' },
+    { name:'Completa la racha de ejercicio', desc:'No rompas tu racha hoy', xp:35, icon:'🔥' },
+    { name:'2 pomodoros de Ciencias', desc:'Física, química o biología', xp:40, icon:'⚗️' },
+    { name:'Haz 5 preguntas aleatorias en el chat', desc:'Usa el botón 🎲 del chat IA', xp:30, icon:'🤖' },
+    { name:'Lee 20 páginas hoy', desc:'El doble de tu meta. ¡Puedes!', xp:50, icon:'📖' },
+    { name:'Simulacro de Inglés + Matemáticas', desc:'Dos materias en un día', xp:70, icon:'💡' },
+    { name:'3 hábitos de salud + 1 pomodoro', desc:'Cuida tu mente para estudiar mejor', xp:40, icon:'💚' },
+    { name:'Repasa errores de simulacros pasados', desc:'Identifica tus puntos débiles', xp:35, icon:'🔍' },
+    { name:'2 pomodoros de Inglés', desc:'Gramática y comprensión lectora', xp:40, icon:'🇬🇧' },
+    { name:'Maratón: 5 pomodoros', desc:'El día más duro. La recompensa, máxima.', xp:90, icon:'🏅' }
+  ],
+
+  // Devuelve los 2 índices de misión para HOY (basado en día del año)
+  _todayIndices(){
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const dayOfYear = Math.floor((now - start) / 864e5);
+    const n = this.BANK.length;
+    return [dayOfYear % n, (dayOfYear + Math.floor(n / 3)) % n];
+  },
+
+  _todayMissions(){
+    return this._todayIndices().map(i => this.BANK[i]);
+  },
+
+  _state(){
+    const st = Storage.load();
+    // reset if new day
+    if(st.missions.date !== td()){
+      st.missions = { date: td(), done: [] };
+      Storage.save(st);
+    }
+    return st.missions;
+  },
+
+  toggle(idx){
+    const st = Storage.load();
+    if(st.missions.date !== td()) st.missions = { date: td(), done: [] };
+    const pos = st.missions.done.indexOf(idx);
+    const wasLocked = st.missions.done.length === 0;
+    if(pos >= 0){
+      st.missions.done.splice(pos, 1);
+    } else {
+      st.missions.done.push(idx);
+      const mission = this._todayMissions()[idx];
+      addXP(mission.xp);
+      toast(mission.icon + ' ¡Misión completada! +' + mission.xp + ' XP', 3500);
+    }
+    Storage.save(st);
+    this.render();
+    this.updateLocks();
+    // Re-check: si acaba de completar la primera misión, desbloqueamos visualmente
+    if(wasLocked && st.missions.done.length > 0) toast('🔓 ¡Tarjetas desbloqueadas!', 2500);
+  },
+
+  doneCount(){
+    return this._state().done.length;
+  },
+
+  render(){
+    const w = $('missionCard'); if(!w) return;
+    const missions = this._todayMissions();
+    const state = this._state();
+    const done = state.done;
+    const count = done.length;
+
+    w.innerHTML = `
+      <div class="mission-header">
+        <div class="mission-title">🎯 Retos de hoy</div>
+        <div class="mission-progress">${count}/${missions.length} completadas</div>
+      </div>
+      ${missions.map((m, i) => {
+        const isDone = done.includes(i);
+        return `<div class="mission-item${isDone ? ' done-mission' : ''}" onclick="Missions.toggle(${i})">
+          <div class="mission-check">${isDone ? '✅' : ''}</div>
+          <div class="mission-text">
+            <div class="mission-name">${m.icon} ${m.name}</div>
+            <div class="mission-desc">${m.desc}</div>
+          </div>
+          <div class="mission-xp">+${m.xp} XP</div>
+        </div>`;
+      }).join('')}
+      ${count >= 2
+        ? '<div style="padding:.75rem 1.1rem;background:rgba(74,222,128,.05);text-align:center;font-size:.8rem;font-weight:700;color:var(--grn2);">🏆 ¡Todas las misiones completadas! ¡Eres imparable!</div>'
+        : '<div style="padding:.6rem 1.1rem;font-size:.7rem;color:var(--t3);">Completa al menos 1 misión para desbloquear las tarjetas de racha y pomodoro.</div>'
+      }`;
+  },
+
+  updateLocks(){
+    const done = this.doneCount();
+    const locked = done === 0;
+    const ls = $('lockStreak'), lp = $('lockPom');
+    if(ls) ls.classList.toggle('hidden', !locked);
+    if(lp) lp.classList.toggle('hidden', !locked);
+  }
+};
+
+/* ─── EMERGENCY BANNER ─── */
+function checkEmergency(){
+  const diff = Math.max(0, new Date('2026-07-26') - new Date());
+  const days = Math.floor(diff / 864e5);
+  const banner = $('emergencyBanner');
+  const ed = $('emergencyDays');
+  if(!banner) return;
+  // Mostrar si faltan menos de 90 días
+  if(days < 90){
+    banner.classList.remove('hidden');
+    if(ed) ed.textContent = days;
+  } else {
+    banner.classList.add('hidden');
+  }
+}
 
 /* ─── READ ─── */
 const Read = {
@@ -1340,26 +1586,302 @@ const Mental = {
   }
 };
 
-/* ─── CHAT ─── */
+/* ─── CHAT con preguntas aleatorias ICFES ─── */
 const Chat = {
   st: null,
-  REPLIES:[
-    q => 'Sobre "' + q.slice(0,30) + '..." — te recomiendo dividir el problema en pasos. ¿Necesitas ejercicios específicos?',
-    () => 'Para Lectura Crítica: lee el texto completo antes de las preguntas. Nunca uses conocimiento externo.',
-    () => 'Para Matemáticas ICFES: olvida el cálculo. Domina proporciones y geometría básica.',
-    () => 'El método Pomodoro + simulacros cada 3 días es muy efectivo.',
-    () => 'Para Inglés: practica los quizzes en el módulo ICFES. Enfócate en A2 primero.'
+
+  // Banco de 25 preguntas ICFES simuladas
+  ICFES_QUESTIONS: [
+    {
+      area: 'Matemáticas',
+      q: 'Si en una tienda hay 120 manzanas y se venden 3/8 de ellas, ¿cuántas manzanas quedan?',
+      opts: ['A. 45', 'B. 75', 'C. 80', 'D. 90'],
+      ans: 'B. 75',
+      exp: '3/8 de 120 = 45 vendidas → 120 - 45 = 75 quedan.'
+    },
+    {
+      area: 'Matemáticas',
+      q: 'Un rectángulo tiene base 8 cm y altura 5 cm. ¿Cuál es su área?',
+      opts: ['A. 13 cm²', 'B. 26 cm²', 'C. 40 cm²', 'D. 45 cm²'],
+      ans: 'C. 40 cm²',
+      exp: 'Área = base × altura = 8 × 5 = 40 cm².'
+    },
+    {
+      area: 'Matemáticas',
+      q: 'Si x + 7 = 15, ¿cuánto vale x?',
+      opts: ['A. 6', 'B. 7', 'C. 8', 'D. 22'],
+      ans: 'C. 8',
+      exp: 'x = 15 - 7 = 8.'
+    },
+    {
+      area: 'Lectura Crítica',
+      q: '"El lenguaje no refleja la realidad, la construye." Esta afirmación implica principalmente que:',
+      opts: [
+        'A. Las palabras son fotos exactas del mundo',
+        'B. El lenguaje crea e interpreta la realidad',
+        'C. Sin lenguaje no existe el pensamiento',
+        'D. La realidad es independiente del habla'
+      ],
+      ans: 'B. El lenguaje crea e interpreta la realidad',
+      exp: 'El texto sostiene que el lenguaje construye (no solo describe) la realidad.'
+    },
+    {
+      area: 'Lectura Crítica',
+      q: 'En el texto "Pedro llegó tarde. Como siempre, nadie lo esperó." La expresión "como siempre" indica:',
+      opts: [
+        'A. Una acción excepcional',
+        'B. Un hábito o patrón repetido',
+        'C. Una orden del narrador',
+        'D. Una suposición del autor'
+      ],
+      ans: 'B. Un hábito o patrón repetido',
+      exp: '"Como siempre" connota frecuencia o costumbre.'
+    },
+    {
+      area: 'Lectura Crítica',
+      q: '¿Cuál de las siguientes opciones es una opinión y NO un hecho?',
+      opts: [
+        'A. Colombia tiene 32 departamentos',
+        'B. Bogotá es la capital del país',
+        'C. La música vallenata es la mejor del mundo',
+        'D. El Amazonas desemboca en el Atlántico'
+      ],
+      ans: 'C. La música vallenata es la mejor del mundo',
+      exp: '"La mejor del mundo" es un juicio subjetivo, no verificable.'
+    },
+    {
+      area: 'Ciencias Naturales',
+      q: 'La fotosíntesis ocurre principalmente en:',
+      opts: ['A. Las raíces', 'B. Los cloroplastos', 'C. Las mitocondrias', 'D. El núcleo celular'],
+      ans: 'B. Los cloroplastos',
+      exp: 'Los cloroplastos contienen clorofila y son el sitio de la fotosíntesis.'
+    },
+    {
+      area: 'Ciencias Naturales',
+      q: 'Un científico formula una hipótesis. El siguiente paso del método científico es:',
+      opts: ['A. Publicar resultados', 'B. Sacar conclusiones', 'C. Diseñar un experimento', 'D. Observar el fenómeno'],
+      ans: 'C. Diseñar un experimento',
+      exp: 'Tras la hipótesis se experimenta para verificarla o refutarla.'
+    },
+    {
+      area: 'Ciencias Naturales',
+      q: '¿Qué tipo de mezcla es el agua salada?',
+      opts: ['A. Heterogénea', 'B. Homogénea', 'C. Coloide', 'D. Suspensión'],
+      ans: 'B. Homogénea',
+      exp: 'El agua salada es una solución (mezcla homogénea): no se distinguen sus componentes.'
+    },
+    {
+      area: 'Sociales y Ciudadanas',
+      q: 'La Constitución Política de Colombia fue promulgada en:',
+      opts: ['A. 1886', 'B. 1948', 'C. 1991', 'D. 2002'],
+      ans: 'C. 1991',
+      exp: 'La Constitución vigente de Colombia es de 1991.'
+    },
+    {
+      area: 'Sociales y Ciudadanas',
+      q: '¿Cuál es la principal función de la Corte Constitucional de Colombia?',
+      opts: [
+        'A. Juzgar crímenes de guerra',
+        'B. Guardar la integridad de la Constitución',
+        'C. Administrar los recursos del Estado',
+        'D. Elegir al presidente'
+      ],
+      ans: 'B. Guardar la integridad de la Constitución',
+      exp: 'La Corte Constitucional vela por la supremacía e integridad de la Constitución.'
+    },
+    {
+      area: 'Sociales y Ciudadanas',
+      q: 'El período presidencial en Colombia dura:',
+      opts: ['A. 3 años', 'B. 4 años', 'C. 5 años', 'D. 6 años'],
+      ans: 'B. 4 años',
+      exp: 'El presidente de Colombia gobierna por un período de 4 años.'
+    },
+    {
+      area: 'Inglés A2',
+      q: 'Choose the correct option: "Yesterday, she _____ to the market."',
+      opts: ['A. go', 'B. goes', 'C. went', 'D. gone'],
+      ans: 'C. went',
+      exp: '"Yesterday" signals past tense → went (past of go).'
+    },
+    {
+      area: 'Inglés A2',
+      q: '"There _____ many students in the classroom."',
+      opts: ['A. is', 'B. are', 'C. am', 'D. be'],
+      ans: 'B. are',
+      exp: '"Many students" is plural → there are.'
+    },
+    {
+      area: 'Inglés B1',
+      q: 'Select the correct sentence:',
+      opts: [
+        'A. She has been studying since three hours',
+        'B. She has been studying for three hours',
+        'C. She is studying since three hours',
+        'D. She was studying for three hours ago'
+      ],
+      ans: 'B. She has been studying for three hours',
+      exp: 'Present perfect continuous + "for" for duration: "for three hours".'
+    },
+    {
+      area: 'Inglés B1',
+      q: '"If I _____ more time, I would travel the world."',
+      opts: ['A. have', 'B. had', 'C. has', 'D. will have'],
+      ans: 'B. had',
+      exp: 'Second conditional: If + past simple → would + infinitive.'
+    },
+    {
+      area: 'Matemáticas',
+      q: 'En una encuesta, el 60% de 200 estudiantes prefiere matemáticas. ¿Cuántos estudiantes es eso?',
+      opts: ['A. 60', 'B. 100', 'C. 120', 'D. 140'],
+      ans: 'C. 120',
+      exp: '60% de 200 = 0.60 × 200 = 120 estudiantes.'
+    },
+    {
+      area: 'Lectura Crítica',
+      q: '"El smog afecta a millones de personas. Por tanto, debemos reducir emisiones de CO₂." El argumento es:',
+      opts: [
+        'A. Inválido, no hay relación',
+        'B. Válido: la conclusión se apoya en la premisa',
+        'C. Inválido: la conclusión contradice la premisa',
+        'D. Válido pero la premisa es falsa'
+      ],
+      ans: 'B. Válido: la conclusión se apoya en la premisa',
+      exp: 'La premisa (smog afecta personas) apoya la conclusión (reducir CO₂).'
+    },
+    {
+      area: 'Ciencias Naturales',
+      q: 'La fuerza de gravedad entre dos objetos AUMENTA cuando:',
+      opts: [
+        'A. La distancia entre ellos aumenta',
+        'B. La masa de uno disminuye',
+        'C. La distancia disminuye',
+        'D. Ambos objetos son del mismo tamaño'
+      ],
+      ans: 'C. La distancia disminuye',
+      exp: 'Ley de gravitación: F = G·m₁·m₂/r². Al reducir r, F aumenta.'
+    },
+    {
+      area: 'Sociales y Ciudadanas',
+      q: 'El Frente Nacional en Colombia (1958-1974) consistió en:',
+      opts: [
+        'A. Una alianza militar con EE.UU.',
+        'B. Alternancia del poder entre liberales y conservadores',
+        'C. Un gobierno socialista de 16 años',
+        'D. La primera constitución democrática'
+      ],
+      ans: 'B. Alternancia del poder entre liberales y conservadores',
+      exp: 'El Frente Nacional fue un acuerdo bipartidista de alternancia presidencial.'
+    },
+    {
+      area: 'Matemáticas',
+      q: '¿Cuánto es el 25% de 360?',
+      opts: ['A. 72', 'B. 80', 'C. 90', 'D. 100'],
+      ans: 'C. 90',
+      exp: '25% = 1/4 → 360 ÷ 4 = 90.'
+    },
+    {
+      area: 'Inglés A2',
+      q: 'What does "I\'m hungry" mean?',
+      opts: [
+        'A. Tengo sueño',
+        'B. Tengo hambre',
+        'C. Tengo frío',
+        'D. Estoy cansado'
+      ],
+      ans: 'B. Tengo hambre',
+      exp: '"Hungry" = con hambre en español.'
+    },
+    {
+      area: 'Ciencias Naturales',
+      q: 'Un ADN tiene la secuencia ATGC. Su cadena complementaria es:',
+      opts: ['A. ATGC', 'B. TACG', 'C. CGTA', 'D. GCTA'],
+      ans: 'B. TACG',
+      exp: 'Las bases complementarias son A-T y G-C → ATGC → TACG.'
+    },
+    {
+      area: 'Lectura Crítica',
+      q: 'Un texto argumentativo tiene como objetivo principal:',
+      opts: [
+        'A. Narrar una historia emocionante',
+        'B. Describir un lugar detalladamente',
+        'C. Convencer al lector de una postura',
+        'D. Entretener al lector con humor'
+      ],
+      ans: 'C. Convencer al lector de una postura',
+      exp: 'El texto argumentativo busca persuadir mediante razones y evidencias.'
+    },
+    {
+      area: 'Matemáticas',
+      q: 'La mediana del conjunto {3, 7, 2, 9, 5} es:',
+      opts: ['A. 3', 'B. 5', 'C. 7', 'D. 6'],
+      ans: 'B. 5',
+      exp: 'Ordenado: {2,3,5,7,9} → el valor central (mediana) es 5.'
+    }
   ],
+
+  TIPS: {
+    'lectura': 'Para Lectura Crítica: lee el texto COMPLETO antes de las preguntas. Nunca uses conocimiento externo al texto. Identifica la tesis central del autor.',
+    'matematicas': 'Para Matemáticas ICFES: olvida el cálculo complejo. Domina proporciones, porcentajes, geometría básica y estadística descriptiva.',
+    'ciencias': 'Para Ciencias: el ICFES evalúa pensamiento científico, no memorización. Practica interpretar gráficas y diseñar experimentos.',
+    'sociales': 'Para Sociales: entiende procesos causas → desarrollo → consecuencias. Repasa la Constitución de 1991 y los derechos fundamentales.',
+    'inglés': 'Para Inglés: 30 preguntas. A2 Gramática (8) + A2 Comprensión (5) + B1 Comprensión (7) + B1 Gramática (10). Practica los dos niveles.'
+  },
+
+  RESPONSES: [
+    q => `Sobre "${q.slice(0,40)}..." — te recomiendo dividir el problema en pasos. ¿Quieres que te explique un tema específico o prefieres una pregunta de práctica? Usa el botón 🎲 para una pregunta aleatoria ICFES.`,
+    () => 'Consejo clave: los simulacros reales del ICFES son tu mejor herramienta. Cada error que cometes en práctica es un error menos en el examen real.',
+    () => 'El método más efectivo es: estudia 25 min (Pomodoro) → 5 min descanso → repite. Tu cerebro consolida mejor así. ¡Úsalo en la pestaña ICFES!',
+    () => 'Para subir puntaje rápido: enfócate en las materias con más preguntas. Matemáticas y Lectura Crítica tienen el mayor peso. ¡Priorízalas!',
+    () => 'Recuerda: no hay fórmulas mágicas. Hay disciplina diaria. Completa tus misiones de hoy y habrás ganado el día.',
+  ],
+
   init(){
     this.st = Storage.load();
     if(this.st.chat.msgs.length === 0) this._welcome();
     else this.renderMsgs();
   },
+
   _welcome(){
-    this.st.chat.msgs = [{role:'ai', text:'👋 Hola Santiago. Soy tu asistente para ICFES 2026. ¿En qué puedo ayudarte?', time:new Date().toLocaleTimeString('es-CO')}];
+    this.st.chat.msgs = [{
+      role:'ai',
+      text:'👋 Hola Santiago. Soy tu asistente ICFES 2026.\n\n📌 Puedo:\n• Responderte dudas de cualquier materia\n• Darte tips de estrategia\n• Generarte preguntas de práctica (botón 🎲)\n\n¿En qué empezamos?',
+      time:new Date().toLocaleTimeString('es-CO')
+    }];
     Storage.save(this.st);
     this.renderMsgs();
   },
+
+  generateRandomQuestion(){
+    const q = this.ICFES_QUESTIONS[Math.floor(Math.random() * this.ICFES_QUESTIONS.length)];
+    const msgText = `🎲 **Pregunta ICFES — ${q.area}**\n\n${q.q}\n\n${q.opts.join('\n')}\n\n_(Responde con A, B, C o D)_`;
+
+    this.st = Storage.load();
+    this.st.chat.msgs.push({ role:'user', text:'🎲 Generar pregunta aleatoria', time:new Date().toLocaleTimeString('es-CO') });
+    this.st.chat.msgs.push({ role:'ai', text:msgText, time:new Date().toLocaleTimeString('es-CO'), _quiz: q });
+    if(this.st.chat.msgs.length > 120) this.st.chat.msgs.splice(0, 2);
+    Storage.save(this.st);
+    this.renderMsgs();
+    Nav.go('chat');
+  },
+
+  _tryAnswerQuiz(text){
+    // Check if last AI message was a quiz
+    const msgs = this.st.chat.msgs;
+    if(msgs.length < 2) return false;
+    const lastAI = [...msgs].reverse().find(m => m.role === 'ai' && m._quiz);
+    if(!lastAI) return false;
+    const ans = text.trim().toUpperCase();
+    if(!['A','B','C','D'].includes(ans.charAt(0))) return false;
+    const q = lastAI._quiz;
+    const correct = q.ans.charAt(0) === ans.charAt(0);
+    if(correct){
+      addXP(10);
+      return `✅ **¡Correcto!** +10 XP\n\n${q.exp}\n\n¿Quieres otra pregunta? Presiona 🎲`;
+    } else {
+      return `❌ **Incorrecto.** La respuesta correcta era **${q.ans}**\n\n${q.exp}\n\n¡No te rindas! Cada error es aprendizaje. Pulsa 🎲 para otra.`;
+    }
+  },
+
   send(){
     const inp = $('chatInp');
     const text = inp ? inp.value.trim() : '';
@@ -1370,26 +1892,49 @@ const Chat = {
     if(this.st.chat.msgs.length > 120) this.st.chat.msgs.splice(0, 2);
     Storage.save(this.st);
     this.renderMsgs();
+
     const c = $('chatMsgs');
     const ty = document.createElement('div');
     ty.style.cssText = 'display:flex;gap:4px;padding:.4rem;';
     ty.innerHTML = '<span style="width:5px;height:5px;background:var(--t3);border-radius:50%;animation:td 1.2s infinite;display:inline-block;"></span><span style="width:5px;height:5px;background:var(--t3);border-radius:50%;animation:td 1.2s .2s infinite;display:inline-block;"></span><span style="width:5px;height:5px;background:var(--t3);border-radius:50%;animation:td 1.2s .4s infinite;display:inline-block;"></span>';
     if(c){ c.appendChild(ty); c.scrollTop = c.scrollHeight; }
+
     setTimeout(() => {
       ty.remove();
-      const fn = this.REPLIES[Math.floor(Math.random() * this.REPLIES.length)];
+      // Try quiz answer first
+      const quizReply = this._tryAnswerQuiz(text);
+      let reply;
+      if(quizReply){
+        reply = quizReply;
+      } else {
+        // Check for keyword tips
+        const low = text.toLowerCase();
+        if(low.includes('lectura') || low.includes('crítica')) reply = this.TIPS.lectura;
+        else if(low.includes('mat') || low.includes('número') || low.includes('algebra')) reply = this.TIPS.matematicas;
+        else if(low.includes('ciencia') || low.includes('física') || low.includes('quím') || low.includes('bio')) reply = this.TIPS.ciencias;
+        else if(low.includes('social') || low.includes('constituc') || low.includes('histor')) reply = this.TIPS.sociales;
+        else if(low.includes('inglés') || low.includes('english') || low.includes('grammar')) reply = this.TIPS.inglés;
+        else {
+          const fn = this.RESPONSES[Math.floor(Math.random() * this.RESPONSES.length)];
+          reply = fn(text);
+        }
+      }
+
       this.st = Storage.load();
-      this.st.chat.msgs.push({role:'ai', text:fn(text), time:new Date().toLocaleTimeString('es-CO')});
+      this.st.chat.msgs.push({role:'ai', text:reply, time:new Date().toLocaleTimeString('es-CO')});
       Storage.save(this.st);
       this.renderMsgs();
-    }, 900);
+    }, 800);
   },
+
   sendMsg(text){
     const inp = $('chatInp'); if(inp) inp.value = text;
     Nav.go('chat');
     setTimeout(() => this.send(), 200);
   },
+
   handleKey(e){ if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); this.send(); } },
+
   clearChat(){
     if(!confirm('¿Limpiar chat?')) return;
     this.st = Storage.load();
@@ -1397,15 +1942,20 @@ const Chat = {
     Storage.save(this.st);
     this._welcome();
   },
+
   renderMsgs(){
     const c = $('chatMsgs'); if(!c) return;
-    c.innerHTML = this.st.chat.msgs.map(m =>
-      `<div style="max-width:80%;padding:.7rem .9rem;border-radius:16px;font-size:.87rem;${
+    c.innerHTML = this.st.chat.msgs.map(m => {
+      // Format: bold **text**, newlines
+      const formatted = m.text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g,'<br>');
+      return `<div style="max-width:85%;padding:.7rem .9rem;border-radius:16px;font-size:.87rem;${
         m.role === 'user'
           ? 'align-self:flex-end;background:var(--r);color:#fff;border-bottom-right-radius:4px;margin-left:auto;'
           : 'align-self:flex-start;background:var(--c2);border:1px solid var(--bdr);border-bottom-left-radius:4px;'
-      }">${m.text.replace(/\n/g,'<br>')}<div style="font-size:.55rem;opacity:.5;margin-top:.25rem;">${m.time}</div></div>`
-    ).join('');
+      }">${formatted}<div style="font-size:.55rem;opacity:.5;margin-top:.25rem;">${m.time}</div></div>`;
+    }).join('');
     c.scrollTop = c.scrollHeight;
   }
 };
@@ -1429,7 +1979,7 @@ const App = {
     const hr = new Date().getHours();
     const g = hr < 5 ? 'Madrugada, Santiago' : hr < 12 ? 'Buenos días, Santiago' : hr < 18 ? 'Buenas tardes, Santiago' : 'Buenas noches, Santiago';
     const gg = $('homeGreet'); if(gg) gg.textContent = g;
-    const subs = ['La disciplina supera al talento.', '85 días. Todo o nada.', 'Cada página te acerca a Univalle.'];
+    const subs = ['La disciplina supera al talento.', '80 días. Todo o nada.', 'Cada página te acerca a Univalle.', 'Hoy es el día más importante.'];
     const sg = $('homeSub'); if(sg) sg.textContent = subs[Math.floor(Math.random() * subs.length)];
 
     const start = new Date('2026-05-01');
@@ -1452,6 +2002,11 @@ const App = {
     Sim.init();
     ICFES.render();
 
+    // ─── NUEVOS: Misiones + Emergency + Locks
+    Missions.render();
+    Missions.updateLocks();
+    checkEmergency();
+
     tickCD();
     setInterval(tickCD, 1000);
 
@@ -1473,6 +2028,7 @@ const App = {
         '<div style="padding:.7rem;text-align:center;"><button class="btn btn-ghost btn-sm btn-full" onclick="Nav.go(\'simulacros\')">Ver todos →</button></div>';
     }
   },
+
   updateStats(){
     const st = Storage.load(), t = td();
     const pages = st.reading.books.reduce((s, b) => s + (b.log[t] || 0), 0);

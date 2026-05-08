@@ -140,11 +140,6 @@ body{
   transition:left .3s cubic-bezier(.4,0,.2,1),width .3s;
   box-shadow:0 0 10px var(--r2);
 }
-.tab-notif{
-  position:absolute;top:4px;right:calc(50% - 18px);
-  width:7px;height:7px;border-radius:50%;background:var(--r2);
-  box-shadow:0 0 6px var(--r2);display:none;
-}
 
 /* ═══════════ COMPONENTS ═══════════ */
 .card{background:var(--c1);border:1px solid var(--bdr);border-radius:20px;overflow:hidden;}
@@ -156,6 +151,19 @@ body{
 
 .n-big{font-size:3.2rem;font-weight:950;color:#fff;letter-spacing:-.06em;line-height:1;}
 .n-med{font-size:1.8rem;font-weight:800;color:#fff;letter-spacing:-.04em;line-height:1;}
+
+/* ═══════════ READING HEADER UPGRADE ═══════════ */
+.read-hero{
+  background:linear-gradient(160deg, var(--c1) 0%, #1e0b0e 100%);
+  border:1px solid rgba(200, 25, 43, 0.2);
+  border-radius:24px; padding:1.5rem; position:relative; overflow:hidden;
+}
+.read-hero::before{
+  content:''; position:absolute; top:-20%; right:-10%; width:150px; height:150px;
+  background:radial-gradient(circle, var(--r) 0%, transparent 70%); opacity:0.1; filter:blur(40px);
+}
+.read-val{font-size:3.5rem; font-weight:900; line-height:1; letter-spacing:-.05em; color:#fff;}
+.read-goal{font-size:1rem; color:var(--t3); font-weight:600; margin-left:.5rem;}
 
 /* ═══════════ ACHIEVEMENTS UNIT ═══════════ */
 .ach-title{font-size:.85rem; font-weight:800; color:#fff; letter-spacing:-0.01em;}
@@ -204,19 +212,6 @@ body{
 .ex-n{font-size:.78rem; font-weight:600; color:var(--t1);}
 .ex-s{font-size:.68rem; color:var(--amb2); font-weight:700;}
 
-/* ═══════════ READING HEADER UPGRADE ═══════════ */
-.read-hero{
-  background:linear-gradient(160deg, var(--c1) 0%, #1e0b0e 100%);
-  border:1px solid rgba(200, 25, 43, 0.2);
-  border-radius:24px; padding:1.5rem; position:relative; overflow:hidden;
-}
-.read-hero::before{
-  content:''; position:absolute; top:-20%; right:-10%; width:150px; height:150px;
-  background:radial-gradient(circle, var(--r) 0%, transparent 70%); opacity:0.1; filter:blur(40px);
-}
-.read-val{font-size:3.5rem; font-weight:900; line-height:1; letter-spacing:-.05em; color:#fff;}
-.read-goal{font-size:1rem; color:var(--t3); font-weight:600; margin-left:.5rem;}
-
 /* ═══════════ QUIZ SYSTEM ═══════════ */
 .quiz-card{padding:1.2rem; display:flex; flex-direction:column; gap:1rem;}
 .q-box{font-size:.95rem; font-weight:600; line-height:1.5; color:#fff;}
@@ -235,14 +230,35 @@ body{
 .pf{height:100%;border-radius:99px;transition:width .9s cubic-bezier(.34,1.56,.64,1);}
 .pf-r{background:linear-gradient(90deg,var(--r3),var(--r2));box-shadow:0 0 10px rgba(200,25,43,.45);}
 
-/* ═══════════ TAB BAR NOTIF ═══════════ */
-.tab-notif{
-  position:absolute;top:4px;right:calc(50% - 18px);
-  width:7px;height:7px;border-radius:50%;background:var(--r2);
-  box-shadow:0 0 6px var(--r2);display:none;
+/* ═══════════ BUTTONS ═══════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  border:none;cursor:pointer;font-weight:700;
+  transition:all .15s; -webkit-appearance:none; border-radius:12px;
 }
+.btn:active{transform:scale(.95);}
+.btn-r{background:var(--r);color:#fff; padding:.8rem 1.2rem; font-size:.9rem;}
+.btn-ghost{background:rgba(255,255,255,.07);color:var(--t1);border:1px solid var(--bdr2); padding:.6rem 1rem;}
+.btn-full{width:100%;}
 
-/* ═══════════ TOGGLE SWITCH ═══════════ */
+/* ═══════════ LISTS ═══════════ */
+.li{padding:.9rem 1.1rem;display:flex;align-items:center;gap:.8rem;border-bottom:1px solid var(--bdr);}
+.li:last-child{border-bottom:none;}
+.li-t{font-size:.88rem;font-weight:600;color:var(--t1);}
+.li-s{font-size:.7rem;color:var(--t3);margin-top:.1rem;}
+
+.bdg{border-radius:99px;padding:.18rem .55rem;font-size:.6rem;font-weight:700; letter-spacing:.05em;}
+.bdg-r{background:var(--rg);color:var(--r2);border:1px solid rgba(200,25,43,.2);}
+.bdg-a{background:rgba(251,191,36,.1);color:var(--amb2);border:1px solid rgba(251,191,36,.18);}
+
+/* ═══════════ INPUTS ═══════════ */
+.inp{
+  background:var(--bg3);border:1.5px solid var(--bdr);border-radius:12px;
+  padding:.75rem .95rem;color:var(--t1);font-size:.9rem;outline:none; width:100%;
+}
+.inp:focus{border-color:var(--r);}
+
+/* Toggle Switch */
 .tog{
   width:44px;height:24px;border-radius:99px;background:var(--bg3);
   border:1px solid var(--bdr);position:relative;transition:all .3s;cursor:pointer;
@@ -254,11 +270,10 @@ body{
 .tog.on{background:var(--r);border-color:var(--r2);}
 .tog.on::after{left:22px;}
 
-/* ═══════════ MISC ═══════════ */
 #toast{
   position:fixed;bottom:calc(var(--tab-h) + var(--sab) + 1rem);
   left:1rem;right:1rem;z-index:998;
-  background:var(--c2);border:1px solid var(--bdr2);border-radius:16px;
+  background:var(--c2);border:1.5px solid var(--bdr2);border-radius:16px;
   padding:.9rem 1.2rem;font-size:.85rem;font-weight:600;text-align:center;
   box-shadow:0 12px 40px rgba(0,0,0,.6);
   transform:translateY(150%);opacity:0;
@@ -266,8 +281,6 @@ body{
 }
 #toast.on{transform:none;opacity:1;}
 .hidden{display:none!important;}
-::-webkit-scrollbar{width:3px;}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:99px;}
 </style>
 </head>
 <body>
@@ -276,11 +289,11 @@ body{
 <div id="L">
   <div class="l-orb"></div>
   <div class="l-logo">M400</div>
-  <div class="l-tag">Elite Performance Protocol</div>
+  <div class="l-tag">High Performance System</div>
   <div class="l-card">
-    <label class="fl">Identificador de Usuario</label>
+    <label class="fl">Usuario</label>
     <input id="lu" type="text" class="fi" placeholder="santiagoenfocado"/>
-    <label class="fl">Clave de Acceso</label>
+    <label class="fl">Contraseña</label>
     <input id="lp" type="password" class="fi" placeholder="••••••••••"/>
     <div id="lerr">⚠ Acceso restringido</div>
     <button class="lbtn" onclick="Auth.login()">Entrar al Sistema →</button>
@@ -295,7 +308,11 @@ body{
 <div class="topbar">
   <div class="tb-l">
     <div class="tb-title" id="tbTitle">Dashboard</div>
-    <div class="tb-sub">Ingeniería Univalle 2026</div>
+    <div class="tb-sub" style="display:flex;align-items:center;gap:.3rem;">
+      Ingeniería Univalle 2026 
+      <span style="color:var(--t3);opacity:.5">|</span>
+      ⏳ <span id="cd0">--</span>d <span id="cd1">--</span>h <span id="cd2">--</span>m <span id="cd3" style="display:none">--</span>
+    </div>
   </div>
   <div class="tb-r">
     <div class="pill pill-r" id="xpPill">⚡ 0</div>
@@ -308,6 +325,7 @@ body{
 <div class="pg on" id="pg-home">
 <div class="pg-inner">
   
+  <!-- Premium Reading Counter -->
   <div class="read-hero" onclick="Nav.go('lectura')">
     <span class="slbl" style="color:var(--r2);margin-bottom:.8rem;">Fuego de Lectura</span>
     <div class="row" style="align-items:baseline;">
@@ -315,10 +333,12 @@ body{
       <span class="read-goal" id="hReadGoal">/ 10</span>
     </div>
     <div class="pb" style="height:8px; margin-top:1.2rem;"><div class="pf pf-r" id="hReadBar"></div></div>
+    <div style="margin-top:.8rem; font-size:.7rem; color:var(--t2); font-weight:600;">Meta: 10 páginas diarias por 80 días.</div>
   </div>
 
   <div id="hMissions"></div>
 
+  <!-- Achievements Summary -->
   <div>
     <span class="slbl">Hitos de Disciplina</span>
     <div class="ach-grid" id="hAch"></div>
@@ -337,6 +357,7 @@ body{
     </div>
   </div>
 
+  <!-- Weekly Quiz Progress -->
   <div class="card cp">
     <span class="slbl">Objetivo Quiz: 3 Diarios</span>
     <div class="rsb">
@@ -346,10 +367,55 @@ body{
     <div class="pb"><div class="pf pf-r" id="hQuizBar"></div></div>
   </div>
 
+  <button class="btn btn-ghost btn-sm btn-full" onclick="Auth.logout()" style="opacity:.3; margin-top:.5rem;">Desconectar</button>
+
 </div>
 </div>
 
-<!-- ═══ ICFES PRO (GÉNESIS) ═══ -->
+<!-- ═══ LECTURA ═══ -->
+<div class="pg" id="pg-lectura">
+<div class="pg-inner">
+  <div class="read-hero">
+    <span class="slbl">Progreso diario</span>
+    <div class="read-val" id="pgReadVal">0 <span class="read-goal">/ 10 pág</span></div>
+    <div class="pb" style="height:10px; margin-top:1rem;"><div class="pf pf-r" id="pgReadBar"></div></div>
+  </div>
+
+  <div>
+    <span class="slbl">Biblioteca de Entrenamiento</span>
+    <div id="booksWrap"></div>
+  </div>
+
+  <div class="card cp">
+    <span class="slbl">Reflexión del día</span>
+    <textarea id="ideaTA" class="inp" style="min-height:100px; margin-bottom:.8rem;" placeholder="¿Cuál es la idea principal de hoy?"></textarea>
+    <button class="btn btn-r btn-full" onclick="Read.saveIdea()">Guardar como Logro</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ FUERZA ═══ -->
+<div class="pg" id="pg-fuerza">
+<div class="pg-inner">
+  <div class="card cp" style="text-align:center; background:linear-gradient(180deg, var(--c1), #151825);">
+    <span class="ach-tag">Racha de Poder</span>
+    <div class="n-big" style="margin:.5rem 0;" id="fStreakN">0</div>
+    <div style="font-size:.8rem; color:var(--t3);">Días de disciplina ininterrumpida</div>
+  </div>
+
+  <div>
+    <span class="slbl">Rutina de Élite</span>
+    <div id="woCard" class="card"></div>
+  </div>
+
+  <div>
+    <span class="slbl">Mini-Rutinas (Reseteo Mental)</span>
+    <div id="miniRutW" style="display:flex; flex-direction:column; gap:.8rem;"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ ICFES PRO (QUIZ) ═══ -->
 <div class="pg" id="pg-icfes">
 <div class="pg-inner">
   <div class="card cp" style="background:var(--pur); background-image:linear-gradient(135deg, var(--pur) 0%, var(--pur2) 100%); border:none;">
@@ -384,49 +450,7 @@ body{
 </div>
 </div>
 
-<!-- ═══ LECTURA ═══ -->
-<div class="pg" id="pg-lectura">
-<div class="pg-inner">
-  <div class="read-hero">
-    <span class="slbl">Progreso diario</span>
-    <div class="read-val" id="pgReadVal">0 <span class="read-goal">/ 10 pág</span></div>
-    <div class="pb" style="height:10px; margin-top:1rem;"><div class="pf pf-r" id="pgReadBar"></div></div>
-  </div>
-
-  <div>
-    <span class="slbl">Biblioteca de Entrenamiento</span>
-    <div id="booksWrap"></div>
-  </div>
-
-  <div class="card cp">
-    <span class="slbl">Reflexión del día</span>
-    <textarea id="ideaTA" class="inp" style="min-height:100px; margin-bottom:.8rem;" placeholder="¿Cuál es la idea principal de hoy?"></textarea>
-    <button class="btn btn-r btn-full" onclick="Read.saveIdea()">Guardar como Logro</button>
-  </div>
-</div>
-</div>
-
-<!-- ═══ FUERZA (GYM) ═══ -->
-<div class="pg" id="pg-fuerza">
-<div class="pg-inner">
-  <div class="card cp" style="text-align:center;">
-    <span class="ach-tag">Racha de Poder</span>
-    <div class="n-big" style="margin:.5rem 0;" id="fStreakN">0</div>
-  </div>
-
-  <div>
-    <span class="slbl">Rutina de Élite</span>
-    <div id="woCard" class="card"></div>
-  </div>
-
-  <div>
-    <span class="slbl">Mini-Rutinas (Reseteo Mental)</span>
-    <div id="miniRutW" style="display:flex; flex-direction:column; gap:.8rem;"></div>
-  </div>
-</div>
-</div>
-
-<!-- ═══ NOTAS ═══ -->
+<!-- ═══ SIMULACROS / NOTAS ═══ -->
 <div class="pg" id="pg-simulacros">
 <div class="pg-inner">
   <div>
@@ -444,13 +468,13 @@ body{
       <option value="Inglés">Inglés</option>
     </select>
     <div class="g2">
-      <input type="number" id="sScore" class="inp" placeholder="Puntaje"/>
+      <input type="number" id="sScore" class="inp" placeholder="Puntaje (1-100)"/>
       <input type="number" id="sOk" class="inp" placeholder="Correctas"/>
     </div>
     <button class="btn btn-r btn-full" style="margin-top:.8rem;" onclick="Sim.add()">Inmortalizar Nota</button>
   </div>
 
-  <div id="simLog" class="card"></div>
+  <div id="simLog"></div>
 </div>
 </div>
 
@@ -488,9 +512,8 @@ body{
 </div>
 </div>
 
-</div><!-- /pages -->
+</div><!-- pages -->
 
-<!-- TAB BAR -->
 <div class="tabbar">
   <div class="tab-ind" id="tabInd"></div>
   <div class="tab on" data-pg="home" onclick="Nav.go('home')"><div class="tab-ic">⚡</div><div class="tab-lb">Inicio</div></div>
@@ -498,20 +521,20 @@ body{
   <div class="tab" data-pg="lectura" onclick="Nav.go('lectura')"><div class="tab-ic">📚</div><div class="tab-lb">Lector</div></div>
   <div class="tab" data-pg="fuerza" onclick="Nav.go('fuerza')"><div class="tab-ic">💪</div><div class="tab-lb">Gym</div></div>
   <div class="tab" data-pg="simulacros" onclick="Nav.go('simulacros')"><div class="tab-ic">📊</div><div class="tab-lb">Notas</div></div>
-  <div class="tab" data-pg="misiones" onclick="Nav.go('misiones')"><div class="tab-ic">🎯</div><div class="tab-lb">Misión</div><div class="tab-notif" id="misionNotif"></div></div>
+  <div class="tab" data-pg="misiones" onclick="Nav.go('misiones')"><div class="tab-ic">🎯</div><div class="tab-lb">Misión</div></div>
   <div class="tab" data-pg="salud" onclick="Nav.go('salud')"><div class="tab-ic">🧠</div><div class="tab-lb">Salud</div></div>
 </div>
+</div>
 
-</div><!-- /app -->
 <div id="toast"></div>
 
 <script>
 'use strict';
 /* ══════════════════════════════════════════
-   STORAGE & DATA
+   STORAGE
 ══════════════════════════════════════════ */
 const S={
-  K:'m400_v10',
+  K:'m400_v8',
   load(){return this._m(this._d(),JSON.parse(localStorage.getItem(this.K)||'{}'));},
   save(s){localStorage.setItem(this.K,JSON.stringify(s));},
   _m(d,s){const r={...d};for(const k in s){if(s[k]!==null&&typeof s[k]==='object'&&!Array.isArray(s[k]))r[k]=this._m(d[k]||{},s[k]);else r[k]=s[k];}return r;},
@@ -538,22 +561,30 @@ const MISSIONS=[
   {id:5,t:'Visual',i:'👁️',n:'Infografía',d:'Crea una infografía simple de una ley de física.'},
   {id:6,t:'Auditivo',i:'👂',n:'Debate IA',d:'Graba un audio debatiendo un punto de vista con Génesis.'},
   {id:7,t:'Kinestésico',i:'✋',n:'Flashcards Físicas',d:'Crea 10 flashcards a mano con vocabulario de Inglés.'},
-  {id:8,t:'Multisensorial',i:'🌀',n:'Enseñanza',d:'Enseña un concepto a alguien dibujando y hablando.'},
-  {id:9,t:'Lector',i:'📝',n:'Vocabulario B1',d:'Busca 20 palabras en inglés desconocidas y úsalas.'},
-  {id:10,t:'Mental',i:'🧠',n:'Foco Absoluto',d:'Estudia 90 minutos sin tocar el celular.'}
+  {id:8,t:'Multisensorial',i:'🌀',n:'Enseñanza',d:'Enseña un concepto a alguien (o un objeto) dibujando y hablando.'},
+  {id:9,t:'Visual',i:'👁️',n:'Geometría Visual',d:'Identifica 3 figuras sólidas en tu casa y calcula su volumen.'},
+  {id:10,t:'Lector',i:'📝',n:'Vocabulario B1',d:'Busca 20 palabras en inglés desconocidas y úsalas en frases.'},
+  {id:11,t:'Auditivo',i:'👂',n:'Lectura en Voz Alta',d:'Lee 3 páginas de tu libro en voz alta con entonación.'},
+  {id:12,t:'Disciplina',i:'⚖️',n:'Ley Seca',d:'Cero distracciones digitales durante 2 horas de estudio.'},
+  {id:13,t:'Científico',i:'🧪',n:'Método aplicado',d:'Formula una hipótesis sobre algo que viste hoy y verifícala.'},
+  {id:14,t:'Análisis',i:'📊',n:'Gráficas',d:'Analiza una gráfica de noticias y describe 3 tendencias.'},
+  {id:15,t:'Memoria',i:'🧠',n:'Palacio Mental',d:'Asocia 5 conceptos clave a lugares de tu casa.'}
 ];
 
 const MINI_RUTINAS=[
   {id:1,n:'Brain Reset',d:'Oxigena el cerebro instantáneamente',i:'⚡',ex:[{n:'Flexiones',s:'2 x 15'},{n:'Saltos',s:'2 x 20'}]},
-  {id:2,n:'Zen Focus',d:'Recupera la concentración profunda',i:'🎯',ex:[{n:'Plancha',s:'2 x 45s'}]},
-  {id:3,n:'Postura Rey',d:'Corrige fatiga de escritorio',i:'🐍',ex:[{n:'Cobra',s:'2 x 30s'}]}
+  {id:2,n:'Zen Focus',d:'Recupera la concentración profunda',i:'🎯',ex:[{n:'Plancha',s:'2 x 45s'},{n:'Respiración',s:'4 ciclos'}]},
+  {id:3,n:'Grip Power',d:'Libera tensión acumulada',i:'✊',ex:[{n:'Puños',s:'3 x 15'},{n:'Flexión Dedos',s:'2 x 10'}]},
+  {id:4,n:'Postura Rey',d:'Corrige fatiga de escritorio',i:'🐍',ex:[{n:'Cobra',s:'2 x 30s'},{n:'Wall Slide',s:'2 x 12'}]}
 ];
 
 const QUESTIONS=[
-  {s:'mat',q:'Si el 30% de x es 90, ¿cuánto es x?',o:['300','270','180','450'],a:0,e:'90 / 0.3 = 300.'},
-  {s:'lc',q:'"Nada es tan peligroso como un buen consejo acompañado de un mal ejemplo." El autor critica:',o:['Los consejos','La hipocresía','La malicia','La inexperiencia'],a:1,e:'La contradicción entre lo que se dice y lo que se hace.'},
-  {s:'soc',q:'¿Cuál de estos NO es un órgano de control en Colombia?',o:['Procuraduría','Contraloría','Defensoría','Fiscalía'],a:3,e:'La Fiscalía pertenece a la Rama Judicial.'},
-  {s:'ing',q:'I _____ to the cinema yesterday.',o:['go','went','gone','going'],a:1,e:'Past simple of go is went.'}
+  {s:'mat',q:'Si el 40% de un número es 240, ¿cuál es el número?',o:['500','600','400','800'],a:1,e:'240 / 0.4 = 600.'},
+  {s:'lc',q:'"La libertad no es hacer lo que uno quiere, sino hacer lo que debe." ¿Cuál es el sentido de la frase?',o:['No hay libertad','La ley es superior','Libertad implica deber','Individualismo puro'],a:2,e:'El autor asocia libertad con responsabilidad moral.'},
+  {s:'soc',q:'¿Qué órgano de control en Colombia se encarga de proteger los derechos humanos?',o:['Procuraduría','Contraloría','Defensoría del Pueblo','Fiscalía'],a:2,e:'La Defensoría es la principal protectora de DDHH.'},
+  {s:'ing',q:'Choose the correct form: She _____ here for ten years.',o:['works','is working','has worked','worked'],a:2,e:'Present perfect for an action started in the past and continuing.'},
+  {s:'mat',q:'El área de un círculo de radio 5 es aproximadamente:',o:['15.7','31.4','78.5','50'],a:2,e:'π * r² = 3.14 * 25 = 78.5.'},
+  {s:'ing',q:'If it _____, we will stay home.',o:['rain','rains','raining','rained'],a:1,e:'First conditional: If + present simple.'}
 ];
 
 /* ══════════════════════════════════════════
@@ -566,7 +597,7 @@ function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');setTi
 function addXP(n){const st=S.load();st.xp+=n;S.save(st);$('xpPill').textContent='⚡ '+st.xp;}
 
 /* ══════════════════════════════════════════
-   LOGIC HANDLERS
+   AUTH
 ══════════════════════════════════════════ */
 const Auth={
   init(){
@@ -580,21 +611,26 @@ const Auth={
       $('L').classList.add('hide');setTimeout(()=>this._show(),500);
     }else{$('lerr').style.display='block';}
   },
-  logout(){const st=S.load();st.auth.in=false;S.save(st);location.reload();},
+  logout(){
+    const st=S.load();st.auth.in=false;S.save(st);location.reload();
+  },
   _show(){$('A').classList.add('on');App.init();}
 };
 
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
 const Nav={
   go(id){
-    const titles={home:'Dashboard', icfes:'Génesis ICFES', lectura:'Lector Élite', fuerza:'Gym de Poder', simulacros:'Análisis de Notas', misiones:'Protocolo Diario', salud:'Salud & Espíritu'};
-    if($('tbTitle')) $('tbTitle').textContent=titles[id]||'Misión 400';
+    const titles = {home:'Dashboard', icfes:'Génesis ICFES', lectura:'Lector Élite', fuerza:'Gym de Poder', simulacros:'Análisis de Notas', misiones:'Protocolo Diario', salud:'Salud & Espíritu'};
+    if($('tbTitle')) $('tbTitle').textContent = titles[id] || 'Misión 400';
     document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
     $(`pg-${id}`).classList.add('on');
     document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.pg===id));
     const tabs=[...document.querySelectorAll('.tab')];
     const idx=tabs.findIndex(t=>t.dataset.pg===id);
     const ind=$('tabInd');
-    if(ind && idx>=0){const w=100/tabs.length; ind.style.left=idx*w+'%'; ind.style.width=w+'%';}
+    if(ind&&idx>=0){const w=100/tabs.length;ind.style.left=idx*w+'%';ind.style.width=w+'%';}
     if(id==='icfes')ICFES.render();
     if(id==='salud')Mental.render();
     if(id==='simulacros')Sim.render();
@@ -602,32 +638,9 @@ const Nav={
   }
 };
 
-const Missions={
-  init(){
-    const st=S.load();if(st.missions.date!==td()){st.missions={date:td(),ids:JSON.parse(JSON.stringify(MISSIONS)).sort(()=>Math.random()-.5).slice(0,3).map(m=>m.id),done:[]};S.save(st);}
-    this.render();this.checkNotif();
-  },
-  checkNotif(){
-    const st=S.load();const notif=$('misionNotif');
-    if(notif) notif.style.display=st.missions.done.length<3?'block':'none';
-  },
-  complete(id){
-    const st=S.load();if(st.missions.done.includes(id))return;
-    st.missions.done.push(id);S.save(st);addXP(100);toast('Misión Élite +100 XP');this.render();this.checkNotif();App.updateMainStats();
-  },
-  render(){
-    const st=S.load();const w=$('misW');if(!w)return;
-    const m=st.missions.ids.map(id=>MISSIONS.find(x=>x.id===id));
-    w.innerHTML=m.map(x=>{
-      const ok=st.missions.done.includes(x.id);
-      return `<div class="card cp" onclick="Missions.complete(${x.id})" style="${ok?'opacity:0.5':''}">
-        <div class="row"><div style="font-size:1.5rem">${x.i}</div><div style="flex:1"><div class="ach-title">${x.n}</div><div class="li-s">${x.d}</div></div>${ok?'<span>✅</span>':''}</div>
-      </div>`;
-    }).join('');
-    const mw=$('hMissions');if(mw)mw.innerHTML=`<div class="card cp"><span class="slbl">Misión de Hoy</span><div class="n-med">${st.missions.done.length} / 3</div></div>`;
-  }
-};
-
+/* ══════════════════════════════════════════
+   LOGIC: READING
+══════════════════════════════════════════ */
 const Read={
   init(){this.render();},
   add(id,n){
@@ -636,24 +649,28 @@ const Read={
     b.read=Math.min(b.read+n,b.total);b.log[td()]=(b.log[td()]||0)+n;
     S.save(st);addXP(n*2);toast(`+${n} páginas registradas.`);this.render();App.updateMainStats();
   },
+  saveIdea(){
+    const t=$('ideaTA').value.trim();if(!t)return;
+    const st=S.load();st.read.ideas.unshift({d:td(),t});S.save(st);
+    $('ideaTA').value='';toast('Idea inmortaliada +50 XP');addXP(50);
+  },
   render(){
-    const st=S.load();const t=td();const today=st.read.books.reduce((s,b)=>s+(b.log[t]||0),0);
+    const st=S.load();const t=td();
+    const today=st.read.books.reduce((s,b)=>s+(b.log[t]||0),0);
     const p=Math.min(today/10*100,100);
     [$('hReadVal'),$('pgReadVal')].forEach(el=>{if(el)el.textContent=today;});
     [$('hReadBar'),$('pgReadBar')].forEach(el=>{if(el)el.style.width=p+'%';});
     const w=$('booksWrap');if(!w)return;
     w.innerHTML=st.read.books.map(b=>{
       const pct=Math.round(b.read/b.total*100);
-      return `<div class="li"><div class="li-body"><div class="li-t">${b.t}</div><div class="li-s">${b.read}/${b.total} (${pct}%)</div><div class="pb"><div class="pf pf-r" style="width:${pct}%"></div></div></div><input type="number" id="bi-${b.id}" class="inp" style="width:55px; margin:0 .4rem" placeholder="+ "/><button class="btn btn-ghost btn-xs" onclick="Read.add('${b.id}',$('bi-${b.id}').value)">Add</button></div>`;
+      return `<div class="li"><div class="li-body"><div class="li-t">${b.t}</div><div class="li-s">${b.read}/${b.total} (${pct}%)</div><div class="pb"><div class="pf pf-r" style="width:${pct}%"></div></div></div><input type="number" id="bi-${b.id}" class="inp" style="width:60px" placeholder="+ "/><button class="btn btn-ghost btn-xs" onclick="Read.add('${b.id}',$('bi-${b.id}').value)">Add</button></div>`;
     }).join('');
-  },
-  saveIdea(){
-    const t=$('ideaTA').value.trim();if(!t)return;
-    const st=S.load();st.read.ideas.unshift({d:td(),t});S.save(st);
-    $('ideaTA').value='';toast('Idea inmortaliada +50 XP');addXP(50);Ach.render();
   }
 };
 
+/* ══════════════════════════════════════════
+   LOGIC: GYM
+══════════════════════════════════════════ */
 const Gym={
   init(){this.render();},
   complete(){
@@ -664,74 +681,170 @@ const Gym={
   mini(id){
     const st=S.load();if(!st.gym.mini)st.gym.mini=[];
     if(st.gym.mini.filter(m=>m.d===td()&&m.id===id).length)return;
-    st.gym.mini.push({d:td(),id});S.save(st);addXP(20);toast('Reset completado +20 XP');this.render();
+    st.gym.mini.push({d:td(),id});S.save(st);
+    addXP(20);toast('Reset completado +20 XP');this.render();
   },
   render(){
-    const st=S.load();$('fStreakN').textContent=st.gym.streak;$('hStreak').textContent=st.gym.streak;
-    const w=$('woCard');if(w)w.innerHTML=`<div class="cp"><div class="ach-title">${st.gym.streak%2===0?'Protocolo Push':'Protocolo Pull'}</div><div style="margin:1rem 0; display:flex; flex-direction:column; gap:.4rem;"><div class="ex-row"><span class="li-t">${st.gym.streak%2===0?'Flexiones Diamante':'Dominadas'}</span><span class="ex-s">3 x 12</span></div><div class="ex-row"><span class="li-t">Sentadillas Explosivas</span><span class="ex-s">3 x 20</span></div></div><button class="btn btn-r btn-full" onclick="Gym.complete()" ${st.gym.last===td()?'disabled':''}>${st.gym.last===td()?'Día Conquistado':'Marcar como Hecho'}</button></div>`;
-    const mw=$('miniRutW');if(mw)mw.innerHTML=MINI_RUTINAS.map(m=>{const ok=(st.gym.mini||[]).filter(x=>x.d===td()&&x.id===m.id).length;return `<div class="mr-card ${ok?'done':''}" onclick="Gym.mini(${m.id})"><div class="mr-top"><span style="font-size:1.5rem">${m.i}</span><div><div class="mr-t">${m.n}</div><div class="mr-d">${m.d}</div></div></div><div class="mr-body">${m.ex?m.ex.map(e=>`<div class="ex-row"><span class="ex-n">${e.n}</span><span class="ex-s">${e.s}</span></div>`).join(''):''}</div></div>`;}).join('');
+    const st=S.load();
+    $('fStreakN').textContent=st.gym.streak;
+    $('hStreak').textContent=st.gym.streak;
+    const w=$('woCard');if(w)w.innerHTML=`<div class="cp"><div class="ach-title">${st.gym.streak%2===0?'Protocolo Empuje (Push)':'Protocolo Tracción (Pull)'}</div>
+      <div style="margin-top:.8rem; display:flex; flex-direction:column; gap:.5rem;">
+        <div class="ex-row"><span class="li-t">${st.gym.streak%2===0?'Flexiones Diamante':'Dominadas'}</span><span class="ex-s">3 x 12</span></div>
+        <div class="ex-row"><span class="li-t">${st.gym.streak%2===0?'Fondos':'Remo Invertido'}</span><span class="ex-s">3 x 15</span></div>
+      </div>
+      <button class="btn btn-r btn-full" style="margin-top:1.2rem" onclick="Gym.complete()" ${st.gym.last===td()?'disabled':''}>${st.gym.last===td()?'Día Conquistado':'Marcar como Hecho'}</button></div>`;
+    
+    const mw=$('miniRutW');if(mw)mw.innerHTML=MINI_RUTINAS.map(m=>{
+      const ok=(st.gym.mini||[]).filter(x=>x.d===td()&&x.id===m.id).length;
+      return `<div class="mr-card ${ok?'done':''}" onclick="Gym.mini(${m.id})">
+        <div class="mr-top"><span style="font-size:1.5rem">${m.i}</span><div><div class="mr-t">${m.n}</div><div class="mr-d">${m.d}</div></div></div>
+        <div class="mr-body">${m.ex.map(e=>`<div class="ex-row"><span class="ex-n">${e.n}</span><span class="ex-s">${e.s}</span></div>`).join('')}</div>
+      </div>`;
+    }).join('');
   }
 };
 
+/* ══════════════════════════════════════════
+   LOGIC: QUIZ & ICFES
+══════════════════════════════════════════ */
 const ICFES={
   cur:null,
+  init(){this.render();},
   render(){
-    const st=S.load();if(st.quiz.date!==td()){st.quiz.daily=0;st.quiz.date=td();S.save(st);}
+    const st=S.load();
+    if(st.quiz.date!==td()){st.quiz.daily=0;st.quiz.date=td();S.save(st);}
+    const pct=Math.min(st.quiz.daily/3*100,100);
     $('hQuizCount').textContent=st.quiz.daily+' / 3';
-    $('hQuizBar').style.width=Math.min(st.quiz.daily/3*100,100)+'%';
+    $('hQuizBar').style.width=pct+'%';
     $('lvl-mat').textContent=st.quiz.stats.mat;$('lvl-lc').textContent=st.quiz.stats.lc;$('lvl-soc').textContent=st.quiz.stats.soc;$('lvl-ing').textContent=st.quiz.stats.ing;
     this.drawQ();
   },
   drawQ(){
-    const w=$('quizContainer');if(!w)return;if(!this.cur)this.cur=QUESTIONS[Math.floor(Math.random()*QUESTIONS.length)];const q=this.cur;
+    const w=$('quizContainer');if(!w)return;
+    if(!this.cur)this.cur=QUESTIONS[Math.floor(Math.random()*QUESTIONS.length)];
+    const q=this.cur;
     w.innerHTML=`<div class="card quiz-card"><span class="ach-tag">Especialidad: ${q.s.toUpperCase()}</span><div class="q-box">${q.q}</div><div style="display:flex;flex-direction:column;gap:.6rem;">${q.o.map((o,i)=>`<button class="opt" id="opt${i}" onclick="ICFES.check(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div><div id="qfb" class="hidden" style="font-size:.8rem; color:var(--t2); padding-top:.5rem"></div></div>`;
   },
   check(idx){
-    const q=this.cur;const st=S.load();document.querySelectorAll('.opt').forEach(b=>b.disabled=true);const sel=$(`opt${idx}`);
+    const q=this.cur;const st=S.load();
+    document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+    const sel=$(`opt${idx}`);
     if(idx===q.a){sel.classList.add('ok');st.quiz.daily++;st.quiz.stats[q.s]++;st.quiz.totalAnswered++;toast('¡Correcto! +30 XP');addXP(30);}
     else{sel.classList.add('ko');$(`opt${q.a}`).classList.add('ok');}$('qfb').classList.remove('hidden');$('qfb').innerText=q.e;
-    S.save(st);setTimeout(()=>{this.cur=null;this.render();},3000);
+    S.save(st);
+    setTimeout(()=>{this.cur=null;this.render();},3000);
   }
 };
 
+/* ══════════════════════════════════════════
+   LOGIC: ACHIEVEMENTS
+══════════════════════════════════════════ */
+const Ach={
+  render(){
+    const st=S.load();const w=$('hAch');if(!w)return;
+    const items=[
+      {i:'🏆',v:st.sims.length,n:'Nacional',l:'Simulacros'},
+      {i:'💪',v:st.gym.streak,n:'Atleta',l:'Racha Gym'},
+      {i:'📖',v:st.read.ideas.length,n:'Sabio',l:'Ideas Logradas'},
+      {i:'⚡',v:st.quiz.totalAnswered,n:'Élite',l:'Preguntas'}
+    ];
+    w.innerHTML=items.map(a=>`<div class="ach-item ${a.v>0?'on':''}">
+      <div class="ach-ico">${a.i}</div>
+      <div class="ach-val">${a.v}</div>
+      <div class="ach-tag">${a.l}</div>
+    </div>`).join('');
+  }
+};
+
+/* ══════════════════════════════════════════
+   LOGIC: SIMULACROS
+══════════════════════════════════════════ */
 const Sim={
+  init(){this.render();},
   add(){
     const s=$('sSubj').value,sc=$('sScore').value,ok=$('sOk').value;if(!sc)return;
     const st=S.load();st.sims.unshift({d:td(),s,sc,ok,t:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});S.save(st);
     addXP(150);toast('Simulacro registrado +150 XP');this.render();App.updateMainStats();
   },
   render(){
-    const st=S.load();if($('hSims'))$('hSims').textContent=st.sims.length;
-    const ss=$('simStats');if(ss){const avg=st.sims.length?Math.round(st.sims.reduce((a,b)=>a+parseInt(b.sc),0)/st.sims.length):0;const best=st.sims.length?Math.max(...st.sims.map(x=>parseInt(x.sc))):0;ss.innerHTML=`<div class="stat-card"><div class="stat-lbl">Promedio</div><div class="stat-val">${avg} pts</div></div><div class="stat-card"><div class="stat-lbl">Mejor Puntaje</div><div class="stat-val" style="color:var(--grn2)">${best} pts</div></div>`;}
-    const log=$('simLog');if(log)log.innerHTML=st.sims.map(x=>`<div class="li"><div class="li-body"><div class="li-t">${x.s}</div><div class="li-s">${x.d} · ${x.t||''}</div></div><div class="bdg bdg-r">${x.sc} pts</div></div>`).join('');
+    const st=S.load();
+    const h=$('hSims');if(h)h.textContent=st.sims.length;
+    const ss=$('simStats');
+    if(ss){
+      const avg=st.sims.length?Math.round(st.sims.reduce((a,b)=>a+parseInt(b.sc),0)/st.sims.length):0;
+      const best=st.sims.length?Math.max(...st.sims.map(x=>parseInt(x.sc))):0;
+      ss.innerHTML=`
+        <div class="stat-card"><div class="stat-lbl">Promedio</div><div class="stat-val">${avg} pts</div></div>
+        <div class="stat-card"><div class="stat-lbl">Mejor Puntaje</div><div class="stat-val" style="color:var(--grn2)">${best} pts</div></div>
+      `;
+    }
+    const log=$('simLog');
+    if(log)log.innerHTML=st.sims.map(x=>`<div class="li"><div class="li-body"><div class="li-t">${x.s}</div><div class="li-s">${x.d} · ${x.t||''}</div></div><div class="bdg bdg-r">${x.sc} pts</div></div>`).join('');
+  }
+};
+
+/* ══════════════════════════════════════════
+   MISSIONS
+══════════════════════════════════════════ */
+const Missions={
+  init(){
+    const st=S.load();if(st.missions.date!==td()){st.missions={date:td(),ids:JSON.parse(JSON.stringify(MISSIONS)).sort(()=>Math.random()-.5).slice(0,3).map(m=>m.id),done:[]};S.save(st);}
+    this.render();
+  },
+  complete(id){
+    const st=S.load();if(st.missions.done.includes(id))return;
+    st.missions.done.push(id);S.save(st);addXP(100);toast('Misión Élite +100 XP');this.render();
+  },
+  render(){
+    const st=S.load();const w=$('misW');if(!w)return;
+    const m=st.missions.ids.map(id=>MISSIONS.find(x=>x.id===id));
+    w.innerHTML=m.map(x=>{
+      const ok=st.missions.done.includes(x.id);
+      return `<div class="card cp" onclick="Missions.complete(${x.id})" style="${ok?'opacity:0.5':''}"><div class="row"><div class="ach-ico">${x.i}</div><div style="flex:1"><div class="ach-title">${x.n}</div><div class="li-s">${x.d}</div></div>${ok?'<span>✅</span>':''}</div></div>`;
+    }).join('');
+    const mw=$('hMissions');if(mw){
+      const pct=Math.round((st.missions.done.length/3)*100);
+      mw.innerHTML=`<div class="card cp"><span class="ach-tag">Progreso Misión</span><div class="rsb"><div class="n-med">${pct}%</div><div class="li-s">${st.missions.done.length} / 3</div></div><div class="pb"><div class="pf pf-r" style="width:${pct}%"></div></div></div>`;
+    }
   }
 };
 
 const Mental={
   MOODS:[{e:'😔',l:'Bajo'},{e:'😐',l:'Normal'},{e:'🙂',l:'Bien'},{e:'😄',l:'Élite'},{e:'🔥',l:'Fuego'}],
   init(){this.render();},
-  saveMood(i){
-    const st=S.load();const m=this.MOODS[i];st.mental.moods.unshift({d:td(),e:m.e,l:m.l,t:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});
-    if(st.mental.moods.length>30)st.mental.moods.pop();S.save(st);addXP(10);toast(`Estado ${m.l} registrado`);this.render();
+  saveMood(idx){
+    const st=S.load();const m=this.MOODS[idx];
+    st.mental.moods.unshift({d:td(),e:m.e,l:m.l,t:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});
+    if(st.mental.moods.length>30)st.mental.moods.pop();
+    S.save(st);addXP(10);toast(`Estado ${m.l} registrado`);this.render();
   },
   save(){
     const t=$('hNote').value.trim();if(!t)return;
-    const st=S.load();st.mental.notes.unshift({d:td(),t,time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});S.save(st);$('hNote').value='';toast('Nota guardada');addXP(20);
+    const st=S.load();st.mental.notes.unshift({d:td(),t,time:new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})});
+    if(st.mental.notes.length>50)st.mental.notes.pop();
+    S.save(st);$('hNote').value='';toast('Bitácora espiritual guardada');addXP(20);
   },
   render(){
-    const st=S.load();const mw=$('moodW');if(mw)mw.innerHTML=this.MOODS.map((m,i)=>`<div class="mood-btn" onclick="Mental.saveMood(${i})"><span class="mood-e">${m.e}</span><span class="mood-l">${m.l}</span></div>`).join('');
-    const mh=$('moodHist');if(mh)mh.innerHTML=st.mental.moods.slice(0,5).map(m=>`<div class="li"><div class="li-body"><div class="li-t" style="font-size:1.1rem">${m.e} ${m.l}</div><div class="li-s">${m.d} · ${m.t}</div></div></div>`).join('')||'<div class="cp c-sub text-center">Sin registros</div>';
-    const hw=$('habW');if(hw)hw.innerHTML=`<div class="li"><div class="li-body"><div class="li-t">Agua 2L 💧</div></div><div class="tog ${st.mental.habits.agua?'on':''}" onclick="Mental.tog('agua')"></div></div><div class="li"><div class="li-body"><div class="li-t">Sueño 7h+ 😴</div></div><div class="tog ${st.mental.habits.sueno?'on':''}" onclick="Mental.tog('sueno')"></div></div>`;
+    const st=S.load();
+    const mw=$('moodW');
+    if(mw)mw.innerHTML=this.MOODS.map((m,i)=>`<div class="mood-btn" onclick="Mental.saveMood(${i})"><span class="mood-e">${m.e}</span><span class="mood-l">${m.l}</span></div>`).join('');
+    
+    const mh=$('moodHist');
+    if(mh){
+      if(!st.mental.moods.length)mh.innerHTML='<div style="padding:1.15rem; font-size:.75rem; color:var(--t3); text-align:center;">Sin registros hoy</div>';
+      else mh.innerHTML=st.mental.moods.slice(0,5).map(m=>`<div class="li"><div class="li-body"><div class="li-t" style="font-size:1.1rem">${m.e} ${m.l}</div><div class="li-s">${m.d} · ${m.t}</div></div></div>`).join('');
+    }
+
+    const hw=$('habW');
+    if(hw)hw.innerHTML=`<div class="li"><div class="li-body"><div class="li-t">Agua 2L 💧</div><div class="li-s">Indispensable para el cerebro</div></div><button class="tog ${st.mental.habits.agua?'on':''}" onclick="Mental.tog('agua')"></button></div>
+    <div class="li"><div class="li-body"><div class="li-t">Buen Sueño 😴</div><div class="li-s">Mínimo 7 horas</div></div><button class="tog ${st.mental.habits.sueno?'on':''}" onclick="Mental.tog('sueno')"></button></div>`;
   },
   tog(k){const st=S.load();st.mental.habits[k]=!st.mental.habits[k];S.save(st);this.render();}
 };
 
-const Ach={
-  render(){
-    const st=S.load();const w=$('hAch');if(!w)return;
-    const items=[{i:'🏆',v:st.sims.length,l:'Simulacros'},{i:'💪',v:st.gym.streak,l:'Racha Gym'},{i:'📖',v:st.read.ideas.length,l:'Ideas Logradas'},{i:'⚡',v:st.quiz.totalAnswered,l:'Preguntas'}];
-    w.innerHTML=items.map(a=>`<div class="ach-item ${a.v>0?'on':''}"><div class="ach-ico">${a.i}</div><div class="ach-val">${a.v}</div><div class="ach-tag">${a.l}</div></div>`).join('');
-  }
+const Chat={
+  send(){toast('Génesis está analizando tu pensamiento...');}
 };
 
 const App={
@@ -747,7 +860,6 @@ const App={
   },
   updateMainStats(){Read.render();Gym.render();Sim.render();Ach.render();Missions.render();}
 };
-
 document.addEventListener('DOMContentLoaded',()=>Auth.init());
 </script>
 </body>

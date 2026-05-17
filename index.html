@@ -48,6 +48,15 @@ body {
 .hidden { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
+/* Guest Banner */
+#guestBanner {
+  display:none; flex-shrink:0;
+  background:linear-gradient(135deg, var(--amb), var(--amb2));
+  color:#000; font-size:.65rem; font-weight:700; text-align:center;
+  padding:.35rem .5rem; letter-spacing:.05em;
+}
+#A.guest #guestBanner { display:block; }
+
 /* ═══════════ SCROLLBAR ═══════════ */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -430,13 +439,14 @@ body {
   <div class="l-orb" aria-hidden="true"></div>
   <div class="l-logo">M400</div>
   <div class="l-tag">High Performance System</div>
-  <section class="l-card" aria-label="Formulario de acceso">
+    <section class="l-card" aria-label="Formulario de acceso">
     <label class="fl" for="lu">Usuario</label>
     <input id="lu" type="text" class="fi" placeholder="santiagoenfocado" autocomplete="username" aria-required="true"/>
     <label class="fl" for="lp">Contraseña</label>
     <input id="lp" type="password" class="fi" placeholder="••••••••••" autocomplete="current-password" aria-required="true"/>
     <div id="lerr" role="alert">⚠ Acceso restringido</div>
     <button class="lbtn" id="loginBtn" type="button" onclick="Auth.login()">Entrar al Sistema →</button>
+    <div style="text-align:center; margin-top:1.2rem;"><button class="btn btn-ghost btn-sm" onclick="Auth.guest()" style="font-size:.75rem;opacity:.5;">🔑 Modo Invitado</button></div>
   </section>
   <div class="l-foot">ICFES 2026 · <strong id="ldays">--</strong> días para el éxito</div>
 </main>
@@ -447,6 +457,8 @@ body {
      ═══════════════════════════════════════════════ -->
 <div id="A">
   <div class="stop"></div>
+
+  <div id="guestBanner">👁 MODO INVITADO · Solo lectura</div>
 
   <!-- Topbar -->
   <header class="topbar">
@@ -728,6 +740,7 @@ const S = {
 
   /* Guarda con manejo de error por cuota excedida */
   save(s) {
+    if (Auth.isGuest()) { toast('Modo invitado: no se pueden guardar cambios'); return; }
     try {
       localStorage.setItem(this.K, JSON.stringify(s));
     } catch (e) {
@@ -847,8 +860,8 @@ const QUESTIONS = [
 ];
 
 // ─── AUTH ─────────────────────────────────────────────────
-/* Sistema de autenticación local con verificación
-   de credenciales mediante hash SHA-256 */
+/* Login directo para que cualquier persona de confianza
+   pueda ver el progreso con las mismas credenciales */
 
 const Auth = {
   init() {
@@ -858,13 +871,11 @@ const Auth = {
     if (st.auth.in) this._show();
   },
 
-  async login() {
+  login() {
     const user = $('lu').value.trim();
     const pass = $('lp').value.trim();
 
-    /* Verifica usuario + contraseña hasheada */
-    const hash = await this._hash(pass);
-    if (user === 'santiagoenfocado' && hash === '055afcef76055dab94ac48ae9a7a7ee5a2b01fb04db331cc5d5088b5885d26fe') {
+    if (user === 'santiagoenfocado' && pass === '1107857110') {
       const st = S.load();
       st.auth.in = true;
       S.save(st);
@@ -883,6 +894,16 @@ const Auth = {
     }
   },
 
+  /* Modo invitado: entra sin credenciales para ver el dashboard */
+  guest() {
+    $('L').classList.add('hide');
+    setTimeout(() => {
+      $('A').classList.add('on');
+      $('A').classList.add('guest');
+      App.init();
+    }, 500);
+  },
+
   logout() {
     const st = S.load();
     st.auth.in = false;
@@ -895,12 +916,8 @@ const Auth = {
     App.init();
   },
 
-  /* Hash SHA-256 para verificación segura de contraseña */
-  async _hash(msg) {
-    const enc = new TextEncoder().encode(msg);
-    const buf = await crypto.subtle.digest('SHA-256', enc);
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-  }
+  /* Verifica si está en modo invitado (solo lectura) */
+  isGuest() { return $('A').classList.contains('guest'); }
 };
 
 // ─── NAV ──────────────────────────────────────────────────

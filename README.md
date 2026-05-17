@@ -24,7 +24,8 @@ Desarrollado para Ingeniería Univalle como plataforma integral de estudio gamif
 ## 🔐 Acceso
 
 - **Usuario:** `santiagoenfocado`
-- **Contraseña:** `1107857110` (verificada con hash SHA-256)
+- **Contraseña:** `1107857110`
+- **Modo Invitado:** Botón "🔑 Modo Invitado" en la pantalla de login — permite navegar el dashboard sin credenciales (solo lectura)
 
 ## 📱 Diseño
 

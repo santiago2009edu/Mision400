@@ -521,6 +521,14 @@ body {
         <div class="pb"><div class="pf pf-r" id="hQuizBar" style="width:0%"></div></div>
       </div>
 
+      <div class="card cp" id="simtrackCard" style="cursor:pointer;" onclick="SimTrack.toggle()" role="button" tabindex="0" aria-label="Simulacro ICFES diario">
+        <span class="slbl">🧪 Simulacro ICFES Diario</span>
+        <div class="rsb">
+          <div style="font-size:.85rem;color:var(--t2);">simulacroicfes.com</div>
+          <div id="simtrackBadge" class="bdg bdg-a">Pendiente</div>
+        </div>
+      </div>
+
       <button class="btn btn-ghost btn-sm btn-full" onclick="Auth.logout()" style="opacity:.3; margin-top:.5rem;" aria-label="Cerrar sesión">Desconectar</button>
 
     </div>
@@ -602,6 +610,11 @@ body {
             <div class="ach-ico">🇬🇧</div>
             <div class="ach-val" id="lvl-ing">0</div>
             <div class="ach-tag">Inglés</div>
+          </div>
+          <div class="ach-item on">
+            <div class="ach-ico">🔬</div>
+            <div class="ach-val" id="lvl-cien">0</div>
+            <div class="ach-tag">Ciencias</div>
           </div>
         </div>
       </div>
@@ -775,8 +788,8 @@ const S = {
         ideas: []
       },
       gym: { streak: 0, last: null, mini: [] },
-      quiz: { daily: 0, date: null, stats: { mat: 0, lc: 0, soc: 0, ing: 0 }, totalAnswered: 0 },
-      sims: [],
+      quiz: { daily: 0, date: null, stats: { mat: 0, lc: 0, soc: 0, ing: 0, cien: 0 }, totalAnswered: 0 },
+      sims: [], simtrack: { date: null, done: false },
       missions: { date: null, ids: [], done: [] },
       mental: { habits: { agua: false, sueno: false }, hDate: null, notes: [], moods: [] },
       xp: 0
@@ -943,6 +956,45 @@ const QUESTIONS = [
   { s: 'soc', q: '¿Qué país no es miembro permanente del Consejo de Seguridad?', o: ['EE.UU.','Francia','Alemania','China'], a: 2, e: 'Alemania no es miembro permanente de la ONU.' },
   { s: 'soc', q: 'La plusvalía según Marx es:',                                 o: ['Ganancia justa','Excedente no pagado al obrero','Impuesto al valor','Precio de mercado'], a: 1, e: 'Plusvalía es el trabajo no remunerado al trabajador.' },
   { s: 'soc', q: '¿Cuándo se firmó la Constitución de Colombia?',              o: ['1886','1991','1810','1957'], a: 1, e: 'La actual Constitución colombiana se firmó en 1991.' },
+  // ═══ CIENCIAS NATURALES ═══
+  { s:'cien', q:'¿Cuál es la fórmula química del agua?', o:['CO₂','H₂O','NaCl','O₂'], a:1, e:'El agua está compuesta por dos átomos de hidrógeno y uno de oxígeno.'},
+  { s:'cien', q:'La fotosíntesis convierte:', o:['Agua en vino','Luz solar en energía química','CO₂ en O₂ usando luz','Minerales en vitaminas'], a:2, e:'La fotosíntesis usa luz solar para convertir CO₂ y agua en glucosa y oxígeno.'},
+  { s:'cien', q:'¿Qué órgano bombea sangre en el cuerpo humano?', o:['Pulmones','Corazón','Hígado','Riñones'], a:1, e:'El corazón es el órgano encargado de bombear sangre a todo el cuerpo.'},
+  { s:'cien', q:'La teoría de la evolución fue propuesta por:', o:['Newton','Darwin','Einstein','Pasteur'], a:1, e:'Charles Darwin propuso la teoría de la evolución por selección natural en 1859.'},
+  { s:'cien', q:'¿Cuál es el planeta más grande del sistema solar?', o:['Saturno','Marte','Júpiter','Neptuno'], a:2, e:'Júpiter es el planeta más grande, con más de 1.300 veces el volumen de la Tierra.'},
+  { s:'cien', q:'Las mitocondrias son conocidas como:', o:['El núcleo de la célula','La central energética de la célula','El sistema digestivo celular','La membrana celular'], a:1, e:'Las mitocondrias generan ATP, la principal fuente de energía celular.'},
+  { s:'cien', q:'La ley de la gravedad fue descrita por:', o:['Galileo','Newton','Kepler','Copérnico'], a:1, e:'Newton formuló la ley de gravitación universal en el siglo XVII.'},
+  { s:'cien', q:'¿Qué gas respiramos principalmente del aire?', o:['Oxígeno','Nitrógeno','Dióxido de carbono','Hidrógeno'], a:1, e:'El aire contiene aproximadamente 78% nitrógeno y 21% oxígeno.'},
+  { s:'cien', q:'El ADN tiene forma de:', o:['Hélice simple','Doble hélice','Círculo','Línea recta'], a:1, e:'La estructura del ADN es una doble hélice descubierta por Watson y Crick.'},
+  { s:'cien', q:'La velocidad de la luz en el vacío es aproximadamente:', o:['300 km/s','300.000 km/s','3.000 km/s','30.000 km/s'], a:1, e:'La luz viaja a unos 300.000 kilómetros por segundo en el vacío.'},
+  { s:'cien', q:'¿Qué vitamina produce el cuerpo al exponerse al sol?', o:['Vitamina A','Vitamina B','Vitamina C','Vitamina D'], a:3, e:'La vitamina D se sintetiza en la piel con exposición a la luz solar.'},
+  { s:'cien', q:'El pH de una sustancia neutra es:', o:['0','7','14','5'], a:1, e:'pH 7 es neutro; menor es ácido, mayor es alcalino.'},
+  { s:'cien', q:'¿Qué tipo de enlace comparte electrones entre átomos?', o:['Iónico','Covalente','Metálico','Puente de hidrógeno'], a:1, e:'El enlace covalente implica compartir electrones entre átomos.'},
+  { s:'cien', q:'La primera ley de Newton trata sobre:', o:['Aceleración','Inercia','Acción y reacción','Gravedad'], a:1, e:'Primera ley de Newton: un cuerpo en reposo permanece en reposo a menos que actúe una fuerza.'},
+  { s:'cien', q:'¿Cuántos huesos tiene el cuerpo humano adulto?', o:['106','206','306','150'], a:1, e:'El cuerpo humano adulto tiene aproximadamente 206 huesos.'},
+  { s:'cien', q:'El proceso de división celular se llama:', o:['Fotosíntesis','Mitosis','Digestión','Respiración'], a:1, e:'La mitosis es el proceso de división celular que produce dos células hijas idénticas.'},
+  { s:'cien', q:'¿Cuál es el símbolo químico del oro?', o:['Ag','Au','Fe','Cu'], a:1, e:'Au (del latín aurum) es el símbolo químico del oro.'},
+  { s:'cien', q:'Las placas tectónicas se mueven debido a:', o:['El viento','Corrientes de magma en el manto','La rotación terrestre','La gravedad lunar'], a:1, e:'El movimiento de las placas tectónicas es impulsado por corrientes de convección en el manto.'},
+  { s:'cien', q:'¿Qué órgano del cuerpo humano filtra la sangre?', o:['Pulmones','Riñones','Estómago','Páncreas'], a:1, e:'Los riñones filtran la sangre eliminando desechos y produciendo orina.'},
+  { s:'cien', q:'La fórmula E=mc² pertenece a:', o:['Newton','Einstein','Hawking','Planck'], a:1, e:'E=mc² es la ecuación de equivalencia masa-energía de Albert Einstein.'},
+  { s:'cien', q:'¿Cuál es el gas de efecto invernadero más abundante?', o:['CO₂','Metano','Vapor de agua','Ozono'], a:2, e:'El vapor de agua es el gas de efecto invernadero más abundante en la atmósfera.'},
+  { s:'cien', q:'Las enzimas son:', o:['Lípidos','Proteínas catalizadoras','Carbohidratos','Vitaminas'], a:1, e:'Las enzimas son proteínas que aceleran reacciones químicas en los seres vivos.'},
+  { s:'cien', q:'La corriente eléctrica se mide en:', o:['Voltios','Amperios','Watts','Ohmios'], a:1, e:'El amperio (A) es la unidad de medida de la corriente eléctrica.'},
+  { s:'cien', q:'¿Cuál es el elemento más abundante en el universo?', o:['Oxígeno','Carbono','Hidrógeno','Helio'], a:2, e:'El hidrógeno constituye aproximadamente el 75% de la materia del universo.'},
+  { s:'cien', q:'La presión atmosférica se mide con:', o:['Termómetro','Barómetro','Higrómetro','Anemómetro'], a:1, e:'El barómetro mide la presión atmosférica, inventado por Torricelli.'},
+  { s:'cien', q:'¿Qué tipo de sangre es el donante universal?', o:['A+','B+','AB+','O-'], a:3, e:'El tipo O- es donante universal de glóbulos rojos.'},
+  { s:'cien', q:'La energía cinética depende de:', o:['La altura','La masa y la velocidad','La temperatura','La presión'], a:1, e:'Energía cinética = ½ × masa × velocidad².'},
+  { s:'cien', q:'¿Cuál es la función principal de los glóbulos rojos?', o:['Defender el cuerpo','Transportar oxígeno','Coagular la sangre','Producir anticuerpos'], a:1, e:'Los glóbulos rojos transportan oxígeno gracias a la hemoglobina.'},
+  { s:'cien', q:'La tabla periódica ordena los elementos por:', o:['Masa atómica','Número atómico','Peso molecular','Densidad'], a:1, e:'La tabla periódica organiza los elementos por número atómico creciente.'},
+  { s:'cien', q:'¿Cuántos cromosomas tiene una célula humana?', o:['23','46','48','24'], a:1, e:'Las células humanas tienen 46 cromosomas (23 pares).'},
+  { s:'cien', q:'El efecto invernadero natural mantiene la Tierra:', o:['Más fría','A una temperatura habitable','Sin atmósfera','Más seca'], a:1, e:'El efecto invernadero natural atrapa calor y mantiene la temperatura terrestre estable.'},
+  { s:'cien', q:'¿Qué científico propuso la teoría heliocéntrica?', o:['Ptolomeo','Copérnico','Galileo','Aristóteles'], a:1, e:'Nicolás Copérnico propuso que el Sol es el centro del sistema solar.'},
+  { s:'cien', q:'Un imán tiene polos:', o:['Norte y Sur','Positivo y Negativo','Este y Oeste','Rojo y Azul'], a:0, e:'Los imanes tienen un polo norte y un polo sur magnéticos.'},
+  { s:'cien', q:'La ósmosis es el paso de agua a través de:', o:['Una membrana semipermeable','El aire','Un sólido','Un imán'], a:0, e:'Ósmosis: movimiento de agua desde una zona de baja concentración a alta a través de una membrana.'},
+  { s:'cien', q:'¿Cuál es la unidad básica de la vida?', o:['Átomo','Célula','Tejido','Órgano'], a:1, e:'La célula es la unidad estructural y funcional fundamental de los seres vivos.'},
+  { s:'cien', q:'La clorofila da a las plantas su color:', o:['Azul','Verde','Rojo','Amarillo'], a:1, e:'La clorofila absorbe luz roja y azul y refleja verde, dando ese color a las plantas.'},
+  { s:'cien', q:'La ley de conservación de la masa fue formulada por:', o:['Dalton','Lavoisier','Pasteur','Mendel'], a:1, e:'Lavoisier: "La materia no se crea ni se destruye, solo se transforma."'},
+  { s:'cien', q:'¿Qué instrumento mide la intensidad de un terremoto?', o:['Barómetro','Sismógrafo','Termómetro','Anemómetro'], a:1, e:'El sismógrafo registra las ondas sísmicas durante un terremoto.'},
   // Inglés
   { s: 'ing', q: 'She _____ here for ten years.',                               o: ['works','is working','has worked','worked'], a: 2, e: 'Present perfect: acción que comenzó en el pasado.' },
   { s: 'ing', q: 'If it _____, we will stay home.',                             o: ['rain','rains','raining','rained'], a: 1, e: 'First conditional: if + present simple.' },
@@ -1238,13 +1290,15 @@ const ICFES = {
     const lvlLc = $('lvl-lc');
     const lvlSoc = $('lvl-soc');
     const lvlIng = $('lvl-ing');
+    const lvlCien = $('lvl-cien');
     if (lvlMat) lvlMat.textContent = st.quiz.stats.mat;
     if (lvlLc) lvlLc.textContent = st.quiz.stats.lc;
     if (lvlSoc) lvlSoc.textContent = st.quiz.stats.soc;
     if (lvlIng) lvlIng.textContent = st.quiz.stats.ing;
+    if (lvlCien) lvlCien.textContent = st.quiz.stats.cien;
 
     /* Badge de nivel */
-    const total = st.quiz.stats.mat + st.quiz.stats.lc + st.quiz.stats.soc + st.quiz.stats.ing;
+    const total = st.quiz.stats.mat + st.quiz.stats.lc + st.quiz.stats.soc + st.quiz.stats.ing + st.quiz.stats.cien;
     const bdg = $('hQuizBdg');
     if (bdg) {
       const lvl = total < 10 ? 'Nivel 1' : total < 25 ? 'Nivel 2' : total < 50 ? 'Nivel 3' : total < 100 ? 'Nivel 4' : 'Élite';
@@ -1267,7 +1321,7 @@ const ICFES = {
     }
 
     const q = this.cur;
-    const subjectLabel = { mat: 'Matemáticas', lc: 'Lectura Crítica', soc: 'Sociales', ing: 'Inglés' };
+    const subjectLabel = { mat: 'Matemáticas', lc: 'Lectura Crítica', soc: 'Sociales', ing: 'Inglés', cien: 'Ciencias Naturales' };
     w.innerHTML = `<div class="card quiz-card">
       <span class="ach-tag">${subjectLabel[q.s] || q.s.toUpperCase()}</span>
       <div class="q-box">${q.q}</div>
@@ -1588,6 +1642,50 @@ const Mental = {
   }
 };
 
+// ─── SIMTRACK (simulacroicfes.com) ────────────────────────
+/* Control diario del simulacro ICFES externo */
+
+const SimTrack = {
+  init() {
+    const st = S.load();
+    if (st.simtrack.date !== td()) {
+      st.simtrack = { date: td(), done: false };
+      S.save(st);
+    }
+    this.render();
+  },
+
+  toggle() {
+    const st = S.load();
+    st.simtrack.done = !st.simtrack.done;
+    S.save(st);
+    if (st.simtrack.done) {
+      addXP(200);
+      toast('🔥 Simulacro marcado +200 XP — rumbo a la gloria');
+      this.render();
+      App.updateMainStats();
+    } else {
+      this.render();
+    }
+  },
+
+  render() {
+    const st = S.load();
+    const badge = $('simtrackBadge');
+    const card = $('simtrackCard');
+    if (!badge) return;
+    if (st.simtrack.done) {
+      badge.textContent = '✅ Completado';
+      badge.className = 'bdg bdg-g';
+      if (card) card.style.borderColor = 'var(--grn2)';
+    } else {
+      badge.textContent = '⏳ Pendiente';
+      badge.className = 'bdg bdg-a';
+      if (card) card.style.borderColor = '';
+    }
+  }
+};
+
 // ─── APP ─────────────────────────────────────────────────
 /* Inicializador principal y reloj de cuenta regresiva */
 
@@ -1604,6 +1702,7 @@ const App = {
     Ach.render();
     Sim.init();
     Mental.init();
+    SimTrack.init();
 
     /* Tick del contador cada segundo */
     if (this._interval) clearInterval(this._interval);

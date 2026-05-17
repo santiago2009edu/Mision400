@@ -486,10 +486,10 @@ body {
         <span class="slbl" style="color:var(--r2);margin-bottom:.8rem;">Fuego de Lectura</span>
         <div class="row" style="align-items:baseline;">
           <span class="read-val" id="hReadVal">0</span>
-          <span class="read-goal" id="hReadGoal">/ 10</span>
+          <span class="read-goal" id="hReadGoal">/ 20</span>
         </div>
         <div class="pb" style="height:8px; margin-top:1.2rem;"><div class="pf pf-r" id="hReadBar" style="width:0%"></div></div>
-        <div style="margin-top:.8rem; font-size:.7rem; color:var(--t2); font-weight:600;">Meta: 10 páginas diarias por 80 días.</div>
+        <div style="margin-top:.8rem; font-size:.7rem; color:var(--t2); font-weight:600;">Meta: 20 páginas diarias · ICFES cada vez más cerca.</div>
       </div>
 
       <div id="hMissions"></div>
@@ -531,7 +531,7 @@ body {
     <div class="pg-inner">
       <div class="read-hero" style="cursor:default;">
         <span class="slbl">Progreso diario</span>
-        <div class="read-val" id="pgReadVal">0 <span class="read-goal">/ 10 pág</span></div>
+        <div class="read-val" id="pgReadVal">0 <span class="read-goal">/ 20 pág</span></div>
         <div class="pb" style="height:10px; margin-top:1rem;"><div class="pf pf-r" id="pgReadBar" style="width:0%"></div></div>
       </div>
 
@@ -768,10 +768,9 @@ const S = {
       auth: { in: false },
       read: {
         books: [
-          { id: 'ruido', t: 'El ruido de las cosas al caer', a: 'Juan Gabriel Vásquez', total: 320, read: 0, log: {} },
-          { id: 'chango', t: 'Changó, el gran putas', a: 'Manuel Zapata Olivella', total: 600, read: 0, log: {} },
-          { id: 'vidas', t: 'Muchas vidas, muchos sabios', a: 'Brian L. Weiss', total: 240, read: 0, log: {} },
-          { id: 'cien', t: 'Cien años de soledad', a: 'Gabriel García Márquez', total: 450, read: 0, log: {} }
+          { id: 'ruido', t: 'El ruido de las cosas al caer', a: 'Juan Gabriel Vásquez', total: 259, read: 0, log: {} },
+          { id: 'sangre', t: 'A sangre fría', a: 'Truman Capote', total: 344, read: 0, log: {} },
+          { id: 'chango', t: 'Changó, el gran putas', a: 'Manuel Zapata Olivella', total: 600, read: 0, log: {} }
         ],
         ideas: []
       },
@@ -831,13 +830,111 @@ const QUESTIONS = [
   { s: 'mat', q: 'log₁₀(1000) es igual a:',                                    o: ['2','3','4','10'], a: 1, e: '10³ = 1000, entonces log = 3.' },
   { s: 'mat', q: 'La probabilidad de obtener cara en 3 lanzamientos seguidos es:', o: ['1/2','1/4','1/6','1/8'], a: 3, e: '(1/2)³ = 1/8.' },
   { s: 'mat', q: '¿Cuántas diagonales tiene un hexágono?',                      o: ['6','9','12','15'], a: 1, e: 'n(n-3)/2 = 6(3)/2 = 9.' },
-  // Lectura Crítica
-  { s: 'lc', q: '"La libertad no es hacer lo que uno quiere, sino hacer lo que debe." ¿Cuál es el sentido?', o: ['No hay libertad','La ley es superior','Libertad implica deber','Individualismo puro'], a: 2, e: 'Asocia libertad con responsabilidad moral.' },
-  { s: 'lc', q: '¿Cuál es la diferencia entre hecho y opinión en un texto?',    o: ['Son lo mismo','El hecho se verifica, la opinión es subjetiva','La opinión es más importante','Ninguna'], a: 1, e: 'El hecho es verificable; la opinión expresa una creencia.' },
-  { s: 'lc', q: 'Un texto argumentativo busca principalmente:',                 o: ['Narrar','Describir','Persuadir','Informar'], a: 2, e: 'El texto argumentativo busca convencer al lector.' },
-  { s: 'lc', q: '¿Qué es una falacia?',                                        o: ['Verdad absoluta','Razonamiento inválido','Figura literaria','Dato estadístico'], a: 1, e: 'Falacia es un error en el razonamiento lógico.' },
-  { s: 'lc', q: 'La palabra "antediluviano" significa:',                        o: ['Anterior al diluvio','Posterior al diluvio','Contra el diluvio','Sin diluvio'], a: 0, e: 'Ante- = antes, diluvio = inundación bíblica.' },
-  { s: 'lc', q: '¿Cuál es la función de una tesis en un ensayo?',              o: ['Concluir','Introducir la idea central','Ejemplificar','Describir'], a: 1, e: 'La tesis presenta la postura central del autor.' },
+  // ═══ LECTURA CRÍTICA (100 preguntas) ═══
+  { s:'lc', q:'La idea principal de un texto se define como:', o:['El tema general','La postura del autor','La información más importante que resume el texto','La primera oración del párrafo'], a:2, e:'La idea principal condensa el mensaje central del texto.'},
+  { s:'lc', q:'Cuando un autor dice "Algunos estudios sugieren que..." está usando:', o:['Una afirmación categórica','Un atenuador retórico','Una conclusión','Una hipérbole'], a:1, e:'Atenuador retórico suaviza la afirmación para ser preciso.'},
+  { s:'lc', q:'¿Qué tipo de texto busca principalmente cambiar la opinión del lector?', o:['Narrativo','Informativo','Argumentativo','Descriptivo'], a:2, e:'El texto argumentativo busca persuadir al lector.'},
+  { s:'lc', q:'En la expresión "el tiempo es oro", predomina la figura literaria:', o:['Metáfora','Símil','Hipérbole','Ironía'], a:0, e:'Metáfora: comparación implícita entre tiempo y oro.'},
+  { s:'lc', q:'¿Cuál de los siguientes NO es un recurso argumentativo?', o:['Cita de autoridad','Ejemplificación','Pregunta retórica','Narración en primera persona'], a:3, e:'Narrar en primera persona no es un recurso argumentativo per se.'},
+  { s:'lc', q:'Leer críticamente implica:', o:['Aceptar todo lo que dice el autor','Identificar intenciones, sesgos y argumentos','Memorizar datos','Saltar palabras difíciles'], a:1, e:'Lectura crítica evalúa intención, sesgo y validez argumentativa.'},
+  { s:'lc', q:'Una conclusión en un texto argumentativo debe:', o:['Repetir la introducción','Derivarse lógicamente de los argumentos previos','Ser sorpresiva','Incluir nueva información no mencionada'], a:1, e:'La conclusión debe ser consecuencia lógica de lo expuesto.'},
+  { s:'lc', q:'La frase "El primer paso para resolver un problema es reconocer que existe" contiene:', o:['Una tesis','Una premisa','Una conclusión','Una definición'], a:1, e:'Es una premisa: punto de partida del razonamiento.'},
+  { s:'lc', q:'¿Qué función cumple un conector "sin embargo"?', o:['Añadir información','Oponer o contrastar ideas','Concluir','Ejemplificar'], a:1, e:'"Sin embargo" introduce una idea que contrasta con la anterior.'},
+  { s:'lc', q:'En un texto expositivo, el autor busca principalmente:', o:['Convencer','Explicar un tema de forma objetiva','Narrar una historia','Criticar una idea'], a:1, e:'El texto expositivo informa o explica de manera objetiva.'},
+  { s:'lc', q:'"El autor utiliza la ironía para..." corresponde a un análisis de:', o:['Contenido','Forma y estilo','Estructura','Tema'], a:1, e:'La ironía es un recurso estilístico, parte de la forma.'},
+  { s:'lc', q:'Una inferencia es:', o:['Una información explícita','Una conclusión basada en pistas del texto','Una opinión del lector','Un dato numérico'], a:1, e:'Inferir es leer entre líneas, sacar conclusiones de lo implícito.'},
+  { s:'lc', q:'¿Cuál es la diferencia entre tema y tesis?', o:['Son sinónimos','El tema es el asunto; la tesis es la postura','La tesis es más general','El tema es la conclusión'], a:1, e:'Tema = asunto general; tesis = postura específica ante ese asunto.'},
+  { s:'lc', q:'Un argumento por analogía compara:', o:['Causas y efectos','Dos situaciones similares para inferir una conclusión','Partes de un todo','Datos estadísticos'], a:1, e:'Analogía: comparar casos semejantes para extraer una conclusión.'},
+  { s:'lc', q:'En "El agua hierve a 100°C", el lenguaje es:', o:['Subjetivo','Figurado','Denotativo','Connotativo'], a:2, e:'Lenguaje denotativo: significado literal y objetivo.'},
+  { s:'lc', q:'Una falacia de "falso dilema" presenta:', o:['Muchas opciones','Solo dos opciones cuando hay más','Una opción correcta','Todas las opciones'], a:1, e:'Falso dilema reduce artificialmente las alternativas a dos.'},
+  { s:'lc', q:'¿Qué elemento NO pertenece a la superestructura de un texto?', o:['Introducción','Desarrollo','Conclusión','Recursos literarios'], a:3, e:'Recursos literarios pertenecen al estilo, no a la superestructura.'},
+  { s:'lc', q:'Cuando leemos "El autor sugiere que..." estamos identificando:', o:['Un hecho','Una inferencia','Una opinión','Un dato'], a:1, e:'"Sugiere" indica que el lector debe inferir la intención del autor.'},
+  { s:'lc', q:'Un texto coherente se caracteriza por:', o:['Usar vocabulario complejo','Tener unidades con sentido global','Ser muy extenso','Tener muchos párrafos'], a:1, e:'Coherencia: las ideas se relacionan formando un sentido unitario.'},
+  { s:'lc', q:'La palabra "no obstante" es un conector de:', o:['Causa','Oposición','Tiempo','Orden'], a:1, e:'"No obstante" indica contraste u oposición entre ideas.'},
+  { s:'lc', q:'¿Cuál es el propósito de un texto descriptivo?', o:['Narrar eventos','Detallar características de algo o alguien','Argumentar una postura','Explicar un proceso'], a:1, e:'Describir es detallar rasgos, cualidades o características.'},
+  { s:'lc', q:'La expresión "Como dijo Einstein..." es un ejemplo de:', o:['Argumento emocional','Cita de autoridad','Falacia','Dato estadístico'], a:1, e:'Cita de autoridad: respaldar un argumento con una figura reconocida.'},
+  { s:'lc', q:'En un ensayo, la función de los párrafos de desarrollo es:', o:['Presentar el tema','Desarrollar y defender la tesis con argumentos','Concluir y resumir','Plantear preguntas'], a:1, e:'El desarrollo contiene los argumentos que sustentan la tesis.'},
+  { s:'lc', q:'Identificar el "ethos" en un discurso significa analizar:', o:['La emoción transmitida','La credibilidad del autor','La estructura lógica','El uso de metáforas'], a:1, e:'Ethos: la imagen de credibilidad y autoridad que proyecta el orador.'},
+  { s:'lc', q:'Un argumento inductivo parte de:', o:['Lo general a lo particular','Lo particular a lo general','Una causa a un efecto','Una definición'], a:1, e:'Inducción: de casos específicos se extrae una conclusión general.'},
+  { s:'lc', q:'¿Qué falla lógica comete quien ataca a la persona en vez de al argumento?', o:['Falsa causa','Ad hominem','Pendiente resbaladiza','Petición de principio'], a:1, e:'Ad hominem: descalificar al interlocutor en vez de refutar su idea.'},
+  { s:'lc', q:'En el análisis textual, el "contexto situacional" se refiere a:', o:['El diccionario','Las circunstancias de producción del texto','La biografía del autor','El número de páginas'], a:1, e:'Contexto situacional: entorno social, histórico y cultural del texto.'},
+  { s:'lc', q:'Una pregunta de opción múltiple tipo ICFES sobre "sentido global" evalúa:', o:['Detalles específicos','La comprensión general del texto','El vocabulario','La puntuación'], a:1, e:'Sentido global: capacidad de sintetizar el mensaje completo del texto.'},
+  { s:'lc', q:'¿Cuál es la intención de usar voz pasiva en un texto científico?', o:['Embellecer la prosa','Dar objetividad y centrarse en el hecho','Confundir al lector','Hacer el texto más largo'], a:1, e:'La voz pasiva enfatiza la acción y no al sujeto, aportando objetividad.'},
+  { s:'lc', q:'Un "argumento deductivo" válido asegura que:', o:['La conclusión es probable','Si las premisas son ciertas, la conclusión es necesariamente cierta','Siempre es falso','Depende del contexto'], a:1, e:'Deducción: la conclusión se sigue necesariamente de las premisas.'},
+  { s:'lc', q:'"El 80% de los estudiantes mejoró sus notas con este método" es un argumento:', o:['Emocional','Estadístico','De autoridad','De experiencia personal'], a:1, e:'Argumento estadístico: usa datos numéricos para sustentar una idea.'},
+  { s:'lc', q:'La función de un título en un texto es:', o:['Decorar','Orientar al lector sobre el contenido','Ocupar espacio','Ser original'], a:1, e:'El título anticipa el contenido y atrae al lector.'},
+  { s:'lc', q:'La intertextualidad ocurre cuando:', o:['Un texto ignora a otros','Un texto dialoga o referencia a otros textos','Dos autores escriben lo mismo','No hay relación entre textos'], a:1, e:'Intertextualidad: relación explícita o implícita entre textos.'},
+  { s:'lc', q:'En un texto periodístico, la "noticia" se caracteriza por:', o:['Ser subjetiva','Responder qué, quién, cómo, cuándo, dónde y por qué','Usar lenguaje figurado','Incluir opiniones del periodista'], a:1, e:'La noticia responde las 6 preguntas básicas del periodismo.'},
+  { s:'lc', q:'Un "sesgo de confirmación" consiste en:', o:['Buscar evidencia que confirme nuestras creencias','Rechazar toda evidencia','Ser objetivo','Cambiar de opinión fácilmente'], a:0, e:'Sesgo de confirmación: favorecer información que respalda creencias previas.'},
+  { s:'lc', q:'La voz del narrador en primera persona ("yo") crea:', o:['Distancia con el lector','Cercanía y subjetividad','Objetividad total','Narración omnisciente'], a:1, e:'Primera persona acerca al lector a la experiencia subjetiva del narrador.'},
+  { s:'lc', q:'"Pathos" en retórica se refiere a:', o:['La lógica del argumento','La apelación a las emociones','La credibilidad del orador','La estructura del discurso'], a:1, e:'Pathos: recurso persuasivo que apela a las emociones del público.'},
+  { s:'lc', q:'¿Cuál es el propósito de un texto instructivo?', o:['Informar','Guiar al lector para realizar una tarea','Convencer','Describir'], a:1, e:'El texto instructivo entrega pasos para lograr un objetivo específico.'},
+  { s:'lc', q:'Un argumento por "causa-efecto" establece:', o:['Una relación temporal','Que un evento produce otro','Una comparación','Una clasificación'], a:1, e:'Causa-efecto: vincula un fenómeno como consecuencia de otro.'},
+  { s:'lc', q:'La palabra "sin embargo" indica relación de:', o:['Adición','Contraste','Causa','Tiempo'], a:1, e:'"Sin embargo" expresa contraste u oposición entre dos ideas.'},
+  { s:'lc', q:'En "El gobierno debería priorizar la educación porque es la base del desarrollo", la palabra "porque" introduce:', o:['Una consecuencia','Una causa o razón','Una conclusión','Un ejemplo'], a:1, e:'"Porque" señala la razón que justifica la afirmación anterior.'},
+  { s:'lc', q:'Una antítesis es:', o:['Repetición de sonidos','Contraposición de dos ideas opuestas','Exageración','Comparación explícita'], a:1, e:'Antítesis: oposición de conceptos en una misma estructura.'},
+  { s:'lc', q:'Cuando un texto presenta datos sin interpretación, predomina la función:', o:['Apelativa','Referencial','Poética','Emotiva'], a:1, e:'Función referencial: transmite información objetiva sobre la realidad.'},
+  { s:'lc', q:'Un "conector de orden" como "en primer lugar" sirve para:', o:['Concluir','Organizar secuencialmente las ideas','Contrastar','Ejemplificar'], a:1, e:'Conectores de orden estructuran la progresión del discurso.'},
+  { s:'lc', q:'La pregunta "¿Estás de acuerdo con el autor?" evalúa:', o:['Comprensión literal','Comprensión crítica','Comprensión inferencial','Vocabulario'], a:1, e:'Comprensión crítica: emitir juicio sobre la postura del autor.'},
+  { s:'lc', q:'Identificar la intención comunicativa de un texto implica reconocer:', o:['Solo el tema','Para qué fue escrito (informar, persuadir, entretener)','El número de páginas','Los personajes'], a:1, e:'Intención comunicativa: propósito con el que se produce el texto.'},
+  { s:'lc', q:'Una paráfrasis consiste en:', o:['Copiar el texto original','Decir lo mismo con otras palabras','Añadir información nueva','Criticar el texto'], a:1, e:'Paráfrasis: reformulación del contenido original con vocabulario propio.'},
+  { s:'lc', q:'En una reseña crítica, el autor:', o:['Solo resume','Solo opina','Combina resumen con evaluación fundamentada','Describe sin opinar'], a:2, e:'Reseña crítica: síntesis del contenido más un juicio valorativo razonado.'},
+  { s:'lc', q:'La cohesión textual se logra mediante:', o:['Buena ortografía','Conectores, referencias y elipsis','Párrafos largos','Letra legible'], a:1, e:'Cohesión: mecanismos lingüísticos que conectan las partes del texto.'},
+  { s:'lc', q:'"La educación es un arma poderosa" es un ejemplo de:', o:['Ironía','Metáfora','Símil','Hipérbole'], a:1, e:'Metáfora: identificación de un término real (educación) con otro figurado (arma).'},
+  { s:'lc', q:'El "pathos" en un discurso político busca:', o:['Demostrar datos','Generar empatía o miedo en la audiencia','Mostrar autoridad','Organizar ideas'], a:1, e:'Pathos apela a las emociones del público para persuadirlo.'},
+  { s:'lc', q:'Un artículo de opinión se diferencia de una noticia porque:', o:['Es más corto','Expresa la postura personal del autor','No tiene autor','Solo contiene datos'], a:1, e:'Artículo de opinión: el autor expresa su punto de vista subjetivo.'},
+  { s:'lc', q:'¿Qué es una proposición en lógica?', o:['Una pregunta','Un enunciado que puede ser verdadero o falso','Una exclamación','Una orden'], a:1, e:'Proposición: afirmación con valor de verdad (V o F).'},
+  { s:'lc', q:'"Si estudias, entonces pasas el examen" es un ejemplo de:', o:['Falacia','Condicional lógico','Inferencia','Definición'], a:1, e:'Condicional: estructura "si...entonces..." que relaciona causa y efecto.'},
+  { s:'lc', q:'En un texto narrativo, el "clímax" es:', o:['El inicio de la historia','El punto de mayor tensión','El desenlace','La descripción de personajes'], a:1, e:'Clímax: momento culminante donde la tensión narrativa alcanza su máximo.'},
+  { s:'lc', q:'Un texto discontinuo es aquel que:', o:['No tiene párrafos','Combina texto con gráficos, tablas o diagramas','Está incompleto','No tiene coherencia'], a:1, e:'Texto discontinuo: organiza la información en formato no lineal (tablas, gráficos).'},
+  { s:'lc', q:'Cuando un autor emplea la "pregunta retórica" busca:', o:['Obtener información','Hacer reflexionar al lector sin esperar respuesta','Confundir','Cumplir reglas gramaticales'], a:1, e:'Pregunta retórica: busca generar reflexión, no obtener respuesta.'},
+  { s:'lc', q:'La "elipsis" en un texto es:', o:['Repetir información','Omitir información que se sobreentiende','Añadir detalles','Corregir errores'], a:1, e:'Elipsis: supresión de elementos lingüísticos que el contexto permite reponer.'},
+  { s:'lc', q:'En la frase "La justicia es ciega", la personificación consiste en:', o:['Atribuir cualidad humana a un concepto abstracto','Describir un paisaje','Comparar dos cosas','Exagerar una cualidad'], a:0, e:'Personificación: atribuir características humanas a lo que no lo es.'},
+  { s:'lc', q:'Una secuencia textual predominantemente argumentativa busca:', o:['Narrar hechos','Defender una tesis con razones','Explicar un proceso','Describir un objeto'], a:1, e:'La secuencia argumentativa tiene como fin persuadir mediante razones.'},
+  { s:'lc', q:'¿Qué significa "contrargumentar"?', o:['Estar de acuerdo','Refutar o cuestionar un argumento presentado','Ignorar el argumento','Repetir el argumento'], a:1, e:'Contrargumentar: presentar razones en contra de un argumento.'},
+  { s:'lc', q:'Un texto con alta carga connotativa se caracteriza por:', o:['Lenguaje literal','Significados simbólicos y subjetivos','Datos numéricos','Definiciones de diccionario'], a:1, e:'Connotación: significado adicional, subjetivo o cultural de las palabras.'},
+  { s:'lc', q:'La "falacia de falsa causa" ocurre cuando:', o:['Se confunde correlación con causalidad','Se ataca a la persona','Se hace una pregunta compleja','Se usa estadística incorrecta'], a:0, e:'Falsa causa: asumir que porque A precede a B, A causa B.'},
+  { s:'lc', q:'En un editorial periodístico predomina la función:', o:['Informativa','Opinativa','Recreativa','Descriptiva'], a:1, e:'El editorial expresa la postura oficial del medio ante un tema.'},
+  { s:'lc', q:'Un "símil" se diferencia de una metáfora en que:', o:['Usa "como" o "cual"','No tiene diferencia','Es más corto','No compara'], a:0, e:'El símil usa conectores comparativos explícitos (como, cual).'},
+  { s:'lc', q:'La estructura "problema-solución" es típica de textos:', o:['Narrativos','Expositivo-argumentativos','Poéticos',' Instructivos'], a:1, e:'Estructura problema-solución: plantea un conflicto y propone alternativas.'},
+  { s:'lc', q:'¿Cuál es la función del "párrafo de cierre"?', o:['Introducir el tema','Sintetizar y dar cierre a lo expuesto','Desarrollar un argumento','Presentar datos nuevos'], a:1, e:'El cierre recoge las ideas principales y ofrece una conclusión.'},
+  { s:'lc', q:'Cuando un texto usa las palabras "posiblemente", "quizás", "tal vez", el autor está:', o:['Afirmando con certeza','Modulando el grado de verdad','Negando la información','Preguntando'], a:1, e:'Estos adverbios expresan duda o probabilidad, modulando la aserción.'},
+  { s:'lc', q:'La "analogía" como recurso argumentativo:', o:['Compara situaciones para facilitar la comprensión','Presenta datos','Narra una historia','Define un concepto'], a:0, e:'Analogía: recurso que compara lo desconocido con algo familiar.'},
+  { s:'lc', q:'En "El presidente afirmó que..." la voz del narrador es:', o:['Directa','Indirecta','Omnisciente','Testigo'], a:1, e:'Estilo indirecto: el narrador reproduce las palabras del hablante.'},
+  { s:'lc', q:'La diferencia entre denotación y connotación es:', o:['No existe','Denotación es objetiva; connotación es subjetiva','Denotación es figurada','Connotación es literal'], a:1, e:'Denotación: significado literal. Connotación: carga subjetiva o cultural.'},
+  { s:'lc', q:'Un texto que presenta "tesis, argumentos y conclusión" tiene estructura:', o:['Narrativa','Argumentativa','Descriptiva','Expositiva'], a:1, e:'La estructura clásica argumentativa sigue: tesis → argumentos → conclusión.'},
+  { s:'lc', q:'Una pregunta tipo ICFES sobre "sinónimo contextual" evalúa:', o:['Gramática','Vocabulario según el contexto','Ortografía','Puntuación'], a:1, e:'Sinónimo contextual: palabra que puede reemplazar a otra según el sentido.'},
+  { s:'lc', q:'La "intención satírica" de un texto busca:', o:['Informar objetivamente','Criticar mediante humor o ironía','Elogiar','Describir neutralmente'], a:1, e:'Sátira: crítica mordaz usando humor, ironía o exageración.'},
+  { s:'lc', q:'En un texto expositivo, el "tema" es:', o:['La opinión del autor','El asunto general del que trata','La conclusión','El título'], a:1, e:'Tema: asunto general sobre el que versa el texto.'},
+  { s:'lc', q:'Identificar el "logotipo" (logos) en un discurso implica:', o:['Analizar la apelación emocional','Examinar la estructura lógica y la evidencia','Evaluar la credibilidad','Contar las palabras'], a:1, e:'Logos: apelación a la razón mediante argumentos lógicos y evidencia.'},
+  { s:'lc', q:'La frase "Todo lo que sube tiene que bajar" es ejemplo de:', o:['Premisa universal','Falacia','Conclusión particular','Hipótesis'], a:0, e:'Premisa universal: afirmación que aplica a todos los casos de una categoría.'},
+  { s:'lc', q:'Un texto "polifónico" se caracteriza por:', o:['Una sola voz','Múltiples voces o perspectivas','Ausencia de autor','Ser muy breve'], a:1, e:'Polifonía textual: presencia de diversas voces y puntos de vista.'},
+  { s:'lc', q:'La "cita textual" se usa en un texto para:', o:['Ocupar espacio','Respaldar un argumento con fuente autorizada','Decorar','Evitar escribir'], a:1, e:'Cita textual: reproduce palabras exactas de una fuente para dar soporte.'},
+  { s:'lc', q:'¿Qué se evalúa al preguntar por la "postura del autor"?', o:['Su biografía','Su posición frente al tema tratado','La extensión del texto','La cantidad de citas'], a:1, e:'Postura del autor: su actitud, opinión o posición ante el tema.'},
+  { s:'lc', q:'La deixis personal ("yo", "tú", "él") en un texto señala:', o:['Tiempo','Personas que participan en el discurso','Lugar','Modo'], a:1, e:'Deixis personal: señala los roles de los participantes en la comunicación.'},
+  { s:'lc', q:'En "Colombia es un país de regiones", la palabra "Colombia" funciona como:', o:['Sujeto','Predicado','Complemento','Modificador'], a:0, e:'"Colombia" es el sujeto de la oración, de quien se predica algo.'},
+  { s:'lc', q:'Un texto que busca "crear conciencia" sobre un tema tiene función:', o:['Apelativa o conativa','Referencial','Poética','Fática'], a:0, e:'Función apelativa: busca influir en la conducta u opinión del receptor.'},
+  { s:'lc', q:'La "petición de principio" como falacia ocurre cuando:', o:['La conclusión está implícita en la premisa','Se usan datos falsos','Se ataca al oponente','Se apela a la emoción'], a:0, e:'Petición de principio: asumir como verdad lo que se quiere demostrar.'},
+  { s:'lc', q:'Un antónimo contextual es:', o:['Una palabra con significado opuesto según el contexto','Sinónimos','Palabras homófonas','Prefijos'], a:0, e:'Antónimo contextual: palabra de significado contrario en ese texto.'},
+  { s:'lc', q:'En un texto dramático, el "monólogo" revela:', o:['Diálogo entre personajes','Los pensamientos internos de un personaje','La voz del narrador','La descripción del escenario'], a:1, e:'Monólogo: parlamento extenso que expresa pensamientos íntimos del personaje.'},
+  { s:'lc', q:'Un argumento "a fortiori" razona:', o:['Del caso más débil al más fuerte','De igualdad','De lo particular','Ignorando evidencia'], a:0, e:'A fortiori: si es cierto para el caso más débil, más lo será para el fuerte.'},
+  { s:'lc', q:'La función metalingüística del lenguaje se centra en:', o:['El mensaje mismo y el código','El receptor','El contexto','El canal'], a:0, e:'Función metalingüística: reflexionar sobre el propio lenguaje.'},
+  { s:'lc', q:'"La dignidad humana es el fundamento de los derechos" es un enunciado:', o:['Fáctico','Normativo','Descriptivo','Narrativo'], a:1, e:'Enunciado normativo: expresa un valor o deber ser, no un hecho.'},
+  { s:'lc', q:'En una infografía, la información se organiza:', o:['Solo en texto','Combinando elementos visuales y textuales','Solo con imágenes','Sin estructura'], a:1, e:'Infografía: representación visual que integra texto e imágenes informativas.'},
+  { s:'lc', q:'La "falacia ad populum" consiste en:', o:['Apelar a la popularidad como verdad','Atacar a la persona','Usar estadísticas falsas','Hacer preguntas complejas'], a:0, e:'Ad populum: afirmar que algo es verdad porque mucha gente lo cree.'},
+  { s:'lc', q:'Un texto con "registro formal" se caracteriza por:', o:['Vocabulario coloquial','Precisión léxica y ausencia de contracciones','Jerga juvenil','Palabras groseras'], a:1, e:'Registro formal: lenguaje cuidado, preciso y normativamente correcto.'},
+  { s:'lc', q:'La "catáfora" es un recurso de cohesión que:', o:['Anticipa un elemento que aún no aparece','Repite información','Omite información','Concluye'], a:0, e:'Catáfora: adelanta un elemento que se mencionará después.'},
+  { s:'lc', q:'Preguntar por el "propósito comunicativo" del texto equivale a:', o:['Qué quiere lograr el autor con su texto','Quién es el autor','Cuántas páginas tiene','Dónde se publicó'], a:0, e:'Propósito comunicativo: intención u objetivo del autor al escribir.'},
+  { s:'lc', q:'En un texto argumentativo, la "refutación" consiste en:', o:['Aceptar el argumento contrario','Anticipar y desmontar objeciones','Ignorar críticas','Repetir la tesis'], a:1, e:'Refutación: parte donde se responden y debilitan los contraargumentos.'},
+  { s:'lc', q:'La "ironía" se produce cuando:', o:['Se dice lo contrario de lo que se piensa','Se exagera un hecho','Se comparan dos ideas','Se repite una palabra'], a:0, e:'Ironía: expresar lo opuesto a lo que realmente se piensa, con intención crítica.'},
+  { s:'lc', q:'El "discurso directo" se reconoce por:', o:['Uso de comillas y verbos como "dijo"','Narración en tercera persona','Lenguaje figurado','Conectores causales'], a:0, e:'Discurso directo reproduce literalmente las palabras del hablante.'},
+  { s:'lc', q:'Un texto con "argumento deductivo" presenta:', o:['Conclusión probable','Premisa general seguida de conclusión particular','Solo ejemplos','Datos sin orden'], a:1, e:'Deducción: parte de una verdad universal para llegar a un caso concreto.'},
+  { s:'lc', q:'La "ambigüedad" en un texto puede ser:', o:['Siempre negativa','Un problema de claridad o un recurso literario','Inexistente','Un error ortográfico'], a:1, e:'Ambigüedad: puede ser fallo comunicativo o recurso intencional (poesía).'},
+  { s:'lc', q:'Cuando el narrador sabe todo de los personajes, es:', o:['Testigo','Omnisciente','Protagonista','Segunda persona'], a:1, e:'Narrador omnisciente: conoce pensamientos, emociones y futuro de los personajes.'},
+  { s:'lc', q:'La "hipérbole" como figura retórica consiste en:', o:['Atenuar la realidad','Exagerar desmedidamente','Comparar suavemente','Omitir información'], a:1, e:'Hipérbole: exageración intencional con fines expresivos o persuasivos.'},
+  { s:'lc', q:'Una pregunta de "comprensión inferencial" exige:', o:['Copiar información textual','Leer entre líneas y deducir','Memorizar datos','Identificar palabras'], a:1, e:'Comprensión inferencial: extraer información implícita del texto.'},
+  { s:'lc', q:'"Logos", "ethos" y "pathos" son conceptos de la retórica de:', o:['Platón','Aristóteles','Sócrates','Cicerón'], a:1, e:'Aristóteles clasificó los modos de persuasión en ethos, pathos y logos.'},
+  { s:'lc', q:'Un texto "expositivo-explicativo" tiene como fin:', o:['Persuadir',' Hacer comprender un tema complejo','Entretener','Describir subjetivamente'], a:1, e:'El texto expositivo-explicativo busca clarificar y hacer accesible un tema.'},
   // Sociales
   { s: 'soc', q: '¿Qué órgano en Colombia protege los DDHH?',                  o: ['Procuraduría','Contraloría','Defensoría del Pueblo','Fiscalía'], a: 2, e: 'La Defensoría protege los DDHH en Colombia.' },
   { s: 'soc', q: 'La Revolución Francesa ocurrió en:',                          o: ['1769','1776','1789','1799'], a: 2, e: 'La Revolución Francesa inició en 1789.' },
@@ -1004,7 +1101,7 @@ const Read = {
     const st = S.load();
     const t = td();
     const today = st.read.books.reduce((s, b) => s + (b.log[t] || 0), 0);
-    const pct = Math.min((today / 10) * 100, 100);
+    const DAILY_GOAL = 20;const pct = Math.min((today / DAILY_GOAL) * 100, 100);
 
     const hVal = $('hReadVal');
     const pgVal = $('pgReadVal');
